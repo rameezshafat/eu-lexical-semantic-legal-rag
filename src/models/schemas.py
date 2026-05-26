@@ -129,7 +129,7 @@ class GoldQuery(BaseModel):
     """One entry in the gold-standard evaluation benchmark."""
 
     query_id: str
-    query: str = Field(..., min_length=10)
+    query: str
     relevant_celex_ids: list[str] = Field(
         ..., min_length=1, description="Ground-truth CELEX IDs for this query"
     )

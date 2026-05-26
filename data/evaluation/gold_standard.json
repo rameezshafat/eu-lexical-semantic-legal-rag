@@ -1,0 +1,76 @@
+{
+  "queries": [
+    {
+      "query_id": "q001",
+      "query": "What are the obligations for monitoring and reporting greenhouse gas emissions from maritime transport?",
+      "relevant_celex_ids": ["32015R0757", "32023R2631"],
+      "notes": "MRV Regulation 2015/757 and Maritime GHG Monitoring Regulation 2023/2631"
+    },
+    {
+      "query_id": "q002",
+      "query": "What is the EU ETS cap and how are emission allowances allocated to industrial installations?",
+      "relevant_celex_ids": ["32003L0087", "32018L2002"],
+      "notes": "ETS Directive and Energy Efficiency Directive amendments to ETS"
+    },
+    {
+      "query_id": "q003",
+      "query": "What economic activities qualify as environmentally sustainable under the EU Taxonomy Regulation?",
+      "relevant_celex_ids": ["32020R0852"],
+      "notes": "Taxonomy Regulation Article 3 defines the criteria"
+    },
+    {
+      "query_id": "q004",
+      "query": "What are the binding national targets for greenhouse gas emission reductions under the Effort Sharing Regulation?",
+      "relevant_celex_ids": ["32018R0842"],
+      "notes": "Effort Sharing Regulation sets member state targets"
+    },
+    {
+      "query_id": "q005",
+      "query": "How does the Carbon Border Adjustment Mechanism calculate the embedded emissions in imported goods?",
+      "relevant_celex_ids": ["32023R0956"],
+      "notes": "CBAM Regulation 2023/956"
+    },
+    {
+      "query_id": "q006",
+      "query": "What are the reporting obligations for fluorinated greenhouse gases under the F-Gas Regulation?",
+      "relevant_celex_ids": ["32014R0517"],
+      "notes": "F-Gas Regulation 2014/517"
+    },
+    {
+      "query_id": "q007",
+      "query": "What requirements must member states meet for the land use, land use change and forestry sector?",
+      "relevant_celex_ids": ["32018R0841"],
+      "notes": "LULUCF Regulation 2018/841"
+    },
+    {
+      "query_id": "q008",
+      "query": "What is the EU's legally binding 2050 climate neutrality target and governance framework?",
+      "relevant_celex_ids": ["32021R1119"],
+      "notes": "European Climate Law 2021/1119"
+    },
+    {
+      "query_id": "q009",
+      "query": "What are the obligations on vehicle manufacturers regarding CO2 emission performance standards for new cars?",
+      "relevant_celex_ids": ["32023R0851"],
+      "notes": "CO2 standards for new passenger cars regulation"
+    },
+    {
+      "query_id": "q010",
+      "query": "What disclosure obligations do financial market participants have regarding sustainability risks?",
+      "relevant_celex_ids": ["32019R2088"],
+      "notes": "SFDR - Sustainable Finance Disclosure Regulation"
+    },
+    {
+      "query_id": "q011",
+      "query": "What are the minimum energy performance requirements for buildings under the Energy Performance of Buildings Directive?",
+      "relevant_celex_ids": ["32018L2002"],
+      "notes": "EED 2018/2002 addresses building energy requirements"
+    },
+    {
+      "query_id": "q012",
+      "query": "How are emission allowances auctioned in Phase 4 of the EU Emissions Trading System?",
+      "relevant_celex_ids": ["32003L0087", "32021R1119"],
+      "notes": "ETS Directive Phase 4 auctioning provisions"
+    }
+  ]
+}
