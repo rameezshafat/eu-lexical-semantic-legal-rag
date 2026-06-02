@@ -18,7 +18,6 @@ from __future__ import annotations
 import logging
 import pickle
 import re
-from pathlib import Path
 from typing import Literal
 
 import numpy as np
@@ -73,9 +72,6 @@ class SparseRetriever(BaseRetriever):
     def index(self, articles: list[LegalArticle]) -> None:
         """
         Tokenize all article texts and build the BM25 inverted index.
-
-        BM25 parameter values (k1, b) are set at construction time and
-        applied here; re-indexing with different corpora is safe.
         """
         log.info("Sparse indexing: tokenizing %d articles …", len(articles))
 
@@ -94,18 +90,24 @@ class SparseRetriever(BaseRetriever):
         """
         Score all documents against *query* using BM25 and return top-k.
 
-        BM25 scores are not normalised (unbounded positive reals); the
-        RankFusionController uses only the rank position, not the raw score.
+        Returns an empty list if the query tokenizes to nothing (e.g. a
+        query made entirely of punctuation) rather than returning arbitrary
+        zero-scored results.
         """
         if not self.is_indexed:
             raise RuntimeError("SparseRetriever has not been indexed yet.")
 
         query_tokens = _tokenize(query)
-        scores       = self._bm25.get_scores(query_tokens)  # shape: (n_docs,)
+        if not query_tokens:
+            log.warning(
+                "SparseRetriever: query produced no tokens after tokenization: %r",
+                query,
+            )
+            return []
 
-        # argsort descending, take top_k
-        k           = min(top_k, len(self._article_map))
-        top_indices = np.argsort(scores)[::-1][:k]
+        scores       = self._bm25.get_scores(query_tokens)
+        k            = min(top_k, len(self._article_map))
+        top_indices  = np.argsort(scores)[::-1][:k]
 
         retrieved: list[RetrievedResult] = []
         for rank, idx in enumerate(top_indices, start=1):
@@ -120,8 +122,19 @@ class SparseRetriever(BaseRetriever):
         return retrieved
 
     def save(self, directory: str) -> None:
-        dir_path = Path(directory)
-        dir_path.mkdir(parents=True, exist_ok=True)
+        """
+        Persist the BM25 index and article map to *directory*.
+
+        Raises
+        ------
+        RuntimeError
+            If the retriever has not been indexed yet.
+        """
+        if not self.is_indexed:
+            raise RuntimeError(
+                "SparseRetriever cannot save: index() or load() must be called first."
+            )
+        dir_path = self._resolve_dir(directory)
 
         with open(dir_path / _BM25_FILE, "wb") as f:
             pickle.dump(self._bm25, f)
@@ -131,7 +144,7 @@ class SparseRetriever(BaseRetriever):
         log.info("Sparse index saved to %s", dir_path)
 
     def load(self, directory: str) -> None:
-        dir_path = Path(directory)
+        dir_path = self._resolve_dir(directory)
 
         with open(dir_path / _BM25_FILE, "rb") as f:
             self._bm25 = pickle.load(f)

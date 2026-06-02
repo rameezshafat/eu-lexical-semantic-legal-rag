@@ -164,11 +164,16 @@ def run_evaluate() -> None:
     _load_indices(dense, sparse)
 
     controller = _build_controller(dense, sparse)
-    evaluator  = Evaluator(
-        controller=controller,
-        gold_standard_path=settings.gold_standard_path,
-        top_k=settings.top_k_fused,
-    )
+
+    try:
+        evaluator = Evaluator(
+            controller=controller,
+            gold_standard_path=settings.gold_standard_path,
+            top_k=settings.top_k_fused,
+        )
+    except (FileNotFoundError, ValueError) as exc:
+        console.print(f"[red]Cannot load gold standard: {exc}[/red]")
+        sys.exit(1)
 
     report = evaluator.run()
 
@@ -181,6 +186,59 @@ def run_evaluate() -> None:
         encoding="utf-8",
     )
     console.print(f"\n[dim]Full report saved to {report_path}[/dim]")
+
+
+def run_baselines() -> None:
+    """
+    Run ablation study: BM25-only vs Dense-only vs Hybrid RRF.
+
+    Produces a side-by-side comparison table — essential for validating
+    that hybrid fusion outperforms each individual retriever.
+    """
+    console.rule("[bold blue]Stage: Baselines[/bold blue]")
+
+    dense  = _build_dense_retriever()
+    sparse = _build_sparse_retriever()
+    _load_indices(dense, sparse)
+
+    controller = _build_controller(dense, sparse)
+
+    try:
+        evaluator = Evaluator(
+            controller=controller,
+            gold_standard_path=settings.gold_standard_path,
+            top_k=settings.top_k_fused,
+        )
+    except (FileNotFoundError, ValueError) as exc:
+        console.print(f"[red]Cannot load gold standard: {exc}[/red]")
+        sys.exit(1)
+
+    baseline = evaluator.run_baselines(
+        sparse_retriever=sparse,
+        dense_retriever=dense,
+    )
+
+    console.print(Panel(
+        baseline.summary_table(),
+        title="[bold blue]Ablation: Retrieval System Comparison[/bold blue]",
+        border_style="blue",
+    ))
+
+    report_path = Path(settings.index_dir) / "baseline_report.json"
+    report_path.write_text(
+        json.dumps(
+            {
+                "top_k": baseline.top_k,
+                "sparse_only": baseline.sparse_only.model_dump(),
+                "dense_only":  baseline.dense_only.model_dump() if baseline.dense_only else None,
+                "hybrid":      baseline.hybrid.model_dump(),
+            },
+            indent=2,
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    console.print(f"\n[dim]Baseline report saved to {report_path}[/dim]")
 
 
 def run_pipeline(query: str) -> None:
@@ -257,7 +315,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--mode",
-        choices=["index", "query", "evaluate", "pipeline"],
+        choices=["index", "query", "evaluate", "baselines", "pipeline"],
         default="query",
         help="Pipeline stage to run (default: query)",
     )
@@ -281,6 +339,8 @@ def main() -> None:
         run_query(args.query)
     elif args.mode == "evaluate":
         run_evaluate()
+    elif args.mode == "baselines":
+        run_baselines()
     elif args.mode == "pipeline":
         run_pipeline(args.query)
 
