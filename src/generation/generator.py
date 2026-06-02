@@ -17,7 +17,6 @@ The system prompt is deliberately restrictive:
 from __future__ import annotations
 
 import logging
-import re
 
 import anthropic
 
@@ -56,45 +55,6 @@ RULES — you must follow all of them:
 """
 
 
-def _build_context_block(fused_results: list[FusedResult]) -> str:
-    """
-    Format the fused provisions into a numbered CONTEXT block for the LLM.
-
-    Each provision is labelled with its citation so the LLM can easily
-    reference it in its answer.
-    """
-    lines = ["CONTEXT (fused legal provisions, ordered by relevance):"]
-    lines.append("=" * 70)
-
-    for result in fused_results:
-        art = result.article
-        lines.append(
-            f"\n[{result.rank}] {art.citation_label}"
-            f"  (type: {art.doc_type}, RRF rank: {result.rank},"
-            f" {result.provenance_str})"
-        )
-        lines.append("-" * 60)
-        lines.append(art.article_text)
-
-    lines.append("\n" + "=" * 70)
-    return "\n".join(lines)
-
-
-def _extract_citations(text: str, fused_results: list[FusedResult]) -> list[str]:
-    """
-    Extract which citation labels the LLM actually used in its answer.
-
-    Uses the known citation_label values from fused_results as the search
-    targets, avoiding regex over arbitrary CELEX patterns.
-    """
-    used = []
-    for result in fused_results:
-        label = result.article.citation_label
-        if label in text:
-            used.append(label)
-    return used
-
-
 class LegalGenerator:
     """
     Wraps an Anthropic LLM to produce strictly-grounded legal answers.
@@ -116,8 +76,8 @@ class LegalGenerator:
         model: str = "claude-opus-4-7",
         max_tokens: int = 2048,
     ) -> None:
-        self._client    = anthropic.Anthropic(api_key=api_key)
-        self._model     = model
+        self._client     = anthropic.Anthropic(api_key=api_key)
+        self._model      = model
         self._max_tokens = max_tokens
 
     def generate(
@@ -153,7 +113,7 @@ class LegalGenerator:
                 model_used=self._model,
             )
 
-        context_block = _build_context_block(fused_results)
+        context_block = self._build_context_block(fused_results)
         user_message  = f"{context_block}\n\nQUESTION: {query}"
 
         log.info(
@@ -169,8 +129,35 @@ class LegalGenerator:
             messages=[{"role": "user", "content": user_message}],
         )
 
+        if not response.content:
+            log.error(
+                "Anthropic API returned an empty content list for query: %s…",
+                query[:60],
+            )
+            return GenerationOutput(
+                query=query,
+                answer="INSUFFICIENT CONTEXT: The model returned no content for this query.",
+                cited_provisions=[],
+                fused_results=fused_results,
+                model_used=self._model,
+                input_tokens=getattr(response.usage, "input_tokens", 0),
+                output_tokens=getattr(response.usage, "output_tokens", 0),
+            )
+
         answer = response.content[0].text
-        cited  = _extract_citations(answer, fused_results)
+
+        if response.stop_reason == "max_tokens":
+            log.warning(
+                "Response truncated at max_tokens=%d for query: %s…",
+                self._max_tokens,
+                query[:60],
+            )
+            answer += (
+                "\n\n[NOTE: This response was truncated at the token limit "
+                "and may be incomplete.]"
+            )
+
+        cited = self._extract_citations(answer, fused_results)
 
         log.info(
             "Generation complete: %d input tokens, %d output tokens, %d citations used.",
@@ -188,3 +175,42 @@ class LegalGenerator:
             input_tokens=response.usage.input_tokens,
             output_tokens=response.usage.output_tokens,
         )
+
+    # ── Private helpers ───────────────────────────────────────────────────────
+
+    @staticmethod
+    def _build_context_block(fused_results: list[FusedResult]) -> str:
+        """
+        Format the fused provisions into a numbered CONTEXT block for the LLM.
+        """
+        lines = ["CONTEXT (fused legal provisions, ordered by relevance):"]
+        lines.append("=" * 70)
+
+        for result in fused_results:
+            art = result.article
+            lines.append(
+                f"\n[{result.rank}] {art.citation_label}"
+                f"  (type: {art.doc_type}, RRF rank: {result.rank},"
+                f" {result.provenance_str})"
+            )
+            lines.append("-" * 60)
+            lines.append(art.article_text)
+
+        lines.append("\n" + "=" * 70)
+        return "\n".join(lines)
+
+    @staticmethod
+    def _extract_citations(
+        text: str, fused_results: list[FusedResult]
+    ) -> list[str]:
+        """
+        Extract which citation labels the LLM actually used in its answer.
+
+        Uses the known citation_label values from fused_results as search
+        targets, avoiding regex over arbitrary CELEX patterns.
+        """
+        return [
+            result.article.citation_label
+            for result in fused_results
+            if result.article.citation_label in text
+        ]

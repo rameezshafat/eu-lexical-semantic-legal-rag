@@ -18,6 +18,8 @@ Design principles
   run in parallel via ThreadPoolExecutor to minimise wall-clock latency.
 - Provenance tracking: every FusedResult carries dense_rank + sparse_rank
   so downstream consumers can explain why a document was surfaced.
+- Fail-fast on total failure: if both retrievers raise, a RuntimeError is
+  propagated to the caller rather than silently returning an empty list.
 """
 
 from __future__ import annotations
@@ -82,6 +84,12 @@ class RankFusionController:
         -------
         list[FusedResult]
             Ordered by descending RRF score, length ≤ top_k_fused.
+
+        Raises
+        ------
+        RuntimeError
+            If both retrievers fail. A partial failure (one retriever succeeds)
+            is logged as a warning and fusion continues with reduced coverage.
         """
         dense_results, sparse_results = self._retrieve_concurrent(query)
 
@@ -106,9 +114,15 @@ class RankFusionController:
         ThreadPoolExecutor is used (not asyncio) because both voyageai and
         rank-bm25 are synchronous; wrapping them in async coroutines would
         add complexity with no benefit.
+
+        Raises
+        ------
+        RuntimeError
+            If both retrievers raise exceptions (total failure).
         """
-        dense_results: list[RetrievedResult] = []
+        dense_results: list[RetrievedResult]  = []
         sparse_results: list[RetrievedResult] = []
+        failures: dict[str, Exception]        = {}
 
         tasks = {
             "dense" : (self._dense.retrieve,  query, self._top_k_r),
@@ -130,6 +144,23 @@ class RankFusionController:
                         sparse_results = results
                 except Exception as exc:
                     log.error("Retriever '%s' raised an exception: %s", label, exc)
+                    failures[label] = exc
+
+        if len(failures) == 2:
+            raise RuntimeError(
+                f"Both retrievers failed — cannot fuse results. "
+                f"Dense error: {failures.get('dense')}; "
+                f"Sparse error: {failures.get('sparse')}"
+            )
+
+        if failures:
+            surviving = "dense" if "sparse" in failures else "sparse"
+            log.warning(
+                "Retriever '%s' failed; fusing with '%s' results only. "
+                "Results reflect single-retriever coverage, not hybrid fusion.",
+                next(iter(failures)),
+                surviving,
+            )
 
         return dense_results, sparse_results
 
@@ -141,16 +172,12 @@ class RankFusionController:
         """
         Compute RRF scores and return a merged, ranked list.
 
-        Implementation details
-        ----------------------
-        - Documents are keyed by doc_id (celex_id::article_number) so the
-          same article appearing in both lists is correctly deduplicated.
-        - The article object itself is taken from whichever list saw it first;
-          both lists hold the same immutable LegalArticle so this is safe.
+        Documents are keyed by doc_id (celex_id::article_number) so the
+        same article appearing in both lists is correctly deduplicated.
         """
-        rrf_scores: dict[str, float]  = defaultdict(float)
-        dense_ranks: dict[str, int]   = {}
-        sparse_ranks: dict[str, int]  = {}
+        rrf_scores: dict[str, float]       = defaultdict(float)
+        dense_ranks: dict[str, int]        = {}
+        sparse_ranks: dict[str, int]       = {}
         article_store: dict[str, LegalArticle] = {}
 
         for result in dense_results:
@@ -165,7 +192,6 @@ class RankFusionController:
             sparse_ranks[doc_id]   = result.rank
             article_store.setdefault(doc_id, result.article)
 
-        # Sort by descending RRF score, assign final ranks
         sorted_ids = sorted(rrf_scores, key=lambda d: rrf_scores[d], reverse=True)
 
         fused: list[FusedResult] = []

@@ -50,20 +50,33 @@ class CorpusLoader:
                 line = line.strip()
                 if not line:
                     continue
+
+                raw = None
                 try:
                     raw = json.loads(line)
-                    article = LegalArticle.model_validate(raw)
-                    articles.append(article)
                 except json.JSONDecodeError as exc:
                     log.warning("Line %d — JSON parse error: %s", line_no, exc)
                     skipped += 1
+                    continue
+
+                if not isinstance(raw, dict):
+                    log.warning(
+                        "Line %d — expected JSON object, got %s; skipping.",
+                        line_no,
+                        type(raw).__name__,
+                    )
+                    skipped += 1
+                    continue
+
+                try:
+                    article = LegalArticle.model_validate(raw)
+                    articles.append(article)
                 except ValidationError as exc:
-                    # Single-line summary so logs stay readable
                     first_err = exc.errors()[0]["msg"]
                     log.debug(
                         "Line %d — validation skipped (%s): %s",
                         line_no,
-                        raw.get("celex_id", "?"),  # type: ignore[possibly-undefined]
+                        raw.get("celex_id", "?"),
                         first_err,
                     )
                     skipped += 1

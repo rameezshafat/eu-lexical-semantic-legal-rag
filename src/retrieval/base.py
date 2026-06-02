@@ -9,6 +9,7 @@ ever calls `retrieve`, so swapping dense ↔ sparse ↔ any future retriever
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from pathlib import Path
 
 from src.models.schemas import LegalArticle, RetrievedResult
 
@@ -32,13 +33,6 @@ class BaseRetriever(ABC):
         Build or re-build the retriever's internal index from *articles*.
 
         This is a destructive operation — any existing index is replaced.
-
-        Parameters
-        ----------
-        articles:
-            Full article corpus in deterministic order.
-            The retriever is responsible for maintaining the mapping
-            from internal index position → LegalArticle.
         """
 
     @abstractmethod
@@ -50,22 +44,25 @@ class BaseRetriever(ABC):
         The `rank` field in each RetrievedResult must be 1-based and
         contiguous (1, 2, 3, …, top_k).
 
-        Parameters
-        ----------
-        query:
-            Free-text legal question.
-        top_k:
-            Maximum number of results to return.
-
-        Returns
-        -------
-        list[RetrievedResult]
-            Ordered from most to least relevant.
+        Raises
+        ------
+        RuntimeError
+            If the retriever has not been indexed yet.
         """
 
     @abstractmethod
     def save(self, directory: str) -> None:
-        """Persist the index to *directory* for later re-loading."""
+        """
+        Persist the index to *directory* for later re-loading.
+
+        Precondition: ``is_indexed`` must be True. Callers must call
+        ``index()`` or ``load()`` before ``save()``.
+
+        Raises
+        ------
+        RuntimeError
+            If the retriever has not been indexed yet.
+        """
 
     @abstractmethod
     def load(self, directory: str) -> None:
@@ -80,3 +77,12 @@ class BaseRetriever(ABC):
     @abstractmethod
     def is_indexed(self) -> bool:
         """True iff the retriever has a ready-to-query index."""
+
+    # ── Shared utility ────────────────────────────────────────────────────────
+
+    @staticmethod
+    def _resolve_dir(directory: str) -> Path:
+        """Resolve *directory* to a Path, creating it if necessary."""
+        path = Path(directory)
+        path.mkdir(parents=True, exist_ok=True)
+        return path
