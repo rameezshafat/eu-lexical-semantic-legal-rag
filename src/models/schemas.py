@@ -31,6 +31,10 @@ class LegalArticle(BaseModel):
         default_factory=list,
         description="CELEX IDs or OJ references explicitly cited within this article",
     )
+    concept_ids: list[str] = Field(
+        default_factory=list,
+        description="EuroVoc concept IDs attached to this article",
+    )
 
     @field_validator("celex_id")
     @classmethod
