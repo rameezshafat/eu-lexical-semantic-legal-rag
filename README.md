@@ -11,7 +11,7 @@ Reciprocal Rank Fusion (RRF), and grounded answer generation via Claude.
 Given a natural-language legal question, the system:
 
 1. Retrieves relevant legislative articles from 57 EU climate law documents
-   using both keyword search (BM25) and semantic search (Voyage-law-2 + FAISS)
+   using both keyword search (BM25) and semantic search (BGE-M3 + FAISS)
 2. Fuses both ranked lists into a single ranking using Reciprocal Rank Fusion
 3. Generates a strictly grounded answer via Claude, with every claim cited
    to a specific `[CELEX_ID — Article N]`
@@ -41,7 +41,7 @@ The ETL pipeline is in `notebooks/cellar_etl.ipynb`.
 │   ├── ingestion/loader.py      # JSONL loader with validation
 │   ├── retrieval/
 │   │   ├── base.py              # BaseRetriever ABC
-│   │   ├── dense.py             # DenseRetriever (Voyage-law-2 + FAISS)
+│   │   ├── dense.py             # DenseRetriever (BGE-M3 + FAISS)
 │   │   └── sparse.py            # SparseRetriever (BM25Okapi)
 │   ├── fusion/controller.py     # RankFusionController (concurrent + RRF)
 │   ├── generation/generator.py  # LegalGenerator (Anthropic, strict grounding)
@@ -82,24 +82,21 @@ source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Copy `.env.example` to `.env` and fill in your API keys:
-
 ```bash
-cp .env.example .env
-# Edit .env:
-#   VOYAGE_API_KEY=your_voyage_key
-#   ANTHROPIC_API_KEY=your_anthropic_key
+# Pull the models (one-time, ~40GB total)
+ollama pull llama3.3:70b
+# BGE-M3 downloads automatically on first run via sentence-transformers
 ```
 
 ---
 
 ## Reproducing Results
 
-### Step 1 — Build indices (requires VOYAGE_API_KEY)
+### Step 1 — Build indices
 
 ```bash
 python main.py --mode index
-# Embeds 825 articles with voyage-law-2 (~3 API calls at batch_size=64)
+# Embeds 825 articles with BGE-M3 (downloads model on first run)
 # Saves: data/indices/dense.faiss + data/indices/sparse.bm25.pkl
 ```
 
@@ -109,7 +106,7 @@ python main.py --mode index
 python main.py --mode baselines
 ```
 
-This evaluates three systems side by side on the 12-query gold standard:
+This evaluates three systems side by side on the 50-query gold standard:
 
 ```
 System               Hit_Rate@5       MRR@5
@@ -121,7 +118,7 @@ Hybrid RRF (ours)    x.xxxx           x.xxxx
 
 Full per-query results saved to `data/indices/baseline_report.json`.
 
-### Step 3 — Run a query with generation (requires ANTHROPIC_API_KEY)
+### Step 3 — Run a query with generation (requires Ollama running with llama3.3:70b)
 
 ```bash
 python main.py --mode query \
@@ -152,7 +149,7 @@ python -m pytest tests/ -v
 
 ## Evaluation Methodology
 
-**Gold standard:** 12 manually curated queries in `data/evaluation/gold_standard.json`.
+**Gold standard:** 50 manually curated queries in `data/evaluation/gold_standard.json`.
 Each query maps to one or more relevant CELEX document IDs.
 
 **Metrics:**
@@ -164,9 +161,7 @@ Each query maps to one or more relevant CELEX document IDs.
 before comparison (e.g. `32003L0087R(02)` matches gold `32003L0087`).
 
 **Known limitations:**
-- 12 queries produces wide confidence intervals (~±0.14 for Hit_Rate at 95%).
-  Interpret aggregate numbers as indicative, not statistically conclusive.
-- 2 of 12 gold queries reference documents not in the corpus
+- 2 gold queries reference documents not in the corpus
   (`32019R2088` SFDR, `32023R0851` CO2 car standards). These will always
   score MRR=0, creating a lower bound on reported metrics.
 
@@ -186,11 +181,12 @@ addresses one obligation, definition, or procedure. Article-level chunking
 avoids the arbitrary window-size decisions of token-based chunking and
 produces units that align with how lawyers reason about law.
 
-**Why voyage-law-2?**
-Legal text has a distributional shift from general text: dense terminology,
-Latin phrases, cross-references. Domain fine-tuning on legal corpora
-produces meaningfully better embeddings than `text-embedding-3-large`
-for legal retrieval tasks.
+**Why BGE-M3?**
+BGE-M3 is free, fully reproducible (no API key required), supports an
+8192-token context window (handles long EU legislative articles without
+truncation), and ranks at the top of the MTEB retrieval benchmark. As a
+domain-agnostic strong baseline it lets any researcher reproduce results
+without cost, which is essential for academic credibility.
 
 **Why strict grounding in the system prompt?**
 Legal analysis requires traceable claims. A response that cites
@@ -205,14 +201,14 @@ All hyperparameters are in `config.py` / `.env`. Key settings:
 
 | Parameter | Default | Effect |
 |---|---|---|
-| `voyage_model` | `voyage-law-2` | Embedding model |
-| `voyage_embed_dim` | `1024` | Must match model output |
+| `dense_model` | `BAAI/bge-m3` | Embedding model |
+| `dense_embed_dim` | `1024` | Must match model output |
 | `bm25_k1` | `1.5` | Term frequency saturation |
 | `bm25_b` | `0.75` | Document length normalization |
 | `rrf_k` | `60` | RRF smoothing constant |
 | `top_k_retrieval` | `20` | Candidates per retriever before fusion |
 | `top_k_fused` | `5` | Final results returned to generator |
-| `llm_model` | `claude-opus-4-7` | Generation model |
+| `llm_model` | `llama3.3:70b` | Generation model (Ollama tag) |
 | `llm_max_tokens` | `2048` | Max generated tokens |
 
 ---
@@ -221,9 +217,9 @@ All hyperparameters are in `config.py` / `.env`. Key settings:
 
 1. **Corpus completeness** — 57 documents covers the core EU climate acquis
    but excludes delegated acts, implementing regulations, and amendments.
-2. **Gold standard size** — 12 queries is too small for statistically
-   robust conclusions. Expanding to 50+ queries is recommended before
-   publication.
+2. **Gold standard size** — 50 queries is the minimum for statistically
+   robust conclusions. Independent validation of a subset is recommended
+   before publication.
 3. **No temporal filtering** — the system treats all corpus documents as
    equally current; consolidated versions are not tracked.
 4. **Single-language** — English text only. EU law is official in 24 languages.

@@ -1,0 +1,171 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\citation{robertson2009bm25}
+\citation{chen2024bgem3}
+\citation{cormack2009rrf}
+\citation{robertson2009bm25}
+\citation{mori2023}
+\citation{nowjcoliee2023}
+\citation{chen2024bgem3}
+\citation{chen2024bgem3}
+\citation{rayo2024}
+\citation{legalrag2024}
+\@writefile{toc}{\contentsline {paragraph}{Research Questions.}{2}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Contributions.}{2}{section*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\newlabel{sec:related}{{2}{2}{Related Work}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Lexical Retrieval in Legal IR}{2}{subsection.2.1}\protected@file@percent }
+\newlabel{sec:related-lexical}{{2.1}{2}{Lexical Retrieval in Legal IR}{subsection.2.1}{}}
+\citation{formal2021splade}
+\citation{formal2022splade2}
+\citation{cormack2009rrf}
+\citation{hyparag2024}
+\citation{lrage2024}
+\citation{cbrrag2023}
+\citation{lexrag2024}
+\citation{lexdrafter2024}
+\citation{legalstructurerag2024}
+\citation{reliableretrievallegal2024}
+\citation{reasoninglegal2024}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Dense Retrieval and Legal Embeddings}{3}{subsection.2.2}\protected@file@percent }
+\newlabel{sec:related-dense}{{2.2}{3}{Dense Retrieval and Legal Embeddings}{subsection.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Sparse Learned Representations}{3}{subsection.2.3}\protected@file@percent }
+\newlabel{sec:related-splade}{{2.3}{3}{Sparse Learned Representations}{subsection.2.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Hybrid Retrieval and Rank Fusion}{3}{subsection.2.4}\protected@file@percent }
+\newlabel{sec:related-hybrid}{{2.4}{3}{Hybrid Retrieval and Rank Fusion}{subsection.2.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Legal RAG Systems}{3}{subsection.2.5}\protected@file@percent }
+\newlabel{sec:related-legalrag}{{2.5}{3}{Legal RAG Systems}{subsection.2.5}{}}
+\citation{nowjcoliee2023}
+\citation{lrage2024}
+\citation{hyparag2024}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Retrieval Reliability and Source Attribution}{4}{subsection.2.6}\protected@file@percent }
+\newlabel{sec:related-reliability}{{2.6}{4}{Retrieval Reliability and Source Attribution}{subsection.2.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7}Evaluation Frameworks for Legal Retrieval}{4}{subsection.2.7}\protected@file@percent }
+\newlabel{sec:related-eval}{{2.7}{4}{Evaluation Frameworks for Legal Retrieval}{subsection.2.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Research Gap and Contributions}{4}{section.3}\protected@file@percent }
+\newlabel{sec:gap}{{3}{4}{Research Gap and Contributions}{section.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Methodology}{4}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{4}{4}{Methodology}{section.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces System architecture. A query is processed concurrently by BM25 and BGE-M3\xspace  ; the two ranked lists of 20~candidates each are merged by RRF\xspace  to produce a fused top-5 context. The fused context is passed to Llama~3.3-70B (Ollama, local inference) for strictly-grounded answer generation, with every claim required to cite \texttt  {[CELEX\_ID\,---\,Article\,N]}. Quantitative evaluation covers only the retrieval components (shaded region).}}{5}{figure.1}\protected@file@percent }
+\newlabel{fig:architecture}{{1}{5}{System architecture. A query is processed concurrently by BM25 and \bgem ; the two ranked lists of 20~candidates each are merged by \rrf to produce a fused top-5 context. The fused context is passed to Llama~3.3-70B (Ollama, local inference) for strictly-grounded answer generation, with every claim required to cite \texttt {[CELEX\_ID\,---\,Article\,N]}. Quantitative evaluation covers only the retrieval components (shaded region)}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Corpus Construction}{5}{subsection.4.1}\protected@file@percent }
+\newlabel{sec:corpus}{{4.1}{5}{Corpus Construction}{subsection.4.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Phase~1 --- Batch SPARQL.}{5}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Phase~2 --- Per-document manifestation retrieval.}{5}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Parsing.}{5}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Corpus statistics.}{5}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why article-level chunking.}{5}{section*.7}\protected@file@percent }
+\citation{reimers2019sbert}
+\citation{chen2024bgem3}
+\citation{cormack2009rrf}
+\citation{cormack2009rrf}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Sparse Retrieval --- BM25}{6}{subsection.4.2}\protected@file@percent }
+\newlabel{sec:sparse}{{4.2}{6}{Sparse Retrieval --- BM25}{subsection.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Dense Retrieval --- BGE-M3}{6}{subsection.4.3}\protected@file@percent }
+\newlabel{sec:dense}{{4.3}{6}{Dense Retrieval --- BGE-M3}{subsection.4.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Model selection rationale.}{6}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Indexing.}{6}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Retrieval.}{6}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Reciprocal Rank Fusion}{6}{subsection.4.4}\protected@file@percent }
+\newlabel{sec:rrf}{{4.4}{6}{Reciprocal Rank Fusion}{subsection.4.4}{}}
+\newlabel{eq:rrf}{{1}{6}{Reciprocal Rank Fusion}{equation.4.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Why RRF over learned fusion.}{6}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Concurrent execution.}{7}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Grounding hypothesis.}{7}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Algorithm}{7}{subsection.4.5}\protected@file@percent }
+\newlabel{sec:algo}{{4.5}{7}{Algorithm}{subsection.4.5}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces Hybrid Sparse-Dense Retrieval Pipeline}}{7}{algocf.1}\protected@file@percent }
+\newlabel{alg:hybrid}{{1}{7}{Algorithm}{algocf.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Evaluation Benchmark Construction}{7}{subsection.4.6}\protected@file@percent }
+\newlabel{sec:eval-bench}{{4.6}{7}{Evaluation Benchmark Construction}{subsection.4.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Relevance judgements.}{7}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Corrigendum normalisation.}{7}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistical note.}{7}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why document-level retrieval.}{7}{section*.17}\protected@file@percent }
+\citation{reimers2019sbert}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Experimental Setup}{8}{section.5}\protected@file@percent }
+\newlabel{sec:setup}{{5}{8}{Experimental Setup}{section.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Hardware.}{8}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Software.}{8}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Index build.}{8}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Query latency measurement.}{8}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Evaluation Framework}{8}{section.6}\protected@file@percent }
+\newlabel{sec:eval}{{6}{8}{Evaluation Framework}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Dimension~1: Effectiveness}{8}{subsection.6.1}\protected@file@percent }
+\newlabel{sec:eval-effectiveness}{{6.1}{8}{Dimension~1: Effectiveness}{subsection.6.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Hit Rate at $k$.}{8}{section*.22}\protected@file@percent }
+\newlabel{eq:hitrate}{{2}{8}{Hit Rate at $k$}{equation.6.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Mean Reciprocal Rank.}{8}{section*.23}\protected@file@percent }
+\newlabel{eq:mrr}{{3}{8}{Mean Reciprocal Rank}{equation.6.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Note on nDCG.}{8}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Confidence intervals.}{9}{section*.25}\protected@file@percent }
+\newlabel{eq:wilson}{{4}{9}{Confidence intervals}{equation.6.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Statistical significance.}{9}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Dimension~2: Reliability}{9}{subsection.6.2}\protected@file@percent }
+\newlabel{sec:eval-reliability}{{6.2}{9}{Dimension~2: Reliability}{subsection.6.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Dimension~3: Efficiency}{9}{subsection.6.3}\protected@file@percent }
+\newlabel{sec:eval-efficiency}{{6.3}{9}{Dimension~3: Efficiency}{subsection.6.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Results}{9}{section.7}\protected@file@percent }
+\newlabel{sec:results}{{7}{9}{Results}{section.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Retrieval effectiveness ($n{=}71$ queries). Wilson 95\,\% confidence intervals in parentheses for $\mathrm  {HR}@{k}$ columns. $\dagger $~McNemar's $p$ vs.\ BM25-only; $\ddagger $~vs.\ BGE-M3\xspace  -only.}}{9}{table.1}\protected@file@percent }
+\newlabel{tab:effectiveness}{{1}{9}{Retrieval effectiveness ($n{=}71$ queries). Wilson 95\,\% confidence intervals in parentheses for $\HR {k}$ columns. $\dagger $~McNemar's $p$ vs.\ BM25-only; $\ddagger $~vs.\ \bgem -only}{table.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Efficiency. Build time and latency measured on [hardware]. Latency: median and P95 over 5 runs $\times $ 71~queries. Overhead ratio: hybrid median $\div $ faster single-retriever median.}}{9}{table.2}\protected@file@percent }
+\newlabel{tab:efficiency}{{2}{9}{Efficiency. Build time and latency measured on [hardware]. Latency: median and P95 over 5 runs $\times $ 71~queries. Overhead ratio: hybrid median $\div $ faster single-retriever median}{table.2}{}}
+\citation{lrage2024}
+\citation{hyparag2024}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Reliability breakdown ($n{=}71$ queries). ``Hybrid strictly improves'' = hybrid hits; both baselines miss. ``Hybrid regresses'' = hybrid misses; at least one baseline hits.}}{10}{table.3}\protected@file@percent }
+\newlabel{tab:reliability}{{3}{10}{Reliability breakdown ($n{=}71$ queries). ``Hybrid strictly improves'' = hybrid hits; both baselines miss. ``Hybrid regresses'' = hybrid misses; at least one baseline hits}{table.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Ablation: sensitivity of hybrid RRF\xspace  to the $k$ constant (Equation~\ref {eq:rrf}). $\mathrm  {HR}@{5}$ and $\mathrm  {MRR}@{5}$ on the full 71-query benchmark. Baseline: $k{=}60$.}}{10}{table.4}\protected@file@percent }
+\newlabel{tab:ablation}{{4}{10}{Ablation: sensitivity of hybrid \rrf to the $k$ constant (Equation~\ref {eq:rrf}). $\HR {5}$ and $\MRR {5}$ on the full 71-query benchmark. Baseline: $k{=}60$}{table.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{10}{section.8}\protected@file@percent }
+\newlabel{sec:discussion}{{8}{10}{Discussion}{section.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{RQ1: Hybrid effectiveness and reliability.}{10}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{RQ2: Sufficiency for grounded responses.}{10}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Comparison with prior work.}{10}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Practical implication.}{10}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Error Analysis}{11}{section.9}\protected@file@percent }
+\newlabel{sec:error}{{9}{11}{Error Analysis}{section.9}{}}
+\@writefile{toc}{\contentsline {paragraph}{Case~1: Vocabulary mismatch (predicted BM25 failure).}{11}{section*.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Case~2: Semantic drift (predicted BGE-M3\xspace  failure).}{11}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Case~3: Article fragmentation (predicted failure for all systems).}{11}{section*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Case~4: Cross-reference gap (predicted hybrid partial failure).}{11}{section*.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Case~5: Governance-level definitional query (predicted BM25 failure).}{11}{section*.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10}Threats to Validity}{12}{section.10}\protected@file@percent }
+\newlabel{sec:validity}{{10}{12}{Threats to Validity}{section.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.1}Internal Validity}{12}{subsection.10.1}\protected@file@percent }
+\newlabel{sec:validity-internal}{{10.1}{12}{Internal Validity}{subsection.10.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2}External Validity}{12}{subsection.10.2}\protected@file@percent }
+\newlabel{sec:validity-external}{{10.2}{12}{External Validity}{subsection.10.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.3}Construct Validity}{12}{subsection.10.3}\protected@file@percent }
+\newlabel{sec:validity-construct}{{10.3}{12}{Construct Validity}{subsection.10.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.4}Reproducibility}{12}{subsection.10.4}\protected@file@percent }
+\newlabel{sec:validity-reproducibility}{{10.4}{12}{Reproducibility}{subsection.10.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {11}Conclusion}{12}{section.11}\protected@file@percent }
+\newlabel{sec:conclusion}{{11}{12}{Conclusion}{section.11}{}}
+\bibcite{robertson2009bm25}{1}
+\bibcite{chen2024bgem3}{2}
+\bibcite{cormack2009rrf}{3}
+\bibcite{mori2023}{4}
+\bibcite{nowjcoliee2023}{5}
+\bibcite{rayo2024}{6}
+\bibcite{legalrag2024}{7}
+\bibcite{formal2021splade}{8}
+\bibcite{formal2022splade2}{9}
+\@writefile{toc}{\contentsline {paragraph}{Future work.}{13}{section*.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {12}Generative AI Disclosure}{13}{section.12}\protected@file@percent }
+\newlabel{sec:ai-disclosure}{{12}{13}{Generative AI Disclosure}{section.12}{}}
+\bibcite{hyparag2024}{10}
+\bibcite{lrage2024}{11}
+\bibcite{cbrrag2023}{12}
+\bibcite{lexrag2024}{13}
+\bibcite{lexdrafter2024}{14}
+\bibcite{legalstructurerag2024}{15}
+\bibcite{reliableretrievallegal2024}{16}
+\bibcite{reasoninglegal2024}{17}
+\bibcite{reimers2019sbert}{18}
+\gdef \@abspage@last{14}
