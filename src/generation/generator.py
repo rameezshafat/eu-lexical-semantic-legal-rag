@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import logging
 
-import anthropic
+from openai import OpenAI
 
 from src.models.schemas import FusedResult, GenerationOutput
 
@@ -57,26 +57,22 @@ RULES — you must follow all of them:
 
 class LegalGenerator:
     """
-    Wraps an Anthropic LLM to produce strictly-grounded legal answers.
+    Wraps a local Llama model via Ollama to produce strictly-grounded legal answers.
 
     Parameters
     ----------
-    api_key:
-        Anthropic API key.
     model:
-        Claude model ID. Defaults to claude-opus-4-7 for maximum reasoning
-        fidelity on complex doctrinal questions.
+        Ollama model tag. Defaults to llama3.3:70b.
     max_tokens:
         Upper bound on generated tokens.
     """
 
     def __init__(
         self,
-        api_key: str,
-        model: str = "claude-opus-4-7",
+        model: str = "llama3.3:70b",
         max_tokens: int = 2048,
     ) -> None:
-        self._client     = anthropic.Anthropic(api_key=api_key)
+        self._client     = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
         self._model      = model
         self._max_tokens = max_tokens
 
@@ -122,16 +118,18 @@ class LegalGenerator:
             len(fused_results),
         )
 
-        response = self._client.messages.create(
+        response = self._client.chat.completions.create(
             model=self._model,
             max_tokens=self._max_tokens,
-            system=_SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": user_message}],
+            messages=[
+                {"role": "system", "content": _SYSTEM_PROMPT},
+                {"role": "user", "content": user_message},
+            ],
         )
 
-        if not response.content:
+        if not response.choices:
             log.error(
-                "Anthropic API returned an empty content list for query: %s…",
+                "Ollama API returned an empty choices list for query: %s…",
                 query[:60],
             )
             return GenerationOutput(
@@ -140,13 +138,13 @@ class LegalGenerator:
                 cited_provisions=[],
                 fused_results=fused_results,
                 model_used=self._model,
-                input_tokens=getattr(response.usage, "input_tokens", 0),
-                output_tokens=getattr(response.usage, "output_tokens", 0),
+                input_tokens=getattr(response.usage, "prompt_tokens", 0),
+                output_tokens=getattr(response.usage, "completion_tokens", 0),
             )
 
-        answer = response.content[0].text
+        answer = response.choices[0].message.content
 
-        if response.stop_reason == "max_tokens":
+        if response.choices[0].finish_reason == "length":
             log.warning(
                 "Response truncated at max_tokens=%d for query: %s…",
                 self._max_tokens,
@@ -161,8 +159,8 @@ class LegalGenerator:
 
         log.info(
             "Generation complete: %d input tokens, %d output tokens, %d citations used.",
-            response.usage.input_tokens,
-            response.usage.output_tokens,
+            response.usage.prompt_tokens,
+            response.usage.completion_tokens,
             len(cited),
         )
 
@@ -172,8 +170,8 @@ class LegalGenerator:
             cited_provisions=cited,
             fused_results=fused_results,
             model_used=self._model,
-            input_tokens=response.usage.input_tokens,
-            output_tokens=response.usage.output_tokens,
+            input_tokens=response.usage.prompt_tokens,
+            output_tokens=response.usage.completion_tokens,
         )
 
     # ── Private helpers ───────────────────────────────────────────────────────

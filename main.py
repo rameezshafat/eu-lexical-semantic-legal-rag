@@ -60,10 +60,9 @@ console = Console()
 
 def _build_dense_retriever() -> DenseRetriever:
     return DenseRetriever(
-        api_key=settings.voyage_api_key,
-        model=settings.voyage_model,
-        embed_dim=settings.voyage_embed_dim,
-        batch_size=settings.voyage_batch_size,
+        model=settings.dense_model,
+        embed_dim=settings.dense_embed_dim,
+        batch_size=settings.dense_batch_size,
     )
 
 
@@ -95,12 +94,8 @@ def _load_indices(dense: DenseRetriever, sparse: SparseRetriever) -> None:
 # ─────────────────────────────────────────────────────────────────────────────
 
 def run_index() -> None:
-    """Load corpus, embed with Voyage, build BM25, persist both indices."""
+    """Load corpus, embed with BGE-M3, build BM25, persist both indices."""
     console.rule("[bold blue]Stage: Index[/bold blue]")
-
-    if not settings.voyage_api_key:
-        console.print("[red]VOYAGE_API_KEY is not set. Cannot build dense index.[/red]")
-        sys.exit(1)
 
     loader   = CorpusLoader(settings.corpus_path)
     articles = loader.load()
@@ -114,7 +109,7 @@ def run_index() -> None:
     sparse.index(articles)
     sparse.save(settings.index_dir)
 
-    console.print("\n[yellow]Building dense (Voyage) index — API calls in progress…[/yellow]")
+    console.print("\n[yellow]Building dense (BGE-M3) index…[/yellow]")
     dense.index(articles)
     dense.save(settings.index_dir)
 
@@ -124,10 +119,6 @@ def run_index() -> None:
 def run_query(query: str) -> None:
     """Fuse retrieval results and generate a grounded LLM answer."""
     console.rule("[bold blue]Stage: Query[/bold blue]")
-
-    if not settings.anthropic_api_key:
-        console.print("[red]ANTHROPIC_API_KEY is not set. Cannot run generation.[/red]")
-        sys.exit(1)
 
     dense  = _build_dense_retriever()
     sparse = _build_sparse_retriever()
@@ -139,7 +130,6 @@ def run_query(query: str) -> None:
     _print_fused_results(query, fused)
 
     generator = LegalGenerator(
-        api_key=settings.anthropic_api_key,
         model=settings.llm_model,
         max_tokens=settings.llm_max_tokens,
     )
