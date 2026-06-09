@@ -27,7 +27,7 @@ Baselines
 run_baselines() evaluates three conditions in one pass for paper-quality
 ablations:
   - sparse_only : BM25 retrieval, no fusion
-  - dense_only  : Voyage-law-2 + FAISS, no fusion
+  - dense_only  : BGE-M3 + FAISS, no fusion
   - hybrid      : RRF-fused dense + sparse (the proposed system)
 """
 
@@ -86,7 +86,7 @@ class BaselineReport:
         rows.append("-" * 46)
         rows.append(f"{'BM25 (sparse-only)':<20} {self.sparse_only.hit_rate:<16.4f} {self.sparse_only.mrr:<10.4f}")
         if self.dense_only:
-            rows.append(f"{'Voyage (dense-only)':<20} {self.dense_only.hit_rate:<16.4f} {self.dense_only.mrr:<10.4f}")
+            rows.append(f"{'BGE-M3 (dense-only)':<20} {self.dense_only.hit_rate:<16.4f} {self.dense_only.mrr:<10.4f}")
         rows.append(f"{'Hybrid RRF (ours)':<20} {self.hybrid.hit_rate:<16.4f} {self.hybrid.mrr:<10.4f}")
         return "\n".join(rows)
 
@@ -150,7 +150,7 @@ class Evaluator:
 
         Runs:
         1. sparse_only  — BM25 results wrapped as FusedResult
-        2. dense_only   — Voyage results wrapped as FusedResult (if available)
+        2. dense_only   — BGE-M3 results wrapped as FusedResult (if available)
         3. hybrid       — the full RRF-fused controller
 
         Parameters

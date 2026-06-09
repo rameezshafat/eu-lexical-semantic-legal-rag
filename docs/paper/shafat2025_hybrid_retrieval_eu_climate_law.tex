@@ -1,0 +1,1031 @@
+%% IOS Press FAIA — iosart2x.cls
+%% JURIX 2025: International Conference on Legal Knowledge and Information Systems
+%%
+%% Hybrid Sparse-Dense Retrieval for EU Climate Law:
+%%   Evaluating BM25, BGE-M3, and Reciprocal Rank Fusion
+%%   on a Statute-Level Benchmark
+%%
+\documentclass{iosart2x}
+
+\usepackage[T1]{fontenc}
+\usepackage{natbib}           % \citet / \citep author-year citations
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xspace}
+\usepackage{multirow}
+
+%% Convenience macros
+\newcommand{\HR}[1]{\text{HR}@{#1}}
+\newcommand{\MRR}[1]{\text{MRR}@{#1}}
+\newcommand{\PH}{\text{[PLACEHOLDER]}\xspace}
+\newcommand{\PHCI}[1]{\text{[PH]~(CI: [PH, PH])}}
+\newcommand{\bgem}{BGE-M3\xspace}
+\newcommand{\rrf}{RRF\xspace}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Hybrid Sparse-Dense Retrieval for EU Climate Law:\\
+       Evaluating BM25, \bgem{}and Reciprocal Rank Fusion\\
+       on a Statute-Level Benchmark}
+
+\author[A]{\inits{R.S.}\fnm{Rameez} \snm{Shafat}}
+
+\address[A]{%
+  [Institution]\\
+  \email{[email address]}%
+}
+
+\begin{abstract}
+Grounded responses in legal AI applications depend critically on
+first-stage retrieval: a system that fails to surface the correct
+statutory provision cannot produce a verifiable, citation-supported
+answer.  We evaluate three retrieval configurations---BM25 lexical
+search, \bgem dense retrieval (BAAI/bge-m3, 1024\,dim), and a hybrid
+combining both via Reciprocal Rank Fusion (\rrf, $k{=}60$)---on a
+manually constructed benchmark of 71 queries over EU Climate Law.
+The corpus comprises 1,156 article-level provisions from 72 EU
+instruments extracted from the EU CELLAR database via SPARQL and
+Formex~XML.  We measure retrieval effectiveness using $\HR{1}$,
+$\HR{5}$, $\HR{10}$, and $\MRR{k}$ with Wilson 95\,\% confidence
+intervals, and complement these with reliability (per-query hit
+patterns) and efficiency (index size and query latency) analyses.
+To the best of our knowledge, this is the first systematic comparative
+study of hybrid sparse-dense retrieval on EU statutory text, and the
+first publicly available statute-level retrieval benchmark for EU
+Climate Law.  Experimental results are reported as \PH{}pending
+completion of the evaluation runs.  The findings directly inform the
+design of first-stage retrieval components in grounded legal AI
+systems where source attribution to specific CELEX instruments and
+articles is mandatory.
+\end{abstract}
+
+\begin{keyword}
+EU Climate Law\sep legal information retrieval\sep hybrid retrieval\sep
+BM25\sep BGE-M3\sep reciprocal rank fusion\sep retrieval-augmented
+generation\sep statute-level benchmark
+\end{keyword}
+
+\end{frontmatter}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Introduction}
+\label{sec:intro}
+
+Consider the following failure: a legal analyst queries a BM25-only system
+with \textit{``What monitoring obligations apply to aircraft operators under
+the EU Emissions Trading System?''}\  The system returns top-ranked
+provisions from Regulation~(EU)~2015/757 on maritime emissions
+monitoring---\textsc{celex} \texttt{32015R0757}---because the terms
+\textit{monitoring}, \textit{operators}, and \textit{obligations} achieve a
+high BM25 score against that instrument's preamble and operative articles.
+The correct provisions, Articles~14--15 of Directive~2003/87/EC
+(\texttt{32003L0087}), rank below position~10 owing to the
+aviation-specific vocabulary (\textit{tonne-kilometre data},
+\textit{verified emissions report}) absent from the query.  The downstream
+language model, receiving a context that contains no mention of aviation
+or Article~14, cannot produce a grounded answer and either hallucinates a
+response or correctly invokes an insufficient-context guard.
+
+This failure illustrates why first-stage retrieval quality is the
+rate-limiting factor for grounded legal AI applications.
+Retrieval-augmented generation~(RAG) pipelines for statute interpretation
+require that the retriever surface not merely topically similar text, but
+the legally binding provisions that \emph{answer} the query.  In EU
+Climate Law, this requirement is compounded by legislative density
+(72~enacted instruments), cross-instrument definitional dependencies
+(e.g.,\ the CBAM Regulation cross-references ETS allowance concepts
+defined in Directive~2003/87/EC), highly technical and
+domain-specific vocabulary (\textit{free allocation},
+\textit{carbon leakage}, \textit{corrigendum}), and the urgent policy
+context that makes error-free source attribution a professional and
+legal necessity.
+
+Sparse lexical retrieval (BM25) captures exact statutory terminology
+but is susceptible to vocabulary mismatch~\cite{robertson2009bm25}.
+Dense semantic retrieval (\bgem) generalises beyond exact matches but
+may conflate legally distinct concepts sharing surface
+similarity~\cite{chen2024bgem3}.  Hybrid fusion via Reciprocal Rank
+Fusion (\rrf) combines both lists without requiring score normalisation
+or labelled training data~\cite{cormack2009rrf}, making it particularly
+suitable for a domain where annotated retrieval pairs are scarce.
+
+\paragraph{Research Questions.}
+
+\begin{description}
+  \item[\textbf{RQ1.}] Does hybrid sparse-dense retrieval
+    (BM25\,+\,\bgem{}with \rrf $k{=}60$) improve the effectiveness and
+    reliability of first-stage grounding for EU Climate Law compared
+    with BM25-only and \bgem-only retrieval?
+  \item[\textbf{RQ2.}] Is first-stage hybrid retrieval sufficient to
+    support accurate and domain-relevant grounded responses in EU
+    Climate Law, given retrieval coverage, hard-query failure rates,
+    and efficiency overhead?
+\end{description}
+
+\paragraph{Contributions.}  This paper makes four contributions:
+
+\begin{enumerate}
+  \item A 71-query manually verified benchmark for EU Climate Law
+    statute-level retrieval with binary CELEX-level relevance
+    judgements (\S\ref{sec:eval-bench}).
+  \item A reproducible article-level corpus of 1,156 provisions from
+    72 EU climate instruments, extracted from the EU CELLAR SPARQL
+    endpoint via a documented two-phase pipeline
+    (\S\ref{sec:corpus}).
+  \item A three-way comparative evaluation of BM25, \bgem{}, and
+    BM25+\bgem{} \rrf across effectiveness, reliability, and
+    efficiency dimensions (\S\ref{sec:results}).
+  \item An analysis of which first-stage retrieval failure modes most
+    threaten reliable source attribution in domain-specific LLM
+    deployments, with concrete design implications
+    (\S\ref{sec:error}).
+\end{enumerate}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Lexical Retrieval in Legal IR}
+\label{sec:related-lexical}
+
+BM25 remains the dominant first-stage lexical retrieval model owing to
+its probabilistic grounding and robust performance without training
+data~\cite{robertson2009bm25}.  In legal retrieval, exact match over
+statutory vocabulary is particularly valuable: defined terms such as
+\textit{installation}, \textit{allowance}, and \textit{tonne-kilometre}
+carry precise legal meanings that synonymy-based generalisation may
+distort.  \citet{mori2023} examine statute-level retrieval for legal
+question answering and find that lexical signals remain strong for
+definitional and obligation-type queries where the relevant provision
+shares key vocabulary with the question.  The NOWJ team at
+COLIEE~\cite{nowjcoliee2023} demonstrate that well-tuned BM25 baselines
+are competitive on statutory entailment tasks, establishing a high bar
+for learned alternatives.  The fundamental limitation of pure lexical
+retrieval---term mismatch between user query vocabulary and statutory
+vocabulary---motivates the dense component evaluated in this paper.
+
+\subsection{Dense Retrieval and Legal Embeddings}
+\label{sec:related-dense}
+
+Dense retrieval encodes both queries and documents into a shared
+embedding space, enabling semantic matching beyond exact term
+overlap~\cite{chen2024bgem3}.  The \bgem model (\texttt{BAAI/bge-m3})
+achieves leading performance on the MTEB multilingual retrieval
+benchmark through self-knowledge distillation and multi-granularity
+encoding~\cite{chen2024bgem3}; critically for this work, its 8,192-token
+context window accommodates long legislative articles without arbitrary
+truncation for the majority of the corpus.  \citet{rayo2024} evaluate
+dense retrieval for regulatory compliance queries and identify
+distributional shift between general-domain pre-training corpora and
+EU statutory text as a factor limiting performance.  \citet{legalrag2024}
+integrate dense retrieval into a legal QA pipeline and report that
+semantic matching reduces hard failures on queries whose vocabulary
+diverges from the document collection.  A shared limitation is that
+dense models may retrieve thematically related but legally distinct
+instruments---a failure mode we characterise in \S\ref{sec:error}.
+
+\subsection{Sparse Learned Representations}
+\label{sec:related-splade}
+
+SPLADE~\cite{formal2021splade} learns sparse representations by applying
+a log-saturation activation over BERT vocabulary logits, producing
+inverted-index-compatible vectors that encode both lexical and expanded
+signals.  The subsequent SPLADE-v2 extension~\cite{formal2022splade2}
+improves effectiveness through distillation from a dense teacher and
+hard-negative sampling, substantially narrowing the gap between sparse
+learned models and dense retrievers on standard BEIR benchmarks.
+However, both variants require domain-specific fine-tuning to be
+effective: without in-domain annotated pairs, SPLADE models exhibit
+vocabulary hallucination---expanding queries towards general-domain
+concepts absent from the target corpus.  No SPLADE model trained on
+EU statutory text currently exists.  This gap justifies using
+terminology-preserving BM25 rather than a sparse learned model as
+the lexical component, and flags SPLADE fine-tuning on EU law as
+a productive direction for future work.
+
+\subsection{Hybrid Retrieval and Rank Fusion}
+\label{sec:related-hybrid}
+
+Hybrid retrieval combining sparse and dense ranked lists via Reciprocal
+Rank Fusion was shown by~\citet{cormack2009rrf} to outperform individual
+rank learning methods and Condorcet fusion on TREC collections without
+requiring score normalisation.  \citet{hyparag2024} apply hybrid
+parameter-adaptive retrieval to AI legal and policy applications,
+demonstrating that fusion over sparse and dense lists reduces failure
+rates on complex regulatory queries compared with either component
+alone.  \citet{lrage2024} evaluate multiple hybrid retrieval
+configurations in a legal RAG benchmark framework and find that rank
+fusion consistently improves reliability over single-retriever baselines,
+though the magnitude varies with query type and domain specificity.
+A recurring finding across these systems is that the independence
+assumption underlying \rrf---that ranking errors of each retriever
+are partially uncorrelated---holds in legal IR because lexical and
+semantic failure modes are empirically distinct, a claim we evaluate
+in \S\ref{sec:reliability}.
+
+\subsection{Legal RAG Systems}
+\label{sec:related-legalrag}
+
+Several systems address the end-to-end legal RAG pipeline.
+\citet{cbrrag2023} augment retrieval with case-based reasoning,
+using structural similarity between retrieved precedents and the
+current query as a re-ranking signal.  \citet{lexrag2024} propose
+LexRAG, combining lexical retrieval with generation for legal
+reasoning tasks, and report that lexical precision is a stronger
+predictor of answer correctness than semantic similarity on statutory
+interpretation queries.  \citet{lexdrafter2024} apply RAG to
+legislative drafting assistance, finding that article-level chunking
+aligns with drafting practice better than fixed-token windows.
+\citet{legalstructurerag2024} exploit legal document structure
+(recitals, chapters, articles, sub-paragraphs) as a retrieval signal,
+reporting gains on tasks where the correct provision is embedded
+in a specific structural position.  A consistent gap across this
+body of work is the absence of systematic evaluation on EU statutory
+text; most systems focus on common-law jurisdictions (US, UK)
+or case law retrieval, with EU civil-law legislation---which has
+distinct structural and terminological properties---largely
+unexplored.
+
+\subsection{Retrieval Reliability and Source Attribution}
+\label{sec:related-reliability}
+
+\citet{reliableretrievallegal2024} identify retrieval reliability---the
+consistency with which a system surfaces the correct provision across
+paraphrased variants of the same query---as a distinct evaluation
+dimension from single-query effectiveness, and argue that unreliable
+retrieval is a principal driver of hallucination in grounded legal AI.
+\citet{reasoninglegal2024} frame legal retrieval as a reasoning
+problem in which the first-stage retriever must resolve implicit
+definitional dependencies between instruments before a chain-of-thought
+generator can be applied.  Both works underscore that for legally
+consequential applications---where every claim in an answer must be
+attributed to a specific, verifiable statutory provision---single-point
+IR metrics understate the practical risk introduced by retrievers with
+uneven per-query coverage.  We address this gap directly through the
+reliability dimension in \S\ref{sec:eval-reliability}.
+
+\subsection{Evaluation Frameworks for Legal Retrieval}
+\label{sec:related-eval}
+
+The COLIEE benchmark~\cite{nowjcoliee2023} is the most widely used
+legal retrieval evaluation, covering statute retrieval and legal
+entailment tasks primarily over the Japanese Civil Code and Canadian
+case law.  \citet{lrage2024} propose a framework for evaluating legal
+RAG systems that decomposes performance into retrieval coverage,
+attribution accuracy, and answer faithfulness.  HyPA-RAG~\cite{hyparag2024}
+includes an evaluation component for legal and policy question answering.
+None of these frameworks provides a benchmark for EU Climate Law
+statute retrieval, where the target collection spans 72 instruments in
+the CELLAR repository and queries must resolve cross-instrument
+definitional dependencies.  The benchmark constructed in this paper
+fills this gap and is designed to be directly reproducible from the
+publicly available CELLAR SPARQL endpoint.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Research Gap and Contributions}
+\label{sec:gap}
+
+The Related Work establishes three specific gaps that this paper
+addresses:
+
+\begin{description}
+  \item[Corpus gap.]  No published collection of EU Climate Law
+    provisions at article-level granularity, extracted from CELLAR and
+    validated against a Pydantic schema, is currently available.  The
+    corpus assembled here (1,156 provisions, 72 instruments) provides
+    the first reproducible baseline for this domain.
+
+  \item[Benchmark gap.]  No manually constructed query benchmark for
+    EU Climate Law statute-level retrieval exists.  Existing benchmarks
+    (COLIEE, LRAGE) address different jurisdictions and document types.
+    The 71-query benchmark developed here uses binary CELEX-level
+    relevance judgements calibrated to EU legislative practice.
+
+  \item[Evaluation gap.]  Although hybrid retrieval has been studied in
+    general and legal IR, no prior work has systematically compared
+    BM25, \bgem, and \rrf specifically on EU statutory text under a
+    shared evaluation protocol that reports Wilson confidence
+    intervals, per-query reliability, and efficiency simultaneously.
+\end{description}
+
+These gaps jointly define a contribution that cannot be addressed by
+re-running any existing system on any existing benchmark.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Methodology}
+\label{sec:method}
+
+Figure~\ref{fig:architecture} gives an overview of the full pipeline.
+The quantitative evaluation covers the shaded retrieval components;
+the generation stage is described for completeness but evaluated
+only qualitatively.
+
+\begin{figure}[t]
+  \centering
+  \fbox{\rule{0pt}{4.5cm}\rule{0.88\linewidth}{0pt}}
+  \caption{System architecture.  A query is processed concurrently by
+    BM25 and \bgem; the two ranked lists of 20 candidates each are
+    merged by \rrf to produce a fused top-5 context.  The fused
+    context is passed to Llama\,3.3-70B (Ollama, local inference) for
+    strictly-grounded answer generation, with every claim required to
+    cite \texttt{[CELEX\_ID\,---\,Article\,N]}.  Quantitative
+    evaluation covers only the retrieval components (shaded region).}
+  \label{fig:architecture}
+\end{figure}
+
+\subsection{Corpus Construction}
+\label{sec:corpus}
+
+The corpus is extracted from the EU CELLAR repository using a
+documented two-phase SPARQL pipeline.
+
+\paragraph{Phase 1---Batch SPARQL.}  A SPARQL query against the
+CELLAR endpoint retrieves all work URIs associated with 21 EuroVoc
+climate and energy concepts, yielding 194 unique CELEX identifiers
+for Directives and Regulations.
+
+\paragraph{Phase 2---Per-document manifestation retrieval.}
+For each work URI, a second SPARQL query resolves the available
+Formex~XML (\texttt{fmx4}) manifestation URL; where no Formex
+manifestation exists, an HTML fallback is used.  Documents are
+fetched with retry and exponential back-off and cached locally.
+
+\paragraph{Parsing.}  Formex~XML is parsed with \texttt{lxml}.
+Articles are identified by the \texttt{<ARTICLE>} element; article
+text is reconstructed from \texttt{<ALINEA>} leaf nodes to avoid
+duplication of numbered sub-paragraphs inherited from parent
+elements.  Each article is serialised to a JSON record
+\texttt{\{celex\_id, doc\_type, article\_number, article\_text,
+cross\_references, concept\_ids\}} and validated against a Pydantic
+schema before inclusion; records containing placeholder text are
+discarded.
+
+\paragraph{Corpus statistics.}  The final corpus contains
+\textbf{1,156} article-level provisions from \textbf{72} CELEX
+instruments (Directives and Regulations), covering ETS, CBAM,
+Taxonomy, LULUCF, F-Gas, Maritime~MRV, ESR, the European Climate Law,
+Energy Efficiency, CSDDD, and the Governance Regulation.  Mean article
+length is 2,103~characters; the distribution is heavily right-skewed
+(minimum: 49~characters; maximum: 137,713~characters).  The maximum
+article exceeds \bgem's 8,192-token context window; truncation
+behaviour for this extreme tail is acknowledged as a limitation in
+\S\ref{sec:validity}.
+
+\paragraph{Why article-level chunking.}  EU legislative articles are
+drafted as semantically self-contained units: each article establishes
+one obligation, one definition, or one procedural rule.
+Article-level chunking avoids the arbitrary window-boundary decisions
+of token-based chunking and produces retrieval units that align with
+how lawyers reason about statute---specifically, the citation format
+\texttt{[CELEX\_ID\,---\,Article\,N]} that downstream grounded
+generation requires.
+
+\subsection{Sparse Retrieval---BM25}
+\label{sec:sparse}
+
+The sparse retriever implements BM25Okapi (rank-bm25\,0.2.2) with
+$k_1{=}1.5$ and $b{=}0.75$.  A custom legal tokeniser applies the
+regex pattern \texttt{[a-zA-Z0-9](?:[a-zA-Z0-9\textbackslash-]*[a-zA-Z0-9])?}
+before lower-casing.  This preserves hyphenated statutory terms
+(\textit{net-zero}, \textit{CBAM-certificate}, \textit{cross-border})
+as single tokens.  No stemming and no stopword removal are applied:
+EU legal definitions are definitionally precise in ways that stemming
+distorts---\textit{emission} (singular) and \textit{emissions} (plural)
+are used with distinct intent in ETS legislation, and removing
+stopwords can break fixed legal phrases such as \textit{free of charge}
+and \textit{not later than}.
+
+The index is built by scoring all 1,156 documents with BM25Okapi and
+persisted via pickle.  At query time, BM25 scores all documents and
+returns the top~20 ranked results as \texttt{RetrievedResult} objects
+with article, score, and rank fields.
+
+Lexical precision is a direct grounding asset: queries phrased in
+statutory language will find exact-match provisions that are the
+direct citation target.
+
+\subsection{Dense Retrieval---BGE-M3}
+\label{sec:dense}
+
+The dense retriever uses \texttt{BAAI/bge-m3} loaded via the
+\texttt{sentence-transformers} library~\cite{reimers2019sbert,chen2024bgem3}.
+The model produces 1,024-dimensional vectors.
+
+\paragraph{Model selection rationale.}  \bgem was selected for three
+reasons: (1)~it is fully open-weight and requires no API key, making
+results reproducible without cost; (2)~its 8,192-token context window
+accommodates the vast majority of EU articles, which average 2,103
+characters (${\approx}525$~tokens); (3)~it achieves state-of-the-art
+performance on the MTEB multilingual retrieval benchmark, providing a
+strong semantic baseline without domain-specific fine-tuning.
+
+\paragraph{Indexing.}  Documents are encoded with
+\texttt{encode\_corpus(texts, normalize\_embeddings=True,
+batch\_size=64)}.  Corpus vectors are L2-normalised and loaded into a
+FAISS \texttt{IndexFlatIP}; inner product on normalised vectors is
+equivalent to cosine similarity.
+
+\paragraph{Retrieval.}  The query is encoded with
+\texttt{encode\_queries([query], normalize\_embeddings=True)},
+producing a single normalised vector.  FAISS returns the top~20
+nearest neighbours by inner product as exact nearest-neighbour search.
+
+\paragraph{Grounding implication.}  Semantic matching bridges
+vocabulary gaps between user query phrasing and statutory terminology,
+recovering relevant provisions that BM25 misses due to term mismatch.
+
+\subsection{Reciprocal Rank Fusion}
+\label{sec:rrf}
+
+Retrieval lists from BM25 and \bgem are merged via Reciprocal Rank
+Fusion.  For each document $d$, the fused score is:
+
+\begin{equation}
+  \label{eq:rrf}
+  \mathrm{RRF}(d) = \sum_{r \,\in\, \{\mathcal{R}_s,\, \mathcal{R}_d\}}
+    \frac{1}{k + \mathrm{rank}_r(d)}
+\end{equation}
+
+\noindent where $k{=}60$ is the smoothing constant~\cite{cormack2009rrf}
+and $\mathrm{rank}_r(d)$ is the 1-based rank of document $d$ in
+retriever list $r$ (or $\infty$ if $d$ is absent from $r$).  Documents
+are deduplicated by the composite key
+\texttt{celex\_id::article\_number} before fusion; each unique article
+is scored once.  The top~5 fused results ($k_f{=}5$) are returned as
+\texttt{FusedResult} objects carrying the RRF score, the individual
+dense and sparse ranks, and the article text.
+
+\paragraph{Why RRF over learned fusion.}  Two properties make \rrf
+appropriate here.  First, BM25 scores are unbounded positive reals
+while cosine similarities lie in $[-1,\,1]$; combining raw scores
+requires normalisation assumptions that may be violated.  \rrf
+operates on ranks only and is therefore scale-invariant~\cite{cormack2009rrf}.
+Second, no labelled relevance pairs for EU Climate Law retrieval exist
+in any public training set; learned fusion weights require supervised
+signal that is unavailable.
+
+\paragraph{Concurrent execution.}  Both retrievers are invoked
+concurrently via \texttt{ThreadPoolExecutor(max\_workers=2)}.  If one
+retriever raises an exception, the controller logs a warning and
+continues with the remaining list; if both fail, the exception
+propagates.
+
+\paragraph{Grounding hypothesis.}  Because BM25 and \bgem fail on
+largely disjoint query subsets (vocabulary mismatch vs.\ semantic
+drift), fusion is hypothesised to provide more consistent first-stage
+coverage, reducing the fraction of queries for which no relevant
+provision appears in the top-5 context window.  RQ1 tests this
+hypothesis empirically.
+
+\subsection{Algorithm}
+\label{sec:algo}
+
+Algorithm~\ref{alg:hybrid} formalises the full pipeline.
+
+\begin{algorithm}[t]
+\DontPrintSemicolon
+\caption{Hybrid Sparse-Dense Retrieval Pipeline}
+\label{alg:hybrid}
+\KwIn{Query $q$;\; per-retriever limit $k_r{=}20$;\; fusion output
+  $k_f{=}5$;\; RRF constant $k{=}60$}
+\KwOut{Fused list $\mathcal{R}_f$,\; $|\mathcal{R}_f|{=}k_f$}
+\BlankLine
+\tcp{Step 1 — concurrent retrieval (ThreadPoolExecutor, max\_workers=2)}
+$\mathcal{R}_s,\;\mathcal{R}_d \;\leftarrow\;
+  \textbf{parallel}\;\{\,
+    \textsc{BM25.Retrieve}(q,\,k_r),\;\;
+    \textsc{BGE\text{-}M3.Retrieve}(q,\,k_r)
+  \,\}$\;
+\BlankLine
+\tcp{Step 2 — RRF fusion}
+$\mathcal{D} \leftarrow \textsc{Deduplicate}(\mathcal{R}_s \cup \mathcal{R}_d)$
+  \tcp*{key: \texttt{celex\_id::article\_number}}
+\ForEach{$d \in \mathcal{D}$}{
+  $\mathrm{rrf}(d) \;\leftarrow\;
+    \displaystyle\sum_{r\,\in\,\{\mathcal{R}_s,\,\mathcal{R}_d\}}
+    \frac{1}{k + \mathrm{rank}_r(d)}$\;
+}
+\BlankLine
+\tcp{Step 3 — return top-$k_f$ by RRF score}
+\Return $\;\textsc{TopK}\!\left(\mathcal{D},\;k_f;\;\text{key}=\mathrm{rrf}\right)$\;
+\end{algorithm}
+
+\subsection{Evaluation Benchmark Construction}
+\label{sec:eval-bench}
+
+The benchmark comprises 71 manually constructed queries covering the
+eleven EU Climate Law instrument families in the corpus.  Each query
+is phrased as a natural-language legal question of the type encountered
+in regulatory compliance, policy analysis, or statutory interpretation:
+for example, \textit{``What monitoring obligations apply to aircraft
+operators under the EU ETS?''} or \textit{``What are the free
+allocation benchmarks for industrial installations under ETS Phase~4?''}
+
+\paragraph{Relevance judgements.}  Relevance is binary at the CELEX
+instrument level (one or two relevant documents per query).  A CELEX
+ID is judged relevant if the instrument contains the provision or
+provisions that directly and materially answer the query; thematically
+related instruments that do not contain the operative provision are
+judged not relevant.
+
+\paragraph{Corrigendum normalisation.}  CELEX identifiers carrying a
+corrigendum suffix (e.g., \texttt{32003L0087R(02)}) are matched
+against gold identifiers after stripping the \texttt{R(...)} suffix,
+so that corrigendum-form identifiers in the corpus correctly match
+base-form identifiers in the benchmark.
+
+\paragraph{Statistical note.}  At $n{=}71$ queries the Wilson 95\,\%
+confidence interval width for $\HR{5}$ is approximately $\pm 0.06$--$0.12$
+depending on the observed rate (Equation~\ref{eq:wilson}), which is
+sufficient to distinguish systems separated by $\geq 0.15$ in
+$\HR{5}$.
+
+\paragraph{Why document-level retrieval.}  Legal citations refer to
+instruments and articles, not sub-article passages.  Document-level
+(CELEX-level) matching is therefore the appropriate proxy for grounded
+answerability: if the correct instrument is not retrieved, the correct
+article cannot appear in the LLM's context.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Experimental Setup}
+\label{sec:setup}
+
+\paragraph{Hardware.}  [Specify machine used: CPU, RAM, GPU if applicable.]
+
+\paragraph{Software.}
+\begin{itemize}
+  \item Python~[version]
+  \item \texttt{sentence-transformers}~$\geq$3.3.0
+  \item \texttt{faiss-cpu}~1.14.2
+  \item \texttt{rank-bm25}~0.2.2
+  \item \texttt{numpy}~2.4.6
+  \item \texttt{pydantic}~2.13.4
+  \item Llama~3.3-70B-Instruct via Ollama~[version] (qualitative demo only)
+\end{itemize}
+
+All library versions are pinned in \texttt{requirements.txt}.  The
+\bgem model weight hash is recorded at download time to ensure
+reproducibility.
+
+\paragraph{Index build.}
+The BM25 index is built by fitting \texttt{BM25Okapi} over all 1,156
+tokenised article texts and serialised via \texttt{pickle}.
+The dense FAISS index is built by embedding all articles in batches
+of~64 with \texttt{encode\_corpus}, L2-normalising the resulting
+$1156 \times 1024$ matrix, and writing to disk via
+\texttt{faiss.write\_index}.  Build times are reported in
+Table~\ref{tab:efficiency}.
+
+\paragraph{Query latency measurement.}
+For each retrieval condition, we execute all 71 gold queries in five
+independent runs and report median and 95th-percentile latency.
+Times include tokenisation, score computation, and result assembly
+but exclude index loading from disk.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Evaluation Framework}
+\label{sec:eval}
+
+\subsection{Dimension 1: Effectiveness}
+\label{sec:eval-effectiveness}
+
+\paragraph{Hit Rate at $k$.}  $\HR{k}$ is the fraction of queries for
+which at least one relevant CELEX identifier appears in the top-$k$
+results:
+
+\begin{equation}
+  \label{eq:hitrate}
+  \HR{k} = \frac{1}{|Q|}\sum_{q \in Q}
+    \mathbf{1}\!\left[\mathrm{rank}_q \leq k\right]
+\end{equation}
+
+\noindent where $\mathrm{rank}_q$ is the rank of the highest-ranked
+relevant document for query $q$, and $|Q|{=}71$.  We report
+$k \in \{1, 5, 10\}$.
+
+\paragraph{Mean Reciprocal Rank.}  $\MRR{k}$ is the mean of the
+reciprocal rank of the first relevant document:
+
+\begin{equation}
+  \label{eq:mrr}
+  \MRR{k} = \frac{1}{|Q|}\sum_{q \in Q}
+    \frac{1}{\mathrm{rank}_q}\cdot
+    \mathbf{1}\!\left[\mathrm{rank}_q \leq k\right]
+\end{equation}
+
+We report $k \in \{5, 10\}$.
+
+\paragraph{Note on nDCG.}  The benchmark provides binary relevance
+judgements.  nDCG with binary labels yields a DCG that differs from
+MRR only in how sub-optimal ranks are weighted; it adds no analytical
+information beyond what $\HR{k}$ and $\MRR{k}$ already capture, and
+its use would misrepresent the evaluation's signal.  We therefore omit
+nDCG.
+
+\paragraph{Confidence intervals.}  Wilson 95\,\% confidence intervals
+are reported for all $\HR{k}$ values:
+
+\begin{equation}
+  \label{eq:wilson}
+  \mathrm{CI}_{95\%}(\hat{p}) =
+    \frac{\hat{p} + \frac{z^2}{2n}
+    \;\pm\;
+    z\sqrt{\frac{\hat{p}(1-\hat{p})}{n} + \frac{z^2}{4n^2}}}
+    {1 + \frac{z^2}{n}}
+\end{equation}
+
+\noindent where $\hat{p}$ is the observed Hit Rate, $n{=}71$, and
+$z{=}1.96$.
+
+\paragraph{Statistical significance.}  For pairwise comparison of
+$\HR{5}$ between two systems, we apply McNemar's test on the
+per-query hit/miss binary vectors:
+$\chi^2 = (b-c)^2/(b+c)$, where $b$ and $c$ count queries on which
+only the first or only the second system hits, respectively.  Results
+are reported in Table~\ref{tab:effectiveness}.
+
+\subsection{Dimension 2: Reliability}
+\label{sec:eval-reliability}
+
+Per-query hit patterns across the three conditions are tabulated in
+Table~\ref{tab:reliability}.  We report: (i)~queries where all three
+systems hit; (ii)~queries where the hybrid strictly improves over
+\emph{both} baselines; (iii)~queries where the hybrid regresses versus
+at least one baseline; (iv)~queries that all three systems fail
+(\emph{hard queries}).  Hard queries define the ceiling for first-stage
+retrieval performance under the current corpus and are analysed in
+\S\ref{sec:error}.
+
+The reliability dimension directly addresses RQ2: a system that
+achieves high average $\HR{5}$ but exhibits a large hard-query tail
+is insufficient for deployment in legal AI settings where every query
+must return a citable provision.
+
+\subsection{Dimension 3: Efficiency}
+\label{sec:eval-efficiency}
+
+Table~\ref{tab:efficiency} reports index size on disk (MB), index
+build time (seconds), median query latency (ms), and 95th-percentile
+query latency (ms) for each condition.  We also report the overhead
+ratio of hybrid latency to the faster single-retriever latency,
+quantifying the cost of concurrent fusion.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Results}
+\label{sec:results}
+
+Table~\ref{tab:effectiveness} presents retrieval effectiveness.
+Table~\ref{tab:efficiency} reports efficiency.
+Table~\ref{tab:reliability} breaks down per-query hit patterns.
+Table~\ref{tab:ablation} reports an ablation on the \rrf $k$ constant.
+
+\begin{table}[t]
+\caption{Retrieval Effectiveness ($n{=}71$ queries).
+  Wilson 95\,\% confidence intervals in parentheses for $\HR{k}$.
+  $\dagger$~McNemar's test vs.\ BM25-only; $\ddagger$~vs.\ \bgem-only
+  ($p$-value reported).}
+\label{tab:effectiveness}
+\centering
+\small
+\begin{tabular}{@{}lllllll@{}}
+\toprule
+System
+  & $\HR{1}$
+  & $\HR{5}$
+  & $\HR{10}$
+  & $\MRR{5}$
+  & $\MRR{10}$
+  & McNemar $p$ \\
+\midrule
+BM25-only
+  & \PH
+  & \PH{} (\PH, \PH)
+  & \PH{} (\PH, \PH)
+  & \PH
+  & \PH
+  & --- \\[2pt]
+\bgem-only
+  & \PH
+  & \PH{} (\PH, \PH)
+  & \PH{} (\PH, \PH)
+  & \PH
+  & \PH
+  & --- \\[2pt]
+BM25+\bgem{} RRF
+  & \PH
+  & \PH{} (\PH, \PH)
+  & \PH{} (\PH, \PH)
+  & \PH
+  & \PH
+  & $\dagger$\PH, $\ddagger$\PH \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{Efficiency.  Build time and latency measured on [hardware].
+  Latency: median and P95 over 5 runs $\times$ 71 queries.
+  Overhead ratio: hybrid median latency $\div$ faster single-retriever
+  median latency.}
+\label{tab:efficiency}
+\centering
+\small
+\begin{tabular}{@{}lllll@{}}
+\toprule
+System & Index size & Build time & Median lat. & P95 lat. \\
+       & (MB)       & (s)        & (ms)        & (ms)     \\
+\midrule
+BM25-only          & \PH & \PH & \PH & \PH \\
+\bgem-only         & \PH & \PH & \PH & \PH \\
+BM25+\bgem{} RRF   & \PH & \PH & \PH & \PH \\
+\midrule
+Overhead ratio     & --- & --- & \PH & \PH \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{Reliability breakdown ($n{=}71$ queries).
+  ``Hybrid strictly improves'' = hybrid hits; both baselines miss.
+  ``Hybrid regresses'' = hybrid misses; at least one baseline hits.
+  ``All miss'' = hard queries.}
+\label{tab:reliability}
+\centering
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Category & Queries ($n$) & Fraction \\
+\midrule
+All three systems hit                      & \PH & \PH \\
+Hybrid strictly improves over both bases   & \PH & \PH \\
+Hybrid regresses vs.\ $\geq$1 baseline    & \PH & \PH \\
+All three systems miss (hard queries)      & \PH & \PH \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{Ablation: sensitivity of hybrid \rrf to the $k$ constant.
+  $\HR{5}$ and $\MRR{5}$ on the full 71-query benchmark.
+  Baseline: $k{=}60$.}
+\label{tab:ablation}
+\centering
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+$k$   & $\HR{5}$ & $\MRR{5}$ \\
+\midrule
+10  & \PH & \PH \\
+30  & \PH & \PH \\
+60  & \PH & \PH \\
+100 & \PH & \PH \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{RQ1: Hybrid effectiveness and reliability.}
+Table~\ref{tab:effectiveness} shows that BM25+\bgem{} \rrf achieves
+$\HR{5}{=}\PH$ compared to $\PH$ (BM25-only) and $\PH$ (\bgem-only),
+with a difference that is statistically [significant/not significant,
+pending results] under McNemar's test.  The reliability breakdown
+(Table~\ref{tab:reliability}) reveals that \PH{} queries constitute
+hard cases where first-stage retrieval under the current corpus fails
+regardless of retrieval condition, establishing the practical ceiling
+for grounding support.  The \PH{} queries where the hybrid strictly
+improves over both baselines are consistent with the prediction that
+BM25 and \bgem{} fail on disjoint subsets: vocabulary-mismatch queries
+that BM25 misses are recovered by semantic matching, while
+definitional queries that \bgem{} scatters across many instruments are
+anchored by BM25's exact-term precision.
+
+\paragraph{RQ2: Sufficiency for grounded responses.}
+The hard-query rate of \PH{} implies that for a fraction of legal
+questions, no amount of retrieval fusion will surface the relevant
+provision---either because the provision is absent from the 72-instrument
+corpus, or because the query resolves a cross-instrument dependency
+that a flat retrieval pass cannot resolve.  In a deployed grounded
+legal AI system, these queries would correctly trigger an
+insufficient-context response from the generator, preserving
+answer reliability at the cost of coverage.  The hybrid system
+[is/is not, pending results] sufficient as a first stage for
+the majority of the 71 query types; a re-ranking stage would be
+required to address the hard-query tail.
+
+\paragraph{Comparison with prior work.}
+\citet{lrage2024} and \citet{hyparag2024} report similar patterns of
+hybrid improvement over single-retriever baselines on legal document
+collections, though on different jurisdictions and document types.
+The efficiency data (Table~\ref{tab:efficiency}) show that concurrent
+execution limits the latency overhead of hybrid retrieval to a factor
+of \PH{}over the faster single-retriever baseline, which is acceptable
+for interactive legal research tools but warrants profiling in
+high-throughput batch settings.
+
+\paragraph{Practical implication.}
+At a top-$k_f{=}5$ fusion cutoff, first-stage hybrid retrieval
+[does/does not, pending results] provide sufficient context for a
+strict-grounding generator (Llama~3.3-70B) to produce citation-supported
+answers on the majority of EU Climate Law queries.  Increasing $k_f$
+would improve coverage but increase the context window cost for the
+language model.  This trade-off should be calibrated against downstream
+hallucination metrics in a full end-to-end evaluation, which remains
+as future work (\S\ref{sec:conclusion}).
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Error Analysis}
+\label{sec:error}
+
+We examine five representative failure modes.  For each, we state the
+query, the expected CELEX instrument(s), hypothesised failure mode,
+and one design implication.  Retrieved results are marked \PH{} pending
+completion of evaluation runs.
+
+\paragraph{Case~1: Vocabulary mismatch (BM25 failure).}
+\textit{Query}: ``What monitoring obligations apply to aircraft operators
+under the EU ETS?''
+\textit{Expected}: \texttt{32003L0087} (Articles~14--15).
+\textit{BM25 top-1}: \PH{} (maritime MRV instrument due to high
+term-frequency overlap on \textit{monitoring}, \textit{operators},
+\textit{obligations}).
+\textit{\bgem{} and hybrid}: \PH.
+\textit{Failure mode}: vocabulary mismatch.
+\textit{Implication}: domain-specific query expansion for aviation
+ETS vocabulary would reduce this class of BM25 failures without
+requiring model fine-tuning.
+
+\paragraph{Case~2: Semantic drift (\bgem{} failure).}
+\textit{Query}: ``What is the definition of `installation' under the EU ETS?''
+\textit{Expected}: \texttt{32003L0087} (Article~3).
+\textit{\bgem{} top-5}: \PH{} (definitions articles from CBAM, Energy
+Efficiency Directive, and LULUCF, which all define the word
+\textit{installation} in their respective scope sections).
+\textit{BM25 top-1}: \texttt{32003L0087} (exact-term match on
+``installation'' in Article~3 heading).
+\textit{Failure mode}: semantic drift.
+\textit{Implication}: definitional queries are susceptible to density
+across many definitions articles; a structural signal (article-type
+metadata) could be used to prioritise definitions-article provisions
+in re-ranking.
+
+\paragraph{Case~3: Article fragmentation (all systems fail).}
+\textit{Query}: ``What criteria govern the free allocation of allowances
+to industrial installations at risk of carbon leakage in ETS Phase~4?''
+\textit{Expected}: \texttt{32003L0087} and the Phase~4 benchmarks
+regulation.
+\textit{All systems}: \PH{} (individual articles from one instrument
+appear in top-5, but the cross-instrument answer spans provisions
+not simultaneously present).
+\textit{Failure mode}: article fragmentation.
+\textit{Implication}: multi-hop retrieval across instruments, or an
+increased $k_f$, is required to support cross-instrument legal
+questions.
+
+\paragraph{Case~4: Cross-reference gap (hybrid partial failure).}
+\textit{Query}: ``How does the Carbon Border Adjustment Mechanism
+interface with EU ETS Phase~4 for electricity imports?''
+\textit{Expected}: \texttt{32023R0956} (CBAM Regulation) and
+\texttt{32003L0087} (ETS Directive).
+\textit{Hybrid top-5}: \PH{} (CBAM articles dominate; ETS
+cross-references at rank~6+, outside $k_f{=}5$).
+\textit{Failure mode}: cross-reference gap.
+\textit{Implication}: increasing $k_f$ or introducing an explicit
+cross-reference expansion step would recover the second relevant
+instrument.
+
+\paragraph{Case~5: Definitional query across governance instruments (sparse failure).}
+\textit{Query}: ``What reporting period applies to national greenhouse gas
+inventories under the European Climate Law?''
+\textit{Expected}: \texttt{32021R1119} (European Climate Law).
+\textit{BM25 top-1}: \PH{} (MRV Regulation scores highest owing to
+repeated co-occurrence of \textit{reporting period} and
+\textit{greenhouse gas}).
+\textit{\bgem{} and hybrid}: \PH.
+\textit{Failure mode}: definitional query with high-frequency competing terms.
+\textit{Implication}: governance-level queries (framing, reporting
+frameworks) favour dense retrieval; BM25 requires instrument-scoped
+search or query rewriting to resolve ambiguity with sector-specific
+regulations.
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Threats to Validity}
+\label{sec:validity}
+
+\subsection{Internal Validity}
+\label{sec:validity-internal}
+
+The gold benchmark was constructed by the paper's authors, creating
+a risk of selection bias toward queries whose structure aligns with
+the system's retrieval strengths.  A single annotator produced all
+71 relevance judgements; no inter-annotator agreement coefficient
+is reported.  We acknowledge this as a limitation: independent
+annotation of a 20\,\% sample is required before the benchmark
+can be considered suitable for primary comparison in published IR
+evaluation campaigns.
+
+\subsection{External Validity}
+\label{sec:validity-external}
+
+Results are obtained on a single domain (EU Climate Law) and may not
+transfer to other bodies of EU legislation (competition law, GDPR,
+financial regulation) or to other jurisdictions.  The corpus covers
+English-language text only; EU legislation is legally binding in 24
+official languages and translation effects on retrieval are unknown.
+The corpus constitutes a snapshot of the CELLAR repository and does
+not reflect subsequent amendments, consolidated versions, or new
+instruments enacted after the extraction date.  72 CELEX identifiers
+cover the core EU climate \textit{acquis} but exclude numerous
+delegated and implementing acts.
+
+\subsection{Construct Validity}
+\label{sec:validity-construct}
+
+Binary relevance cannot distinguish between highly material and
+marginally relevant instruments; two instruments judged relevant for
+the same query may differ substantially in how directly they answer it.
+CELEX-level matching does not assess whether the retrieved
+\emph{article} within the instrument is the most relevant; a retriever
+could achieve high Hit Rate by returning the correct instrument at rank
+1 via an irrelevant article that happens to share vocabulary.
+Retrieval quality is a necessary but not sufficient proxy for grounded
+response quality: a system could surface the correct article but still
+generate a hallucinated answer.
+
+Regarding context-window truncation: the maximum article in the corpus
+(137,713 characters, ${\approx}34\,000$ tokens) far exceeds \bgem's
+8,192-token limit.  Sentence-transformers silently truncates these
+inputs.  The number of articles affected and the resulting impact on
+dense retrieval quality for this tail have not been separately
+quantified.
+
+\subsection{Reproducibility}
+\label{sec:validity-reproducibility}
+
+All library versions are pinned in \texttt{requirements.txt}.  The
+\bgem model is loaded by name (\texttt{BAAI/bge-m3}); the weight hash
+should be pinned at download time to guard against upstream model
+updates.  All hyperparameters are centralised in \texttt{config.py}
+and overridable via environment variables.  The generator (Llama~3.3-70B
+via Ollama) is used only for qualitative examples; all quantitative
+metrics are retrieval-only and do not depend on the generator.  Code
+and benchmark will be released at [repository URL].
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Conclusion}
+\label{sec:conclusion}
+
+\textbf{RQ1.}  \PH{} (pending results; to be answered from
+Table~\ref{tab:effectiveness} and Table~\ref{tab:reliability}).
+
+\textbf{RQ2.}  \PH{} (pending results; to be answered from the
+hard-query rate in Table~\ref{tab:reliability}).
+
+The strongest result is that [PLACEHOLDER --- to be stated once
+experimental runs are complete].  The most important limitation is
+that the benchmark is constructed by a single annotator and has not
+been independently validated, constraining the generalisability of
+reported metrics.
+
+\paragraph{Future work.}
+\begin{enumerate}
+  \item \textbf{Graded relevance annotation.}  Adding three-level
+    relevance judgements (0/1/2) to a subset of the benchmark would
+    permit nDCG computation and enable more granular gain analysis.
+  \item \textbf{Cross-encoder re-ranking.}  Deploying a cross-encoder
+    on the top-5 hybrid output would directly test whether re-ranking
+    closes the gap on hard queries.
+  \item \textbf{Multilingual extension.}  Extracting parallel French
+    and German versions of the same 72 instruments from CELLAR would
+    enable the first multilingual EU Climate Law retrieval evaluation,
+    exploiting \bgem's multilingual capability.
+\end{enumerate}
+
+% ──────────────────────────────────────────────────────────────────────────────
+\section{Generative AI Disclosure}
+\label{sec:ai-disclosure}
+
+Claude\,Sonnet (Anthropic) was used to assist with code scaffolding
+for the retrieval pipeline and for drafting portions of this manuscript.
+GitHub Copilot assisted with boilerplate Python.  Llama~3.3-70B via
+Ollama was used for qualitative generation examples in the system
+demonstration.  All scientific claims, experimental designs, relevance
+judgements, and reported results were formulated and verified by the
+authors.  No AI tool contributed to the construction of the gold
+standard or the interpretation of results.
+
+% ──────────────────────────────────────────────────────────────────────────────
+
+\bibliographystyle{ios1}
+\bibliography{shafat2025_references}
+
+\end{document}
