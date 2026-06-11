@@ -111,7 +111,7 @@ class RankFusionController:
         """
         Execute both retrievers in parallel threads and collect results.
 
-        ThreadPoolExecutor is used (not asyncio) because both voyageai and
+        ThreadPoolExecutor is used (not asyncio) because both sentence-transformers and
         rank-bm25 are synchronous; wrapping them in async coroutines would
         add complexity with no benefit.
 
