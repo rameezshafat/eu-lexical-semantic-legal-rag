@@ -1,8 +1,8 @@
 # Lexico-Semantic Fusion for EU Climate Law Retrieval
 
 A hybrid retrieval-augmented generation (RAG) system for EU climate legislation.
-Combines BM25 lexical search with Voyage-law-2 dense retrieval, fused via
-Reciprocal Rank Fusion (RRF), and grounded answer generation via Claude.
+Combines BM25 lexical search with BGE-M3 dense retrieval, fused via
+Reciprocal Rank Fusion (RRF), and grounded answer generation via Llama 3.3 70B (Ollama).
 
 ---
 
@@ -10,10 +10,10 @@ Reciprocal Rank Fusion (RRF), and grounded answer generation via Claude.
 
 Given a natural-language legal question, the system:
 
-1. Retrieves relevant legislative articles from 57 EU climate law documents
+1. Retrieves relevant legislative articles from 72 EU climate law documents
    using both keyword search (BM25) and semantic search (BGE-M3 + FAISS)
 2. Fuses both ranked lists into a single ranking using Reciprocal Rank Fusion
-3. Generates a strictly grounded answer via Claude, with every claim cited
+3. Generates a strictly grounded answer via Llama 3.3 70B (Ollama), with every claim cited
    to a specific `[CELEX_ID — Article N]`
 
 ---
@@ -23,11 +23,11 @@ Given a natural-language legal question, the system:
 | Property | Value |
 |---|---|
 | Source | EU CELLAR database (publications.europa.eu) |
-| Documents | 57 EU legislative acts |
-| Articles | 825 article-level provisions |
+| Documents | 72 EU legislative acts |
+| Articles | 1,156 article-level provisions |
 | Instruments | ETS, CBAM, Taxonomy, LULUCF, F-Gas, MRV, ESR, European Climate Law |
 | Format | JSONL — one line per article |
-| Fields | `celex_id`, `doc_type`, `article_number`, `article_text`, `cross_references` |
+| Fields | `celex_id`, `doc_type`, `article_number`, `article_text`, `cross_references`, `concept_ids` |
 
 The ETL pipeline is in `notebooks/cellar_etl.ipynb`.
 
@@ -44,7 +44,7 @@ The ETL pipeline is in `notebooks/cellar_etl.ipynb`.
 │   │   ├── dense.py             # DenseRetriever (BGE-M3 + FAISS)
 │   │   └── sparse.py            # SparseRetriever (BM25Okapi)
 │   ├── fusion/controller.py     # RankFusionController (concurrent + RRF)
-│   ├── generation/generator.py  # LegalGenerator (Anthropic, strict grounding)
+│   ├── generation/generator.py  # LegalGenerator (Ollama/Llama, strict grounding)
 │   └── evaluation/evaluator.py  # Evaluator (Hit_Rate@k, MRR, baselines)
 ├── data/
 │   ├── corpus/eu_climate_articles.jsonl
@@ -83,9 +83,9 @@ pip install -r requirements.txt
 ```
 
 ```bash
-# Pull the models (one-time, ~40GB total)
+# Pull the generation model (one-time, ~40GB)
 ollama pull llama3.3:70b
-# BGE-M3 downloads automatically on first run via sentence-transformers
+# BGE-M3 (~2.3GB) downloads automatically on first run via sentence-transformers
 ```
 
 ---
@@ -96,7 +96,7 @@ ollama pull llama3.3:70b
 
 ```bash
 python main.py --mode index
-# Embeds 825 articles with BGE-M3 (downloads model on first run)
+# Embeds 1,156 articles with BGE-M3 (downloads model on first run)
 # Saves: data/indices/dense.faiss + data/indices/sparse.bm25.pkl
 ```
 
@@ -106,13 +106,13 @@ python main.py --mode index
 python main.py --mode baselines
 ```
 
-This evaluates three systems side by side on the 50-query gold standard:
+This evaluates three systems side by side on the 71-query gold standard:
 
 ```
 System               Hit_Rate@5       MRR@5
 ----------------------------------------------
 BM25 (sparse-only)   x.xxxx           x.xxxx
-Voyage (dense-only)  x.xxxx           x.xxxx
+BGE-M3 (dense-only)  x.xxxx           x.xxxx
 Hybrid RRF (ours)    x.xxxx           x.xxxx
 ```
 
@@ -149,7 +149,7 @@ python -m pytest tests/ -v
 
 ## Evaluation Methodology
 
-**Gold standard:** 50 manually curated queries in `data/evaluation/gold_standard.json`.
+**Gold standard:** 71 manually curated queries in `data/evaluation/gold_standard.json`.
 Each query maps to one or more relevant CELEX document IDs.
 
 **Metrics:**
@@ -161,8 +161,7 @@ Each query maps to one or more relevant CELEX document IDs.
 before comparison (e.g. `32003L0087R(02)` matches gold `32003L0087`).
 
 **Known limitations:**
-- 2 gold queries reference documents not in the corpus
-  (`32019R2088` SFDR, `32023R0851` CO2 car standards). These will always
+- Some gold queries may reference documents not yet in the corpus. These will always
   score MRR=0, creating a lower bound on reported metrics.
 
 ---
@@ -215,11 +214,10 @@ All hyperparameters are in `config.py` / `.env`. Key settings:
 
 ## Limitations
 
-1. **Corpus completeness** — 57 documents covers the core EU climate acquis
+1. **Corpus completeness** — 72 documents covers the core EU climate acquis
    but excludes delegated acts, implementing regulations, and amendments.
-2. **Gold standard size** — 50 queries is the minimum for statistically
-   robust conclusions. Independent validation of a subset is recommended
-   before publication.
+2. **Gold standard size** — 71 queries provides reasonable coverage but
+   independent validation of a subset is recommended before publication.
 3. **No temporal filtering** — the system treats all corpus documents as
    equally current; consolidated versions are not tracked.
 4. **Single-language** — English text only. EU law is official in 24 languages.

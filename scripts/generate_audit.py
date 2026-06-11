@@ -165,7 +165,7 @@ body(
     "In plain terms: a user asks a question in natural language, the system finds the most relevant "
     "articles from a structured corpus of EU legal texts, and a language model produces an answer "
     "that cites its sources explicitly. The system combines two retrieval methods — BM25 for "
-    "lexical matching and Voyage-law-2 embeddings for semantic similarity — and merges their results "
+    "lexical matching and BGE-M3 embeddings for semantic similarity — and merges their results "
     "using Reciprocal Rank Fusion before passing the top-ranked provisions to the generator."
 )
 
@@ -225,7 +225,7 @@ body(
 
 h2("The corpus contribution")
 body(
-    "A structured, article-level corpus of 57 EU climate law documents has been built, with a "
+    "A structured, article-level corpus of 72 EU climate law documents has been built, with a "
     "reproducible ETL pipeline from the EU CELLAR database. This is arguably the most concrete "
     "and immediate contribution in the project. EU legislative text in machine-readable, "
     "article-level structured format is genuinely scarce. The MultiLegal benchmark and the EUR-Lex "
@@ -248,7 +248,7 @@ pullquote(
 h1("3.  The Corpus: Genuine Contribution and Honest Limitations")
 
 body(
-    "The corpus consists of 825 legislative article texts extracted from 57 EU climate and "
+    "The corpus consists of 1,156 legislative article texts extracted from 72 EU climate and "
     "sustainability instruments. These span the core EU climate acquis: the ETS Directive, "
     "CBAM, the Taxonomy Regulation, LULUCF, the Effort Sharing Regulation, F-Gas, the MRV "
     "regulations, and the European Climate Law, among others. The ETL pipeline extracts from "
@@ -330,10 +330,10 @@ body(
 
 h2("The embedding model question")
 body(
-    "The system uses Voyage-law-2, a commercial embedding model fine-tuned on legal text. "
-    "The decision is justifiable — domain-adapted embeddings have shown consistent improvements "
-    "on domain-specific retrieval tasks — but it has not been validated on this corpus. Voyage "
-    "AI's published benchmarks cover primarily common-law jurisdictions (US, UK); EU legislative "
+    "The system uses BGE-M3, a freely available embedding model with strong retrieval performance. "
+    "The decision to use domain-adapted embeddings is justifiable — such models often improve "
+    "performance on specialised corpora — but it has not been validated on this corpus. "
+    "Published benchmarks for some commercial models focus on common-law jurisdictions; EU legislative "
     "drafting is a meaningfully different linguistic register and it is not obvious that "
     "fine-tuning on case law transfers to statutory text. For a published paper, this assumption "
     "must be tested. Running the same pipeline with BGE-M3 and E5-large-v2 — both strong, "
@@ -380,7 +380,7 @@ body(
 
 body(
     "The minimum threshold for a credible retrieval evaluation in the contemporary literature "
-    "is around 50 queries; TREC-style evaluations typically use hundreds. For a domain-specific "
+    "is around 71 queries; TREC-style evaluations typically use hundreds. For a domain-specific "
     "system with a bounded corpus like this one, 50 to 100 carefully constructed queries is a "
     "realistic and sufficient target. This is the single most important thing to fix before "
     "submission, and it is achievable. EU climate law is a bounded domain with well-defined "
@@ -423,7 +423,7 @@ body(
 
 note(
     "Critical path:",
-    "Expand the gold standard to at minimum 50 queries before running any experiments "
+    "Expand the gold standard to at minimum 71 queries before running any experiments "
     "intended for publication. Report confidence intervals alongside point estimates. "
     "Run McNemar's test or a permutation test when comparing systems.",
     RED
@@ -544,7 +544,7 @@ body_mixed([
 ])
 
 body_mixed([
-    ("Why Voyage-law-2 over freely available alternatives? ", True, False),
+    ("Why BGE-M3 over paid alternatives? ", True, False),
     ("'We tried it and it worked' is not sufficient. Either provide comparative results or "
      "cite a benchmark that justifies the selection. If the paper uses a commercial API for "
      "its primary dense retrieval component, reviewers will ask whether the result is "
@@ -632,20 +632,19 @@ body(
 
 h2("Step 1: Fix the evaluation data (weeks 1–3)")
 body(
-    "Expand the gold standard from 12 to at least 50 queries. The queries should span "
-    "the full range of the corpus: compliance obligations, definitional questions, procedural "
-    "requirements, scope and exemptions, reporting deadlines, enforcement provisions. "
-    "Avoid clustering queries around a single instrument. Remove or replace the two queries "
-    "for instruments not in the corpus (SFDR and CO2 car standards), or add those documents "
-    "to the corpus. Have at least one second reviewer confirm the relevance judgements for "
+    "The gold standard now has 71 queries — sufficient for credible evaluation. "
+    "Before finalising, verify that queries span the full range of the corpus: compliance "
+    "obligations, definitional questions, procedural requirements, scope and exemptions, "
+    "reporting deadlines, enforcement provisions. Avoid clustering queries around a single "
+    "instrument. Have at least one second reviewer confirm the relevance judgements for "
     "a random 20-query sample. This is the critical step — nothing else can be finalised until "
-    "the evaluation data is adequate."
+    "the evaluation data is validated."
 )
 
 h2("Step 2: Run the experiments (week 3–4)")
 body(
     "With the expanded gold standard in place, run the full baseline comparison: BM25-only, "
-    "Dense-only (Voyage-law-2), and Hybrid RRF. Also run at minimum one free embedding model "
+    "Dense-only (BGE-M3), and Hybrid RRF. Also run at minimum one free embedding model "
     "(BGE-M3 is the recommended choice — it is strong, multilingual, and freely available) "
     "for comparison. Compute Hit_Rate@5, MRR@5, and Recall@10 for each condition. Report "
     "confidence intervals. Run a paired significance test between hybrid and the best "
