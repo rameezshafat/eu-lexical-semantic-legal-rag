@@ -71,8 +71,9 @@ class LegalGenerator:
         self,
         model: str = "llama3.3:70b",
         max_tokens: int = 2048,
+        base_url: str = "http://localhost:11434/v1",
     ) -> None:
-        self._client     = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+        self._client     = OpenAI(base_url=base_url, api_key="ollama")
         self._model      = model
         self._max_tokens = max_tokens
 

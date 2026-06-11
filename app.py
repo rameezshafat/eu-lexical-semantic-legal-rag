@@ -1,14 +1,14 @@
 """
-demo_ui.py — Final showcase UI for the Lexico-Semantic Fusion Legal RAG system.
+app.py — Demo UI for the Lexico-Semantic Fusion Legal RAG system.
 
 Run:
     pip install gradio==6.15.2
-    python demo_ui.py
+    python app.py
 
 Graceful degradation by capability:
-  Full RAG       — hybrid retrieval + LLM generation   (VOYAGE + ANTHROPIC keys)
-  Retrieval-only — hybrid BM25 + Voyage, no LLM        (VOYAGE key only)
-  Sparse-only    — BM25 only, fully offline             (no keys needed)
+  Full RAG       — hybrid retrieval + LLM generation   (Ollama running with llama3.3:70b)
+  Retrieval-only — hybrid BM25 + BGE-M3, no LLM        (dense index exists, Ollama not running)
+  Sparse-only    — BM25 only, fully offline             (no index needed)
 """
 
 from __future__ import annotations
@@ -24,10 +24,8 @@ from src.retrieval.sparse import SparseRetriever
 
 # ── Capability detection ──────────────────────────────────────────────────────
 
-_INDEX_DIR  = Path(settings.index_dir)
-_HAS_DENSE  = (_INDEX_DIR / "dense.faiss").exists()
-_HAS_VOYAGE = bool(settings.voyage_api_key)
-_HAS_ANTHRO = bool(settings.anthropic_api_key)
+_INDEX_DIR = Path(settings.index_dir)
+_HAS_DENSE = (_INDEX_DIR / "dense.faiss").exists()
 
 # ── Startup: load all available components ────────────────────────────────────
 
@@ -48,14 +46,13 @@ _dense      = None
 _controller = None
 _generator  = None
 
-if _HAS_DENSE and _HAS_VOYAGE:
+if _HAS_DENSE:
     from src.retrieval.dense import DenseRetriever
     from src.fusion.controller import RankFusionController
     _dense = DenseRetriever(
-        api_key=settings.voyage_api_key,
-        model=settings.voyage_model,
-        embed_dim=settings.voyage_embed_dim,
-        batch_size=settings.voyage_batch_size,
+        model=settings.dense_model,
+        embed_dim=settings.dense_embed_dim,
+        batch_size=settings.dense_batch_size,
     )
     _dense.load(str(_INDEX_DIR))
     _controller = RankFusionController(
@@ -65,18 +62,20 @@ if _HAS_DENSE and _HAS_VOYAGE:
         top_k_retrieval=settings.top_k_retrieval,
         top_k_fused=settings.top_k_fused,
     )
-    print("  Dense (Voyage) index + RankFusionController loaded")
+    print("  Dense (BGE-M3) index + RankFusionController loaded")
 
-if _HAS_ANTHRO and _controller:
+try:
     from src.generation.generator import LegalGenerator
     _generator = LegalGenerator(
-        api_key=settings.anthropic_api_key,
         model=settings.llm_model,
         max_tokens=settings.llm_max_tokens,
+        base_url=settings.llm_ollama_base_url,
     )
-    print("  LegalGenerator (Claude) ready")
+    print("  LegalGenerator (Ollama) ready")
+except Exception as _exc:
+    print(f"  LegalGenerator unavailable: {_exc}")
 
-if _generator:
+if _generator and _controller:
     _MODE, _MODE_COLOR = "Full RAG", "#1d4ed8"
 elif _controller:
     _MODE, _MODE_COLOR = "Retrieval-Only", "#0369a1"
@@ -344,7 +343,7 @@ def handle_query(query: str):
     if _controller:
         fused   = _controller.fuse_results(query)
         results = fused
-        mode    = "Hybrid (BM25 + Dense + RRF)"
+        mode    = "Hybrid (BM25 + BGE-M3 + RRF)"
     else:
         raw     = _sparse.retrieve(query, top_k=settings.top_k_fused)
         # Wrap as FusedResult-compatible objects for uniform rendering
@@ -376,11 +375,10 @@ def handle_query(query: str):
         answer_html = _render_answer(output.answer)
     else:
         msg = (
-            "LLM generation is not active in this demo instance.\n\n"
+            "LLM generation is not active in this demo instance.<br><br>"
             "To enable: build indices with "
-            "<code>python main.py --mode index</code>, then set "
-            "<code>VOYAGE_API_KEY</code> and <code>ANTHROPIC_API_KEY</code> "
-            "in <code>.env</code>."
+            "<code>python main.py --mode index</code>, then start Ollama with "
+            "<code>ollama serve</code> and pull <code>llama3.3:70b</code>."
         )
         answer_html = f'<div class="no-llm">{msg}</div>'
 
@@ -391,10 +389,10 @@ def handle_query(query: str):
 
 # ── Gradio layout ─────────────────────────────────────────────────────────────
 
-_CORPUS_COUNTS = f"{len(_articles):,} articles · 57 EU legislative acts"
+_CORPUS_COUNTS = f"{len(_articles):,} articles · 72 EU legislative acts"
 _PIPELINE_DESC = (
-    "BM25 lexical search &nbsp;+&nbsp; Voyage-law-2 semantic search "
-    "&nbsp;→&nbsp; Reciprocal Rank Fusion &nbsp;→&nbsp; Claude (cited answer)"
+    "BM25 lexical search &nbsp;+&nbsp; BGE-M3 semantic search "
+    "&nbsp;→&nbsp; Reciprocal Rank Fusion &nbsp;→&nbsp; LLM (Ollama cited answer)"
 )
 
 with gr.Blocks(title="EU Climate Law — Legal RAG") as demo:
@@ -444,7 +442,7 @@ with gr.Blocks(title="EU Climate Law — Legal RAG") as demo:
                         line-height:1.6;">
               <b style="color:#1e293b;">System</b><br>
               Retriever: BM25 k1={settings.bm25_k1}, b={settings.bm25_b}<br>
-              Dense: {settings.voyage_model}<br>
+              Dense: {settings.dense_model}<br>
               RRF k={settings.rrf_k} · top-{settings.top_k_retrieval} per retriever<br>
               Returning top-{settings.top_k_fused} fused results<br>
               Generator: {settings.llm_model}

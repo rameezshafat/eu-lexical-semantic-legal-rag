@@ -99,30 +99,27 @@ class TestSparseRetriever(unittest.TestCase):
 
 class TestDenseRetrieverMocked(unittest.TestCase):
     """
-    Tests DenseRetriever logic without calling the Voyage API.
-    The voyageai.Client.embed method is mocked to return fixed vectors.
+    Tests DenseRetriever logic without loading the BGE-M3 model.
+    SentenceTransformer.encode is mocked to return fixed unit vectors.
     """
 
     def setUp(self):
-        import faiss
         from src.retrieval.dense import DenseRetriever
 
-        with patch("voyageai.Client") as mock_client_cls:
-            self.mock_client = MagicMock()
-            mock_client_cls.return_value = self.mock_client
+        with patch("src.retrieval.dense.SentenceTransformer") as mock_st_cls:
+            self.mock_model = MagicMock()
+            mock_st_cls.return_value = self.mock_model
 
-            # Stub: embed always returns unit vectors of dim 4
-            def fake_embed(texts, model, input_type):
-                result = MagicMock()
-                result.embeddings = [
-                    np.random.rand(4).tolist() for _ in texts
-                ]
-                return result
+            # Stub: encode returns L2-normalised unit vectors of dim 4
+            def fake_encode(texts, normalize_embeddings=True, batch_size=64,
+                            show_progress_bar=False, prompt_name=None):
+                n = len(texts) if isinstance(texts, list) else 1
+                vecs = np.random.rand(n, 4).astype(np.float32)
+                norms = np.linalg.norm(vecs, axis=1, keepdims=True)
+                return vecs / norms
 
-            self.mock_client.embed.side_effect = fake_embed
-            self.retriever = DenseRetriever(
-                api_key="test-key", model="voyage-law-2", embed_dim=4, batch_size=10
-            )
+            self.mock_model.encode.side_effect = fake_encode
+            self.retriever = DenseRetriever(model="BAAI/bge-m3", embed_dim=4, batch_size=10)
             self.retriever.index(ARTICLES)
 
     def test_is_indexed(self):
