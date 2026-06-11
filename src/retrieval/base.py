@@ -20,7 +20,7 @@ class BaseRetriever(ABC):
 
     Implementors
     ------------
-    - DenseRetriever  : Voyage-law-2 embeddings + FAISS cosine search
+    - DenseRetriever  : BGE-M3 embeddings + FAISS cosine search
     - SparseRetriever : BM25Okapi lexical search
 
     Both must be indexable independently and queryable with the same signature

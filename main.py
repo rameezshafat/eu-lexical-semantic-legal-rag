@@ -9,7 +9,7 @@ Execution modes (controlled by --mode flag):
 
 Usage examples
 --------------
-  # Build indices (one-time, requires VOYAGE_API_KEY)
+  # Build indices (one-time; BGE-M3 downloads automatically, no API key needed)
   python main.py --mode index
 
   # Query the system
@@ -132,6 +132,7 @@ def run_query(query: str) -> None:
     generator = LegalGenerator(
         model=settings.llm_model,
         max_tokens=settings.llm_max_tokens,
+        base_url=settings.llm_ollama_base_url,
     )
     output = generator.generate(query, fused)
 
