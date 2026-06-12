@@ -108,6 +108,16 @@ _CSS = """
 .hero h1 { font-size: 1.6rem; font-weight: 700; margin: 0 0 4px;
            color: #0f172a; letter-spacing: -0.02em; }
 .hero .subtitle { font-size: 0.9rem; color: #475569; margin: 0 0 10px; }
+
+/* ── Dark-mode overrides (Gradio adds .dark to the page root) ──
+   Custom cards keep light backgrounds in both themes, so text inside
+   them must stay dark; page-level chrome must flip to light text. */
+.dark .hero h1 { color: #f1f5f9; }
+.dark .hero .subtitle { color: #94a3b8; }
+.dark .corpus-stat { color: #94a3b8; }
+.dark .corpus-stat b { color: #e2e8f0; }
+.dark .sample-label, .dark .query-label { color: #94a3b8; }
+.dark .evidence-header { color: #cbd5e1; }
 .mode-badge {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 4px 12px; border-radius: 20px; font-size: 0.75rem;
@@ -129,13 +139,15 @@ _CSS = """
     display: flex; gap: 16px; padding: 8px 14px;
     background: #f8fafc; border: 1px solid #e2e8f0;
     border-radius: 8px; margin-bottom: 12px;
-    font-size: 0.78rem; color: #475569; flex-wrap: wrap;
+    font-size: 0.78rem; color: #475569 !important; flex-wrap: wrap;
 }
-.stats-bar .stat { display: flex; align-items: center; gap: 5px; }
-.stats-bar .stat-val { font-weight: 700; color: #0f172a; }
-.stats-bar .sep { color: #cbd5e1; }
+.stats-bar .stat { display: flex; align-items: center; gap: 5px; color: #475569 !important; }
+.stats-bar .stat-val { font-weight: 700; color: #0f172a !important; }
+.stats-bar .sep { color: #cbd5e1 !important; }
 
 /* ── Answer box ── */
+/* !important: the box keeps its light background in dark mode, where
+   Gradio's theme would otherwise force near-white text onto it. */
 .answer-box {
     border-left: 3px solid #2563eb;
     padding: 14px 18px;
@@ -143,10 +155,10 @@ _CSS = """
     border-radius: 0 8px 8px 0;
     font-size: 0.92rem;
     line-height: 1.7;
-    color: #1e293b;
+    color: #1e293b !important;
     margin-bottom: 20px;
 }
-.answer-box p { margin: 0 0 10px; }
+.answer-box p { margin: 0 0 10px; color: #1e293b !important; }
 .answer-box p:last-child { margin: 0; }
 
 /* ── Evidence section ── */
@@ -216,12 +228,12 @@ _CSS = """
 .insufficient {
     border-left: 3px solid #f59e0b; background: #fffbeb;
     padding: 12px 16px; border-radius: 0 8px 8px 0;
-    font-size: 0.88rem; color: #78350f;
+    font-size: 0.88rem; color: #78350f !important;
 }
 .no-llm {
     border-left: 3px solid #94a3b8; background: #f8fafc;
     padding: 12px 16px; border-radius: 0 8px 8px 0;
-    font-size: 0.88rem; color: #475569;
+    font-size: 0.88rem; color: #475569 !important;
 }
 .no-llm code { background:#e2e8f0; padding:1px 5px; border-radius:4px;
                font-size:0.8rem; }
