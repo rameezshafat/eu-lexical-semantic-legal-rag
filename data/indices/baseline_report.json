@@ -3,20 +3,20 @@
   "sparse_only": {
     "total_queries": 71,
     "top_k": 5,
-    "hit_rate": 0.9577464788732394,
-    "mrr": 0.8396713615023474,
+    "hit_rate": 0.6901408450704225,
+    "mrr": 0.5408450704225352,
     "per_query": [
       {
         "query_id": "q001",
-        "query": "What are the obligations for monitoring and reporting carbon dioxide emissions from ships arriving at EU ports?",
+        "query": "If my company runs cargo ships that call at European ports, what do we have to measure and report about their CO2?",
         "relevant_celex_ids": [
           "32015R0757"
         ],
         "retrieved_celex_ids": [
           "32015R0757",
-          "32015R0757",
           "32023L0959",
           "32015R0757",
+          "32023L0959",
           "32015R0757"
         ],
         "hit_at_k": true,
@@ -25,191 +25,191 @@
       },
       {
         "query_id": "q002",
-        "query": "What is the EU ETS cap and how are emission allowances allocated to industrial installations?",
+        "query": "How much pollution is allowed in total under the EU carbon market, and how do factories get their permits?",
         "relevant_celex_ids": [
           "32003L0087",
           "32023L0959"
         ],
         "retrieved_celex_ids": [
-          "32023R0956",
-          "32018R0842",
-          "32023R0956",
-          "32023L0959",
-          "32023L0959"
+          "32024R3012",
+          "32023R0955",
+          "32014R0749",
+          "32020R1208",
+          "32014R0749"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.25,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q003",
-        "query": "What economic activities qualify as environmentally sustainable under the EU Taxonomy Regulation?",
+        "query": "How does the EU decide whether a business activity counts as genuinely green?",
         "relevant_celex_ids": [
           "32020R0852"
         ],
         "retrieved_celex_ids": [
-          "32020R0852",
-          "32020R0852",
-          "32020R0852",
-          "32020R0852",
-          "32020R0852"
+          "32023R2631",
+          "32024L1760",
+          "32024L1760",
+          "32023R2631",
+          "32023R2631"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q004",
-        "query": "What are the binding national targets for greenhouse gas emission reductions under the Effort Sharing Regulation?",
+        "query": "Which emission-cutting targets is each EU country legally on the hook for in areas like transport and farming?",
         "relevant_celex_ids": [
           "32018R0842",
           "32023R0857"
         ],
         "retrieved_celex_ids": [
+          "32025R2358",
           "32023R0955",
-          "32018R0842",
+          "32023R2631",
           "32018R1999",
-          "32026R0667",
-          "32023R0857"
+          "32003L0030"
+        ],
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q005",
+        "query": "When goods come into the EU, how do they figure out how much carbon went into making them?",
+        "relevant_celex_ids": [
+          "32023R0956"
+        ],
+        "retrieved_celex_ids": [
+          "32023R0857",
+          "32023R0839",
+          "32023R0956",
+          "32023R0955",
+          "32023L1791"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.3333333333333333,
+        "top_k": 5
+      },
+      {
+        "query_id": "q006",
+        "query": "What do businesses have to report about the refrigerant-type gases that warm the planet?",
+        "relevant_celex_ids": [
+          "32014R0517"
+        ],
+        "retrieved_celex_ids": [
+          "32025L2360",
+          "32023L1791",
+          "32014R0517",
+          "32014R0517",
+          "32023R2631"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.3333333333333333,
+        "top_k": 5
+      },
+      {
+        "query_id": "q007",
+        "query": "What rules apply to countries for the carbon stored or released by their forests and farmland?",
+        "relevant_celex_ids": [
+          "32018R0841",
+          "32023R0839"
+        ],
+        "retrieved_celex_ids": [
+          "32024R3012",
+          "32018R0841",
+          "32025R2358",
+          "32024R3012",
+          "32025R2083"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
         "top_k": 5
       },
       {
-        "query_id": "q005",
-        "query": "How does the Carbon Border Adjustment Mechanism calculate the embedded emissions in imported goods?",
-        "relevant_celex_ids": [
-          "32023R0956"
-        ],
-        "retrieved_celex_ids": [
-          "32023R0956",
-          "32023R0956",
-          "32023R0956",
-          "32025R2083",
-          "32023R1773"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q006",
-        "query": "What are the reporting obligations for fluorinated greenhouse gases under the F-Gas Regulation?",
-        "relevant_celex_ids": [
-          "32014R0517"
-        ],
-        "retrieved_celex_ids": [
-          "32014R0517",
-          "32014R0517",
-          "32014R0517",
-          "32014R0517",
-          "32014R0517"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q007",
-        "query": "What requirements must member states meet for the land use, land use change and forestry sector?",
-        "relevant_celex_ids": [
-          "32018R0841",
-          "32023R0839"
-        ],
-        "retrieved_celex_ids": [
-          "32023R0839",
-          "32018R0841",
-          "32018R0841",
-          "32020R1208",
-          "32023R0839"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
         "query_id": "q008",
-        "query": "What is the EU's legally binding 2050 climate neutrality target and governance framework?",
+        "query": "Where exactly is the EU's promise to be climate neutral by 2050 written into law?",
         "relevant_celex_ids": [
           "32021R1119"
         ],
         "retrieved_celex_ids": [
-          "32021R1119",
           "32023R0857",
+          "32025R0754",
+          "32025R0754",
           "32024R1991",
-          "32026R0667",
-          "32023L1791"
+          "32021R1229"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q009",
-        "query": "What due diligence obligations do large companies have regarding adverse environmental impacts in their value chains?",
+        "query": "Do big firms have to check that their suppliers aren't wrecking the environment?",
         "relevant_celex_ids": [
           "32024L1760"
         ],
         "retrieved_celex_ids": [
-          "32024L1760",
-          "32024L1760",
-          "32024L1760",
-          "32024L1760",
-          "32024L1760"
+          "32023L1791",
+          "32023L1791",
+          "32018R1999",
+          "32018R1999",
+          "32013R0525"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q010",
-        "query": "What financial support does the Social Climate Fund provide to households and vulnerable groups affected by carbon pricing?",
+        "query": "Is there EU money to help poorer households cope when carbon prices push up their bills?",
         "relevant_celex_ids": [
           "32023R0955"
         ],
         "retrieved_celex_ids": [
-          "32023R0955",
-          "32023L1791",
-          "32023R0955",
+          "32023R0435",
+          "32023R0435",
+          "32025R2083",
           "32023R0955",
           "32023R0955"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.25,
         "top_k": 5
       },
       {
         "query_id": "q011",
-        "query": "What are the minimum energy performance requirements for buildings under EU energy efficiency law?",
+        "query": "What's the minimum energy standard a building has to meet under EU rules?",
         "relevant_celex_ids": [
           "32018L2002",
           "32023L1791"
         ],
         "retrieved_celex_ids": [
-          "32023L1791",
-          "32023L1791",
+          "32023R0955",
+          "32025R2358",
           "32023L1791",
           "32023L1791",
           "32023L1791"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.3333333333333333,
         "top_k": 5
       },
       {
         "query_id": "q012",
-        "query": "How are emission allowances auctioned in Phase 4 of the EU Emissions Trading System?",
+        "query": "How does selling carbon permits at auction work in the current trading phase?",
         "relevant_celex_ids": [
           "32003L0087",
           "32023L0959"
         ],
         "retrieved_celex_ids": [
           "32023L0959",
-          "32023R0435",
-          "32023R0435",
-          "32023L0959",
-          "32023R0955"
+          "32014R0749",
+          "32023R0857",
+          "32023R0839",
+          "32018R1999"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -217,17 +217,17 @@
       },
       {
         "query_id": "q013",
-        "query": "What reporting obligations apply to importers of goods covered by CBAM during the transitional period before 2026?",
+        "query": "Before the carbon border charge fully kicks in, what paperwork do importers need to file?",
         "relevant_celex_ids": [
           "32023R1773",
           "32023R0956"
         ],
         "retrieved_celex_ids": [
           "32023R0956",
-          "32023R0956",
-          "32023R1773",
-          "32023R1773",
-          "32023R1773"
+          "32023R2631",
+          "32023R2631",
+          "32014R0517",
+          "32014R0517"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -235,16 +235,16 @@
       },
       {
         "query_id": "q014",
-        "query": "What are the procedures for applying to become an authorised CBAM declarant through the CBAM registry?",
+        "query": "How do I get approved as the person allowed to declare carbon for goods I import?",
         "relevant_celex_ids": [
           "32025R0486",
           "32023R0956"
         ],
         "retrieved_celex_ids": [
-          "32025R0486",
           "32023R0956",
           "32023R0956",
-          "32025R0486",
+          "32023R0956",
+          "32023R0956",
           "32023R0956"
         ],
         "hit_at_k": true,
@@ -253,105 +253,105 @@
       },
       {
         "query_id": "q015",
-        "query": "What technical screening criteria determine whether an economic activity contributes substantially to climate change mitigation under the EU Taxonomy?",
+        "query": "What exact tests prove an activity really helps fight climate change for green-investment purposes?",
         "relevant_celex_ids": [
           "32021R2139",
           "32020R0852"
         ],
         "retrieved_celex_ids": [
-          "32020R0852",
-          "32021R2139",
-          "32020R0852",
-          "32020R0852",
-          "32021R2139"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q016",
-        "query": "What Taxonomy-aligned disclosure obligations apply to financial market participants offering investment products?",
-        "relevant_celex_ids": [
-          "32021R2178",
-          "32020R0852"
-        ],
-        "retrieved_celex_ids": [
-          "32020R0852",
-          "32021R2178",
+          "32024R3012",
           "32020R0852",
           "32020R0852",
-          "32023R2631"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q017",
-        "query": "What must member states include in their integrated national energy and climate plans and when must they be submitted?",
-        "relevant_celex_ids": [
-          "32018R1999"
-        ],
-        "retrieved_celex_ids": [
-          "32023L1791",
-          "32023L1791",
-          "32018R1999",
-          "32023L1791",
-          "32023L1791"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
-        "top_k": 5
-      },
-      {
-        "query_id": "q018",
-        "query": "What are the annual greenhouse gas inventory submission obligations for EU member states?",
-        "relevant_celex_ids": [
-          "32013R0525",
-          "32014R0749"
-        ],
-        "retrieved_celex_ids": [
-          "32014R0666",
-          "32018R1999",
-          "32014R0749",
-          "32018R1999",
-          "32013R0525"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
-        "top_k": 5
-      },
-      {
-        "query_id": "q019",
-        "query": "What format and content must member states use when reporting national policies and measures to reduce greenhouse gas emissions?",
-        "relevant_celex_ids": [
-          "32020R1208",
-          "32018R1999"
-        ],
-        "retrieved_celex_ids": [
-          "32013R0525",
-          "32018R1999",
-          "32013R0525",
-          "32022R2299",
-          "32014R0749"
+          "32020R0852",
+          "32024R3012"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
         "top_k": 5
       },
       {
+        "query_id": "q016",
+        "query": "What do investment funds have to tell people about how green their products actually are?",
+        "relevant_celex_ids": [
+          "32021R2178",
+          "32020R0852"
+        ],
+        "retrieved_celex_ids": [
+          "32023L1791",
+          "32023L1791",
+          "32023L1791",
+          "32023R2631",
+          "32020R0852"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.2,
+        "top_k": 5
+      },
+      {
+        "query_id": "q017",
+        "query": "What goes into a country's combined energy-and-climate plan, and when is it due?",
+        "relevant_celex_ids": [
+          "32018R1999"
+        ],
+        "retrieved_celex_ids": [
+          "32014R1307",
+          "32023R1773",
+          "32024L1760",
+          "32015R0757",
+          "32003L0087"
+        ],
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q018",
+        "query": "How do EU countries report their yearly greenhouse gas totals?",
+        "relevant_celex_ids": [
+          "32013R0525",
+          "32014R0749"
+        ],
+        "retrieved_celex_ids": [
+          "32025R2083",
+          "32013R0525",
+          "32023R0956",
+          "32020R1208",
+          "32020R1208"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.5,
+        "top_k": 5
+      },
+      {
+        "query_id": "q019",
+        "query": "In what form do governments have to report the steps they're taking to cut emissions?",
+        "relevant_celex_ids": [
+          "32020R1208",
+          "32018R1999"
+        ],
+        "retrieved_celex_ids": [
+          "32023R0956",
+          "32025L2360",
+          "32024L1760",
+          "32023R1773",
+          "32021R2178"
+        ],
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "top_k": 5
+      },
+      {
         "query_id": "q020",
-        "query": "What are the obligations for member states to prepare and submit long-term low-emission development strategies to the Commission?",
+        "query": "Do countries have to send Brussels a long-range plan for going low-carbon?",
         "relevant_celex_ids": [
           "32018R1999"
         ],
         "retrieved_celex_ids": [
           "32018R1999",
           "32013R0525",
-          "32018R1999",
           "32014R0749",
-          "32018R1999"
+          "32014R0749",
+          "32024R3012"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -359,42 +359,42 @@
       },
       {
         "query_id": "q021",
-        "query": "What monitoring and reporting plan obligations apply to aircraft operators under the EU ETS?",
+        "query": "What emissions-tracking plan do airlines have to file under the carbon market?",
         "relevant_celex_ids": [
           "32023L0959"
         ],
         "retrieved_celex_ids": [
-          "32008L0101",
-          "32008L0101",
-          "32008L0101",
-          "32008L0101",
-          "32023L0959"
+          "32023R2631",
+          "32025L2360",
+          "32023L0959",
+          "32023R2631",
+          "32018R1999"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.2,
+        "reciprocal_rank": 0.3333333333333333,
         "top_k": 5
       },
       {
         "query_id": "q022",
-        "query": "How was aviation included in the EU Emissions Trading System and what flights and activities does it cover?",
+        "query": "How did flying get pulled into the EU carbon market, and which flights does it cover?",
         "relevant_celex_ids": [
           "32008L0101",
           "32003L0087"
         ],
         "retrieved_celex_ids": [
+          "32018R0841",
+          "32003L0087",
           "32008L0101",
-          "32008L0101",
-          "32008L0101",
-          "32008L0101",
-          "32003L0087"
+          "32023L0959",
+          "32023R0956"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
         "top_k": 5
       },
       {
         "query_id": "q023",
-        "query": "What obligations do shipping companies have under the EU ETS for maritime greenhouse gas emissions?",
+        "query": "What do shipping companies now owe under the carbon market for their vessels' emissions?",
         "relevant_celex_ids": [
           "32023L0959",
           "32015R0757"
@@ -412,16 +412,16 @@
       },
       {
         "query_id": "q024",
-        "query": "What minimum proportions of clean and zero-emission vehicles must public contracting authorities procure?",
+        "query": "When a public authority buys vehicles, how many have to be low- or zero-emission?",
         "relevant_celex_ids": [
           "32019L1161"
         ],
         "retrieved_celex_ids": [
           "32019L1161",
+          "32023R0955",
           "32019L1161",
-          "32019L1161",
-          "32019L1161",
-          "32019L1161"
+          "32023L0959",
+          "32023L1791"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -429,16 +429,16 @@
       },
       {
         "query_id": "q025",
-        "query": "What cumulative end-use energy savings must member states achieve under the Energy Efficiency Directive?",
+        "query": "How much energy are member states required to save overall under EU efficiency rules?",
         "relevant_celex_ids": [
           "32023L1791"
         ],
         "retrieved_celex_ids": [
           "32023L1791",
           "32018L2002",
-          "32018L2002",
           "32023L1791",
-          "32018L2002"
+          "32018L2002",
+          "32023L1791"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -446,24 +446,24 @@
       },
       {
         "query_id": "q026",
-        "query": "What does the energy efficiency first principle require when assessing policy, planning and investment decisions?",
+        "query": "What's the rule that says you should weigh up energy savings first when making policy or investment calls?",
         "relevant_celex_ids": [
           "32023L1791"
         ],
         "retrieved_celex_ids": [
+          "32018L2002",
           "32023L1791",
+          "32018L2002",
           "32023L1791",
-          "32023L1791",
-          "32023L1791",
-          "32023L1791"
+          "32018R1999"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
         "top_k": 5
       },
       {
         "query_id": "q027",
-        "query": "What requirements must a bond issuer meet to use the European Green Bond or EuGB designation?",
+        "query": "What does a company have to do before it can call its bond an official EU green bond?",
         "relevant_celex_ids": [
           "32023R2631"
         ],
@@ -480,7 +480,7 @@
       },
       {
         "query_id": "q028",
-        "query": "What are the registration requirements and supervisory obligations for external reviewers of European Green Bonds?",
+        "query": "How do the outfits that vet green bonds get registered and kept in check?",
         "relevant_celex_ids": [
           "32023R2631",
           "32025R0755"
@@ -498,32 +498,32 @@
       },
       {
         "query_id": "q029",
-        "query": "Which territories and people are eligible for support from the Just Transition Fund and on what basis?",
+        "query": "Who can get help from the EU fund for regions hit hardest by moving off fossil fuels?",
         "relevant_celex_ids": [
           "32021R1056"
         ],
         "retrieved_celex_ids": [
-          "32021R1056",
-          "32021R1056",
-          "32021R1056",
-          "32021R1229",
-          "32021R1229"
+          "32023R0435",
+          "32023R0435",
+          "32023R2631",
+          "32025R1914",
+          "32022R2299"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q030",
-        "query": "What eligibility conditions must carbon removal and soil emission reduction activities meet to be certified under EU law?",
+        "query": "What does a carbon-removal or soil project need to qualify for EU certification?",
         "relevant_celex_ids": [
           "32024R3012"
         ],
         "retrieved_celex_ids": [
           "32024R3012",
+          "32025R2358",
           "32024R3012",
-          "32024R3012",
-          "32024R3012",
+          "32025L2360",
           "32024R3012"
         ],
         "hit_at_k": true,
@@ -532,14 +532,14 @@
       },
       {
         "query_id": "q031",
-        "query": "What must a carbon farming operator include in an activity plan and monitoring plan submitted to a certification body?",
+        "query": "If I run a carbon farming scheme, what plans do I have to hand to the certifier?",
         "relevant_celex_ids": [
           "32024R3012",
           "32025R2358"
         ],
         "retrieved_celex_ids": [
           "32024R3012",
-          "32025R2358",
+          "32024R3012",
           "32024R3012",
           "32024R3012",
           "32025R2358"
@@ -550,67 +550,67 @@
       },
       {
         "query_id": "q032",
-        "query": "What restoration measures must member states implement for degraded terrestrial habitat types under EU nature restoration law?",
+        "query": "What do countries have to do to bring damaged land habitats back to health under the new EU nature law?",
         "relevant_celex_ids": [
           "32024R1991"
         ],
         "retrieved_celex_ids": [
-          "32024R1991",
-          "32024R1991",
-          "32024R1991",
-          "32024R1991",
-          "32024R1991"
+          "32025L2360",
+          "32025L2360",
+          "32025L2360",
+          "32013R1293",
+          "32023R2631"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q033",
-        "query": "What minimum biofuel proportions must member states ensure are placed on the transport fuel market?",
+        "query": "What share of road fuel was each country meant to make up with biofuel?",
         "relevant_celex_ids": [
           "32003L0030"
         ],
         "retrieved_celex_ids": [
+          "32003L0030",
           "32018R1999",
-          "32003L0030",
-          "32003L0030",
-          "32003L0030",
-          "32014R0517"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
-        "top_k": 5
-      },
-      {
-        "query_id": "q034",
-        "query": "What criteria determine whether grassland used for biofuel feedstock is considered highly biodiverse and therefore excluded from cultivation?",
-        "relevant_celex_ids": [
-          "32014R1307"
-        ],
-        "retrieved_celex_ids": [
-          "32014R1307",
-          "32014R1307",
-          "32003L0030",
-          "32020R0852",
-          "32023L1791"
+          "32018R1999",
+          "32025R2083",
+          "32008L0101"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
         "top_k": 5
       },
       {
+        "query_id": "q034",
+        "query": "How do you tell whether a meadow is too rich in wildlife to be ploughed up for biofuel crops?",
+        "relevant_celex_ids": [
+          "32014R1307"
+        ],
+        "retrieved_celex_ids": [
+          "32003L0030",
+          "32003L0087",
+          "32024R1991",
+          "32018R0841",
+          "32023R0435"
+        ],
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "top_k": 5
+      },
+      {
         "query_id": "q035",
-        "query": "What are the general objectives of the LIFE Programme for contributing to climate action?",
+        "query": "What's the EU's flagship funding programme for the environment trying to achieve?",
         "relevant_celex_ids": [
           "32021R0783",
           "32013R1293"
         ],
         "retrieved_celex_ids": [
           "32013R1293",
+          "32013R1293",
           "32021R0783",
-          "32021R0783",
-          "32021R0783",
+          "32013R1293",
           "32021R0783"
         ],
         "hit_at_k": true,
@@ -619,35 +619,35 @@
       },
       {
         "query_id": "q036",
-        "query": "What is the EU's binding climate target for 2040 and how does it relate to the 2050 neutrality goal?",
+        "query": "Has the EU pinned down a 2040 climate goal yet, and how does it sit with the 2050 one?",
         "relevant_celex_ids": [
           "32021R1119",
           "32026R0667"
         ],
         "retrieved_celex_ids": [
-          "32021R1119",
-          "32021R1119",
-          "32026R0667",
-          "32023L1791",
-          "32023R0857"
+          "32024R1991",
+          "32024R1991",
+          "32024R1991",
+          "32024R1991",
+          "32021R1056"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q037",
-        "query": "How does the EU ETS determine free allowance allocation to energy-intensive industries to prevent carbon leakage?",
+        "query": "Why do some heavy industries get free carbon permits, and how is that amount worked out?",
         "relevant_celex_ids": [
           "32003L0087",
           "32023L0959"
         ],
         "retrieved_celex_ids": [
+          "32023R0857",
+          "32023R0839",
           "32023R0956",
-          "32023R0956",
-          "32023R0956",
-          "32026R0667",
-          "32023R0956"
+          "32018L2002",
+          "32023L1791"
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
@@ -655,7 +655,7 @@
       },
       {
         "query_id": "q038",
-        "query": "What are the objectives and scope of the EU framework for soil monitoring and reducing harmful contamination?",
+        "query": "What is the EU planning to do about keeping soil healthy and cutting down on contamination?",
         "relevant_celex_ids": [
           "32025L2360"
         ],
@@ -672,51 +672,51 @@
       },
       {
         "query_id": "q039",
-        "query": "What is the Union Registry and how does it support the tracking of emission allowances under the EU ETS?",
+        "query": "What's the system that keeps track of who holds which carbon allowances?",
         "relevant_celex_ids": [
           "32018R0208",
           "32003L0087"
         ],
         "retrieved_celex_ids": [
-          "32018R0842",
-          "32023R0857",
-          "32018R0208",
-          "32015R1844",
-          "32023L0959"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
-        "top_k": 5
-      },
-      {
-        "query_id": "q040",
-        "query": "What flexibility mechanisms allow member states to borrow, bank or transfer annual emission allocations under the Effort Sharing Regulation?",
-        "relevant_celex_ids": [
-          "32018R0842"
-        ],
-        "retrieved_celex_ids": [
-          "32018R0842",
-          "32018R0841",
-          "32023R0839",
-          "32023R0857",
-          "32018R0842"
+          "32003L0087",
+          "32003L0087",
+          "32025R2358",
+          "32023L0959",
+          "32025R2358"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
         "top_k": 5
       },
       {
+        "query_id": "q040",
+        "query": "Can a country carry forward, stockpile or trade away its yearly emissions budget?",
+        "relevant_celex_ids": [
+          "32018R0842"
+        ],
+        "retrieved_celex_ids": [
+          "32025R2083",
+          "32023R1773",
+          "32023R0956",
+          "32021R0783",
+          "32023R0956"
+        ],
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "top_k": 5
+      },
+      {
         "query_id": "q041",
-        "query": "How are forest reference levels determined and used in LULUCF accounting to assess member state performance?",
+        "query": "How is the baseline for forest emissions set when judging how well a country is doing on land accounting?",
         "relevant_celex_ids": [
           "32018R0841"
         ],
         "retrieved_celex_ids": [
           "32018R0841",
-          "32018R0842",
+          "32023R0839",
           "32023R0839",
           "32018R0841",
-          "32023R0839"
+          "32018R0841"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -724,24 +724,24 @@
       },
       {
         "query_id": "q042",
-        "query": "What minimum standards must EU Paris-aligned benchmarks meet regarding greenhouse gas emission exclusions and reductions?",
+        "query": "What minimum rules apply to stock-market indices that claim to line up with the Paris Agreement?",
         "relevant_celex_ids": [
           "32020R1818"
         ],
         "retrieved_celex_ids": [
-          "32020R1818",
-          "32020R1818",
-          "32024R3012",
-          "32020R1818",
-          "32020R1818"
+          "32018R0842",
+          "32018R1999",
+          "32024L1760",
+          "32024L1760",
+          "32021R1119"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q043",
-        "query": "What obligations must companies fulfil when adopting a climate transition plan under the Corporate Sustainability Due Diligence Directive?",
+        "query": "What's expected of a company that puts together a climate plan under the new corporate due-diligence rules?",
         "relevant_celex_ids": [
           "32024L1760"
         ],
@@ -749,131 +749,7 @@
           "32024L1760",
           "32024L1760",
           "32024L1760",
-          "32024L1760",
-          "32024L1760"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q044",
-        "query": "How is the adjustment to the number of CBAM certificates calculated to account for ETS free allocations received by domestic producers?",
-        "relevant_celex_ids": [
-          "32025R2620",
-          "32023R0956"
-        ],
-        "retrieved_celex_ids": [
-          "32025R2620",
-          "32023R0956",
-          "32023R0956",
-          "32023R0956",
-          "32023R0956"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q045",
-        "query": "What quality assurance and quality control procedures apply to the compilation of the Union greenhouse gas inventory?",
-        "relevant_celex_ids": [
-          "32014R0666",
-          "32013R0525"
-        ],
-        "retrieved_celex_ids": [
-          "32020R1208",
-          "32013R0525",
-          "32014R0666",
-          "32018R1999",
-          "32020R1208"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
-        "top_k": 5
-      },
-      {
-        "query_id": "q046",
-        "query": "What progress reporting obligations do member states have under the Energy Union Governance Regulation?",
-        "relevant_celex_ids": [
-          "32018R1999",
-          "32020R1208"
-        ],
-        "retrieved_celex_ids": [
-          "32018R1999",
-          "32023R0857",
-          "32018R1999",
-          "32021R1119",
-          "32018R0842"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q047",
-        "query": "How does the Effort Sharing Regulation allocate annual emission allocations to member states for sectors outside the ETS?",
-        "relevant_celex_ids": [
-          "32018R0842",
-          "32023R0857"
-        ],
-        "retrieved_celex_ids": [
-          "32023R0857",
-          "32018R0842",
-          "32018R0842",
-          "32018R0842",
-          "32018R0842"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q048",
-        "query": "What restoration obligations apply to marine, coastal and freshwater ecosystems under EU nature restoration law?",
-        "relevant_celex_ids": [
-          "32024R1991"
-        ],
-        "retrieved_celex_ids": [
-          "32024R1991",
-          "32024R1991",
-          "32020R0852",
-          "32024R1991",
-          "32020R0852"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q049",
-        "query": "What is the do no significant harm principle and how is it assessed for economic activities in the EU Taxonomy framework?",
-        "relevant_celex_ids": [
-          "32021R2139",
-          "32020R0852"
-        ],
-        "retrieved_celex_ids": [
-          "32023R2631",
-          "32023L0959",
-          "32020R0852",
-          "32020R0852",
-          "32020R0852"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
-        "top_k": 5
-      },
-      {
-        "query_id": "q050",
-        "query": "What must member states include in their national social climate plans to access support from the Social Climate Fund?",
-        "relevant_celex_ids": [
-          "32023R0955"
-        ],
-        "retrieved_celex_ids": [
-          "32023R0955",
-          "32023R0955",
-          "32023R0955",
-          "32023R0955",
+          "32015R0757",
           "32021R1056"
         ],
         "hit_at_k": true,
@@ -881,17 +757,141 @@
         "top_k": 5
       },
       {
+        "query_id": "q044",
+        "query": "How is the carbon-border bill trimmed to account for the free permits domestic producers already get?",
+        "relevant_celex_ids": [
+          "32025R2620",
+          "32023R0956"
+        ],
+        "retrieved_celex_ids": [
+          "32023L1791",
+          "32018L2002",
+          "32014R0517",
+          "32018L2002",
+          "32023L1791"
+        ],
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q045",
+        "query": "What quality checks go into putting together the EU-wide greenhouse gas figures?",
+        "relevant_celex_ids": [
+          "32014R0666",
+          "32013R0525"
+        ],
+        "retrieved_celex_ids": [
+          "32018R1999",
+          "32014R0749",
+          "32014R0666",
+          "32018R0842",
+          "32013R0525"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.3333333333333333,
+        "top_k": 5
+      },
+      {
+        "query_id": "q046",
+        "query": "What progress updates do member states owe under the EU's energy and climate governance setup?",
+        "relevant_celex_ids": [
+          "32018R1999",
+          "32020R1208"
+        ],
+        "retrieved_celex_ids": [
+          "32023L1791",
+          "32018R1999",
+          "32018R1999",
+          "32018R1999",
+          "32018R1999"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.5,
+        "top_k": 5
+      },
+      {
+        "query_id": "q047",
+        "query": "How are yearly emission limits handed out to countries for the sectors that sit outside the carbon market?",
+        "relevant_celex_ids": [
+          "32018R0842",
+          "32023R0857"
+        ],
+        "retrieved_celex_ids": [
+          "32023R0956",
+          "32025R2083",
+          "32026R0667",
+          "32023L0959",
+          "32023R0956"
+        ],
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q048",
+        "query": "What restoration duties cover seas, coasts and rivers under the EU nature law?",
+        "relevant_celex_ids": [
+          "32024R1991"
+        ],
+        "retrieved_celex_ids": [
+          "32024R1991",
+          "32024R1991",
+          "32023R0956",
+          "32024R1991",
+          "32023R2631"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q049",
+        "query": "What's the 'don't make anything else worse' test for activities in the EU green-investment rules?",
+        "relevant_celex_ids": [
+          "32021R2139",
+          "32020R0852"
+        ],
+        "retrieved_celex_ids": [
+          "32025R2358",
+          "32013R1293",
+          "32023L1791",
+          "32020R0852",
+          "32024L1760"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.25,
+        "top_k": 5
+      },
+      {
+        "query_id": "q050",
+        "query": "What does a country need to put in its plan to tap the fund that cushions carbon-price impacts?",
+        "relevant_celex_ids": [
+          "32023R0955"
+        ],
+        "retrieved_celex_ids": [
+          "32024L1760",
+          "32024R1991",
+          "32024R1991",
+          "32018R1999",
+          "32023R0956"
+        ],
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "top_k": 5
+      },
+      {
         "query_id": "q051",
-        "query": "What types of environmental and transport infrastructure investment does the EU Cohesion Fund support?",
+        "query": "What kind of environment and transport projects does the EU's cohesion money pay for?",
         "relevant_celex_ids": [
           "32013R1300"
         ],
         "retrieved_celex_ids": [
           "32013R1300",
           "32013R1300",
-          "32013R1300",
-          "32013R1300",
-          "32023R0435"
+          "32013R1293",
+          "32021R1229",
+          "32025L2360"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -899,33 +899,33 @@
       },
       {
         "query_id": "q052",
-        "query": "How is the share of climate-related support calculated for ERDF, ESF and Cohesion Fund programmes?",
+        "query": "How do you work out how much of a regional-funding programme counts as climate spending?",
         "relevant_celex_ids": [
           "32014R0215"
         ],
         "retrieved_celex_ids": [
-          "32023R0435",
-          "32023R0435",
-          "32014R0215",
-          "32014R0215",
-          "32023R0435"
+          "32023R0857",
+          "32023R0839",
+          "32021R0783",
+          "32013R1293",
+          "32024R1991"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q053",
-        "query": "How are Kyoto protocol credits such as CERs and ERUs transferred within the EU ETS registry system?",
+        "query": "How are old Kyoto-era carbon credits like CERs moved around inside the EU registry?",
         "relevant_celex_ids": [
           "32015R1844"
         ],
         "retrieved_celex_ids": [
           "32015R1844",
           "32015R1844",
-          "32014R0662",
           "32015R1844",
-          "32013R0525"
+          "32015R1844",
+          "32003L0087"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -933,16 +933,16 @@
       },
       {
         "query_id": "q054",
-        "query": "What is the Public Sector Loan Facility and how does it support green and digital transition investments?",
+        "query": "What's the scheme that pairs EU grants with EIB loans for green public projects?",
         "relevant_celex_ids": [
           "32021R1229"
         ],
         "retrieved_celex_ids": [
           "32021R1229",
-          "32021R1056",
-          "32023R0435",
           "32021R1229",
-          "32021R1229"
+          "32021R1229",
+          "32021R1229",
+          "32023L1791"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -950,16 +950,16 @@
       },
       {
         "query_id": "q055",
-        "query": "What review process applies to the technical screening criteria in the EU Taxonomy Delegated Regulation on climate?",
+        "query": "How and when do the green-investment technical criteria get reviewed?",
         "relevant_celex_ids": [
           "32022R1214",
           "32021R2139"
         ],
         "retrieved_celex_ids": [
-          "32023R2631",
+          "32023R0955",
+          "32023L0959",
+          "32025R2180",
           "32020R0852",
-          "32020R0852",
-          "32023R2631",
           "32023R2631"
         ],
         "hit_at_k": false,
@@ -968,17 +968,17 @@
       },
       {
         "query_id": "q056",
-        "query": "What information must member states include in their biennial progress reports on the decarbonisation dimension under the Governance Regulation?",
+        "query": "What goes into the two-yearly progress report on the decarbonisation side of the governance rules?",
         "relevant_celex_ids": [
           "32022R2299",
           "32018R1999"
         ],
         "retrieved_celex_ids": [
           "32022R2299",
-          "32022R2299",
-          "32022R2299",
-          "32022R2299",
-          "32022R2299"
+          "32018R1999",
+          "32023R0956",
+          "32018R1999",
+          "32024R1991"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -986,52 +986,52 @@
       },
       {
         "query_id": "q057",
-        "query": "How does the Recovery and Resilience Facility allocate ETS auction revenues to support the energy transition?",
+        "query": "How does the EU recovery fund steer carbon-auction money into the energy transition?",
         "relevant_celex_ids": [
           "32023R0435"
         ],
         "retrieved_celex_ids": [
+          "32023R0955",
           "32023R0435",
           "32023R0435",
-          "32023R0435",
-          "32023R0435",
-          "32023R0435"
+          "32023R0955",
+          "32021R0783"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
         "top_k": 5
       },
       {
         "query_id": "q058",
-        "query": "What procedures does ESMA follow when investigating infringements of European Green Bond obligations?",
+        "query": "What steps does the EU markets watchdog take when it looks into green-bond rule-breaking?",
         "relevant_celex_ids": [
           "32025R0754",
           "32023R2631"
         ],
         "retrieved_celex_ids": [
-          "32025R0754",
+          "32025L2360",
+          "32015R0757",
           "32023R2631",
-          "32023R2631",
-          "32025R0754",
+          "32003L0030",
           "32023R2631"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.3333333333333333,
         "top_k": 5
       },
       {
         "query_id": "q059",
-        "query": "How are areas affected by desertification and long-term climate change impacts identified for carbon farming activities?",
+        "query": "How are drought-stricken and climate-damaged areas pinned down for carbon farming?",
         "relevant_celex_ids": [
           "32025R2043",
           "32024R3012"
         ],
         "retrieved_celex_ids": [
-          "32025R2043",
-          "32025R2043",
-          "32025R2358",
-          "32024R1991",
-          "32024R3012"
+          "32024R3012",
+          "32024R3012",
+          "32024R3012",
+          "32024R3012",
+          "32025R2358"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1039,17 +1039,17 @@
       },
       {
         "query_id": "q060",
-        "query": "What de minimis exemption applies to small importers from the obligations of the Carbon Border Adjustment Mechanism?",
+        "query": "Is there a small-shipment exemption from the EU's carbon border rules?",
         "relevant_celex_ids": [
           "32025R2083",
           "32023R0956"
         ],
         "retrieved_celex_ids": [
-          "32025R2083",
           "32023R0956",
-          "32021R1056",
-          "32014R0517",
-          "32014R0517"
+          "32024R3012",
+          "32024R3012",
+          "32025R2358",
+          "32025R2083"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1057,17 +1057,17 @@
       },
       {
         "query_id": "q061",
-        "query": "What criteria determine the good repute and professional qualifications required of senior management at external reviewers of European Green Bonds?",
+        "query": "What standards of trustworthiness and qualifications do the bosses at green-bond reviewers need?",
         "relevant_celex_ids": [
           "32025R2180",
           "32023R2631"
         ],
         "retrieved_celex_ids": [
           "32025R2180",
-          "32025R2180",
           "32023R2631",
-          "32025R2180",
-          "32025R2180"
+          "32023R2631",
+          "32023R2631",
+          "32023R2631"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1075,17 +1075,17 @@
       },
       {
         "query_id": "q062",
-        "query": "Under what conditions may a CBAM verifier replace a physical site visit with a virtual inspection?",
+        "query": "When can a carbon-import checker do a remote inspection instead of turning up at the site?",
         "relevant_celex_ids": [
           "32025R2546",
           "32023R0956"
         ],
         "retrieved_celex_ids": [
           "32025R2546",
+          "32023R2631",
+          "32023R2631",
           "32025R2546",
-          "32025R2546",
-          "32023R0956",
-          "32025L2360"
+          "32023R2631"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1093,17 +1093,17 @@
       },
       {
         "query_id": "q063",
-        "query": "How is the quarterly price of CBAM certificates calculated from EU ETS auction clearing prices?",
+        "query": "How is the price of a carbon border certificate set from the EU carbon auction results each quarter?",
         "relevant_celex_ids": [
           "32025R2548",
           "32023R0956"
         ],
         "retrieved_celex_ids": [
           "32025R2548",
-          "32025R2548",
-          "32023R0956",
-          "32025R2548",
-          "32025R2548"
+          "32024R3012",
+          "32025R2083",
+          "32023R1773",
+          "32024R3012"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1111,7 +1111,7 @@
       },
       {
         "query_id": "q064",
-        "query": "What exclusion criteria apply to companies with significant involvement in fossil fuel activities under EU Paris-aligned benchmarks?",
+        "query": "Which companies get shut out of Paris-aligned investment indices because of their fossil fuel ties?",
         "relevant_celex_ids": [
           "32025R1775",
           "32020R1818"
@@ -1119,9 +1119,9 @@
         "retrieved_celex_ids": [
           "32020R1818",
           "32020R1818",
-          "32020R1818",
-          "32020R1818",
-          "32023L0959"
+          "32014R0749",
+          "32020R1208",
+          "32015R0757"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1129,35 +1129,35 @@
       },
       {
         "query_id": "q065",
-        "query": "What derogations from Taxonomy disclosure requirements are available for small and medium-sized portfolio companies?",
+        "query": "Do smaller companies get any kind of break from the EU green-investment disclosure rules?",
         "relevant_celex_ids": [
           "32026R0073",
           "32021R2178"
         ],
         "retrieved_celex_ids": [
-          "32023R2631",
-          "32021R2178",
           "32024L1760",
-          "32023R2631",
+          "32024L1760",
+          "32020R1818",
+          "32020R0852",
           "32023R2631"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q066",
-        "query": "What certification methodology applies to direct air capture with carbon storage activities under the Carbon Removal Certification Framework?",
+        "query": "How do projects that suck carbon out of the air and bury it get certified under the EU removal rules?",
         "relevant_celex_ids": [
           "32026R0285",
           "32024R3012"
         ],
         "retrieved_celex_ids": [
           "32024R3012",
+          "32024R3012",
+          "32025R2358",
           "32026R0285",
-          "32024R3012",
-          "32024R3012",
-          "32024R3012"
+          "32026R0285"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1165,86 +1165,86 @@
       },
       {
         "query_id": "q067",
-        "query": "What are the annual LULUCF emission and removal limit values applicable to member states between 2026 and 2029?",
+        "query": "What yearly land-sector emission and removal limits apply to countries from 2026 to 2029?",
         "relevant_celex_ids": [
           "32026R0893",
           "32018R0841"
         ],
         "retrieved_celex_ids": [
-          "32023R0839",
-          "32026R0893",
           "32018R0842",
-          "32025L2360",
-          "32018R0842"
+          "32023R0839",
+          "32025R2083",
+          "32023L0959",
+          "32026R0893"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 0.2,
         "top_k": 5
       },
       {
         "query_id": "q068",
-        "query": "How can member states use the European Social Fund Plus to support workers and communities affected by natural disasters?",
+        "query": "Can the EU social fund be tapped to help workers and towns recover after a natural disaster?",
         "relevant_celex_ids": [
           "32024R3236"
         ],
         "retrieved_celex_ids": [
+          "32024R3236",
+          "32024R3236",
+          "32024R3236",
           "32023R0435",
-          "32021R1056",
-          "32021R0783",
-          "32023L1791",
-          "32021R0783"
-        ],
-        "hit_at_k": false,
-        "reciprocal_rank": 0.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q069",
-        "query": "What ERDF flexibility provisions apply during the mid-term review to redirect funding toward climate resilience?",
-        "relevant_celex_ids": [
-          "32025R1914"
-        ],
-        "retrieved_celex_ids": [
-          "32025R1914",
-          "32025R1914",
-          "32025L2360",
-          "32014R0215",
-          "32013R1293"
+          "32023R0435"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
         "top_k": 5
       },
       {
+        "query_id": "q069",
+        "query": "What wiggle room is there at the mid-point review to shift regional funds toward climate resilience?",
+        "relevant_celex_ids": [
+          "32025R1914"
+        ],
+        "retrieved_celex_ids": [
+          "32025L2360",
+          "32025L2360",
+          "32013R1300",
+          "32013R1293",
+          "32014R0215"
+        ],
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "top_k": 5
+      },
+      {
         "query_id": "q070",
-        "query": "What changes were made to the common reporting tables that member states use for Governance Regulation progress reports?",
+        "query": "What changed in the standard reporting tables countries use for their governance progress reports?",
         "relevant_celex_ids": [
           "32024R1281",
           "32020R1208"
         ],
         "retrieved_celex_ids": [
           "32014R0749",
-          "32020R1208",
           "32014R0749",
-          "32014R0749",
-          "32023R0955"
+          "32018R1999",
+          "32023R0956",
+          "32018R1999"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q071",
-        "query": "What uniform format must member states follow when submitting their national restoration plan under the Nature Restoration Regulation?",
+        "query": "What standard template do countries have to use when handing in their nature restoration plans?",
         "relevant_celex_ids": [
           "32025R0912",
           "32024R1991"
         ],
         "retrieved_celex_ids": [
           "32024R1991",
-          "32025R0912",
+          "32018R1999",
           "32024R1991",
-          "32024R1991",
+          "32021R0783",
           "32024R1991"
         ],
         "hit_at_k": true,
@@ -1256,21 +1256,21 @@
   "dense_only": {
     "total_queries": 71,
     "top_k": 5,
-    "hit_rate": 0.9859154929577465,
-    "mrr": 0.8901408450704226,
+    "hit_rate": 0.9577464788732394,
+    "mrr": 0.8291079812206573,
     "per_query": [
       {
         "query_id": "q001",
-        "query": "What are the obligations for monitoring and reporting carbon dioxide emissions from ships arriving at EU ports?",
+        "query": "If my company runs cargo ships that call at European ports, what do we have to measure and report about their CO2?",
         "relevant_celex_ids": [
           "32015R0757"
         ],
         "retrieved_celex_ids": [
           "32015R0757",
-          "32023L0959",
           "32015R0757",
           "32015R0757",
-          "32023L0959"
+          "32015R0757",
+          "32015R0757"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1278,34 +1278,34 @@
       },
       {
         "query_id": "q002",
-        "query": "What is the EU ETS cap and how are emission allowances allocated to industrial installations?",
+        "query": "How much pollution is allowed in total under the EU carbon market, and how do factories get their permits?",
         "relevant_celex_ids": [
           "32003L0087",
           "32023L0959"
         ],
         "retrieved_celex_ids": [
-          "32018R0842",
-          "32023R0956",
-          "32018R0842",
           "32023L0959",
-          "32018R0842"
+          "32023R0839",
+          "32024R3012",
+          "32020R1818",
+          "32024R3012"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.25,
+        "reciprocal_rank": 1.0,
         "top_k": 5
       },
       {
         "query_id": "q003",
-        "query": "What economic activities qualify as environmentally sustainable under the EU Taxonomy Regulation?",
+        "query": "How does the EU decide whether a business activity counts as genuinely green?",
         "relevant_celex_ids": [
           "32020R0852"
         ],
         "retrieved_celex_ids": [
           "32020R0852",
+          "32023R2631",
           "32020R0852",
           "32020R0852",
-          "32020R0852",
-          "32021R2178"
+          "32023R2631"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1313,34 +1313,34 @@
       },
       {
         "query_id": "q004",
-        "query": "What are the binding national targets for greenhouse gas emission reductions under the Effort Sharing Regulation?",
+        "query": "Which emission-cutting targets is each EU country legally on the hook for in areas like transport and farming?",
         "relevant_celex_ids": [
           "32018R0842",
           "32023R0857"
         ],
         "retrieved_celex_ids": [
-          "32018R0842",
-          "32023R0857",
-          "32021R1119",
           "32023R0839",
-          "32023R0955"
+          "32023R0857",
+          "32020R1818",
+          "32019L1161",
+          "32023L0959"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
         "top_k": 5
       },
       {
         "query_id": "q005",
-        "query": "How does the Carbon Border Adjustment Mechanism calculate the embedded emissions in imported goods?",
+        "query": "When goods come into the EU, how do they figure out how much carbon went into making them?",
         "relevant_celex_ids": [
           "32023R0956"
         ],
         "retrieved_celex_ids": [
           "32023R0956",
+          "32023R1773",
           "32023R0956",
-          "32023R1773",
-          "32023R1773",
-          "32025R2083"
+          "32023R0956",
+          "32023R0956"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1348,34 +1348,34 @@
       },
       {
         "query_id": "q006",
-        "query": "What are the reporting obligations for fluorinated greenhouse gases under the F-Gas Regulation?",
+        "query": "What do businesses have to report about the refrigerant-type gases that warm the planet?",
         "relevant_celex_ids": [
           "32014R0517"
         ],
         "retrieved_celex_ids": [
-          "32014R0749",
-          "32014R0517",
+          "32015R0757",
           "32020R1208",
           "32014R0517",
-          "32014R0517"
+          "32020R1208",
+          "32014R0749"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 0.3333333333333333,
         "top_k": 5
       },
       {
         "query_id": "q007",
-        "query": "What requirements must member states meet for the land use, land use change and forestry sector?",
+        "query": "What rules apply to countries for the carbon stored or released by their forests and farmland?",
         "relevant_celex_ids": [
           "32018R0841",
           "32023R0839"
         ],
         "retrieved_celex_ids": [
-          "32023R0839",
+          "32018R0841",
           "32018R0841",
           "32023R0839",
-          "32024R1991",
-          "32023R0839"
+          "32024R3012",
+          "32018R0841"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1383,50 +1383,50 @@
       },
       {
         "query_id": "q008",
-        "query": "What is the EU's legally binding 2050 climate neutrality target and governance framework?",
+        "query": "Where exactly is the EU's promise to be climate neutral by 2050 written into law?",
         "relevant_celex_ids": [
           "32021R1119"
         ],
         "retrieved_celex_ids": [
-          "32021R1119",
           "32023R0857",
-          "32021R1119",
+          "32023R0839",
           "32026R0667",
-          "32021R1119"
+          "32021R1119",
+          "32023R0857"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.25,
         "top_k": 5
       },
       {
         "query_id": "q009",
-        "query": "What due diligence obligations do large companies have regarding adverse environmental impacts in their value chains?",
+        "query": "Do big firms have to check that their suppliers aren't wrecking the environment?",
         "relevant_celex_ids": [
           "32024L1760"
         ],
         "retrieved_celex_ids": [
-          "32024L1760",
-          "32024L1760",
-          "32024L1760",
+          "32019L1161",
+          "32015R0757",
+          "32020R0852",
           "32024L1760",
           "32024L1760"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.25,
         "top_k": 5
       },
       {
         "query_id": "q010",
-        "query": "What financial support does the Social Climate Fund provide to households and vulnerable groups affected by carbon pricing?",
+        "query": "Is there EU money to help poorer households cope when carbon prices push up their bills?",
         "relevant_celex_ids": [
           "32023R0955"
         ],
         "retrieved_celex_ids": [
           "32023R0955",
-          "32023R0955",
-          "32023R0955",
-          "32023R0955",
-          "32023R0955"
+          "32023L0959",
+          "32025R1914",
+          "32023R0435",
+          "32018L2002"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1434,7 +1434,7 @@
       },
       {
         "query_id": "q011",
-        "query": "What are the minimum energy performance requirements for buildings under EU energy efficiency law?",
+        "query": "What's the minimum energy standard a building has to meet under EU rules?",
         "relevant_celex_ids": [
           "32018L2002",
           "32023L1791"
@@ -1442,8 +1442,8 @@
         "retrieved_celex_ids": [
           "32018L2002",
           "32023L1791",
+          "32023R0955",
           "32025R1914",
-          "32023L1791",
           "32023L1791"
         ],
         "hit_at_k": true,
@@ -1452,17 +1452,17 @@
       },
       {
         "query_id": "q012",
-        "query": "How are emission allowances auctioned in Phase 4 of the EU Emissions Trading System?",
+        "query": "How does selling carbon permits at auction work in the current trading phase?",
         "relevant_celex_ids": [
           "32003L0087",
           "32023L0959"
         ],
         "retrieved_celex_ids": [
+          "32023R0956",
+          "32003L0087",
           "32008L0101",
-          "32023L0959",
-          "32018R0842",
-          "32023L0959",
-          "32023R0435"
+          "32023R0435",
+          "32024R3012"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
@@ -1470,17 +1470,17 @@
       },
       {
         "query_id": "q013",
-        "query": "What reporting obligations apply to importers of goods covered by CBAM during the transitional period before 2026?",
+        "query": "Before the carbon border charge fully kicks in, what paperwork do importers need to file?",
         "relevant_celex_ids": [
           "32023R1773",
           "32023R0956"
         ],
         "retrieved_celex_ids": [
           "32023R0956",
-          "32023R1773",
+          "32014R0517",
           "32023R0956",
-          "32023R1773",
-          "32023R1773"
+          "32023R0956",
+          "32023R0956"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1488,17 +1488,17 @@
       },
       {
         "query_id": "q014",
-        "query": "What are the procedures for applying to become an authorised CBAM declarant through the CBAM registry?",
+        "query": "How do I get approved as the person allowed to declare carbon for goods I import?",
         "relevant_celex_ids": [
           "32025R0486",
           "32023R0956"
         ],
         "retrieved_celex_ids": [
-          "32025R0486",
+          "32023R0956",
+          "32023R0956",
           "32025R2083",
-          "32023R0956",
-          "32023R0956",
-          "32025R0486"
+          "32024R3012",
+          "32023R0956"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1506,16 +1506,16 @@
       },
       {
         "query_id": "q015",
-        "query": "What technical screening criteria determine whether an economic activity contributes substantially to climate change mitigation under the EU Taxonomy?",
+        "query": "What exact tests prove an activity really helps fight climate change for green-investment purposes?",
         "relevant_celex_ids": [
           "32021R2139",
           "32020R0852"
         ],
         "retrieved_celex_ids": [
-          "32021R2139",
-          "32021R2139",
           "32020R0852",
+          "32025R2043",
           "32020R0852",
+          "32024R3012",
           "32020R0852"
         ],
         "hit_at_k": true,
@@ -1524,17 +1524,17 @@
       },
       {
         "query_id": "q016",
-        "query": "What Taxonomy-aligned disclosure obligations apply to financial market participants offering investment products?",
+        "query": "What do investment funds have to tell people about how green their products actually are?",
         "relevant_celex_ids": [
           "32021R2178",
           "32020R0852"
         ],
         "retrieved_celex_ids": [
-          "32021R2178",
-          "32021R2178",
           "32020R0852",
-          "32021R2178",
-          "32020R0852"
+          "32020R0852",
+          "32020R0852",
+          "32020R0852",
+          "32023R2631"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1542,7 +1542,7 @@
       },
       {
         "query_id": "q017",
-        "query": "What must member states include in their integrated national energy and climate plans and when must they be submitted?",
+        "query": "What goes into a country's combined energy-and-climate plan, and when is it due?",
         "relevant_celex_ids": [
           "32018R1999"
         ],
@@ -1559,95 +1559,95 @@
       },
       {
         "query_id": "q018",
-        "query": "What are the annual greenhouse gas inventory submission obligations for EU member states?",
+        "query": "How do EU countries report their yearly greenhouse gas totals?",
         "relevant_celex_ids": [
           "32013R0525",
           "32014R0749"
         ],
         "retrieved_celex_ids": [
           "32014R0666",
+          "32020R1208",
           "32023R0857",
           "32018R1999",
-          "32014R0666",
-          "32020R1208"
+          "32014R0749"
         ],
-        "hit_at_k": false,
-        "reciprocal_rank": 0.0,
+        "hit_at_k": true,
+        "reciprocal_rank": 0.2,
         "top_k": 5
       },
       {
         "query_id": "q019",
-        "query": "What format and content must member states use when reporting national policies and measures to reduce greenhouse gas emissions?",
+        "query": "In what form do governments have to report the steps they're taking to cut emissions?",
         "relevant_celex_ids": [
           "32020R1208",
           "32018R1999"
         ],
         "retrieved_celex_ids": [
           "32013R0525",
-          "32018R1999",
           "32022R2299",
+          "32020R1208",
           "32020R1208",
           "32014R0749"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 0.3333333333333333,
         "top_k": 5
       },
       {
         "query_id": "q020",
-        "query": "What are the obligations for member states to prepare and submit long-term low-emission development strategies to the Commission?",
+        "query": "Do countries have to send Brussels a long-range plan for going low-carbon?",
         "relevant_celex_ids": [
           "32018R1999"
         ],
         "retrieved_celex_ids": [
-          "32013R0525",
           "32018R1999",
-          "32014R0749",
+          "32013R0525",
           "32023R0955",
-          "32018R1999"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
-        "top_k": 5
-      },
-      {
-        "query_id": "q021",
-        "query": "What monitoring and reporting plan obligations apply to aircraft operators under the EU ETS?",
-        "relevant_celex_ids": [
-          "32023L0959"
-        ],
-        "retrieved_celex_ids": [
-          "32008L0101",
-          "32023L0959",
-          "32008L0101",
-          "32015R1844",
-          "32015R1844"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
-        "top_k": 5
-      },
-      {
-        "query_id": "q022",
-        "query": "How was aviation included in the EU Emissions Trading System and what flights and activities does it cover?",
-        "relevant_celex_ids": [
-          "32008L0101",
-          "32003L0087"
-        ],
-        "retrieved_celex_ids": [
-          "32008L0101",
-          "32023L0959",
-          "32023R0956",
-          "32023R0956",
-          "32003L0087"
+          "32014R0749",
+          "32020R1818"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
         "top_k": 5
       },
       {
+        "query_id": "q021",
+        "query": "What emissions-tracking plan do airlines have to file under the carbon market?",
+        "relevant_celex_ids": [
+          "32023L0959"
+        ],
+        "retrieved_celex_ids": [
+          "32023L0959",
+          "32015R0757",
+          "32015R0757",
+          "32025R2358",
+          "32015R0757"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q022",
+        "query": "How did flying get pulled into the EU carbon market, and which flights does it cover?",
+        "relevant_celex_ids": [
+          "32008L0101",
+          "32003L0087"
+        ],
+        "retrieved_celex_ids": [
+          "32023L0959",
+          "32008L0101",
+          "32008L0101",
+          "32023R0956",
+          "32023R1773"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.5,
+        "top_k": 5
+      },
+      {
         "query_id": "q023",
-        "query": "What obligations do shipping companies have under the EU ETS for maritime greenhouse gas emissions?",
+        "query": "What do shipping companies now owe under the carbon market for their vessels' emissions?",
         "relevant_celex_ids": [
           "32023L0959",
           "32015R0757"
@@ -1655,8 +1655,8 @@
         "retrieved_celex_ids": [
           "32023L0959",
           "32023L0959",
-          "32023R0956",
-          "32023L0959",
+          "32015R0757",
+          "32023R1773",
           "32015R0757"
         ],
         "hit_at_k": true,
@@ -1665,7 +1665,7 @@
       },
       {
         "query_id": "q024",
-        "query": "What minimum proportions of clean and zero-emission vehicles must public contracting authorities procure?",
+        "query": "When a public authority buys vehicles, how many have to be low- or zero-emission?",
         "relevant_celex_ids": [
           "32019L1161"
         ],
@@ -1673,8 +1673,8 @@
           "32019L1161",
           "32019L1161",
           "32019L1161",
-          "32019L1161",
-          "32019L1161"
+          "32023L1791",
+          "32023L1791"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1682,16 +1682,16 @@
       },
       {
         "query_id": "q025",
-        "query": "What cumulative end-use energy savings must member states achieve under the Energy Efficiency Directive?",
+        "query": "How much energy are member states required to save overall under EU efficiency rules?",
         "relevant_celex_ids": [
           "32023L1791"
         ],
         "retrieved_celex_ids": [
           "32023L1791",
+          "32023L1791",
+          "32018R1999",
           "32018L2002",
-          "32018L2002",
-          "32018L2002",
-          "32023L1791"
+          "32018L2002"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1699,16 +1699,16 @@
       },
       {
         "query_id": "q026",
-        "query": "What does the energy efficiency first principle require when assessing policy, planning and investment decisions?",
+        "query": "What's the rule that says you should weigh up energy savings first when making policy or investment calls?",
         "relevant_celex_ids": [
           "32023L1791"
         ],
         "retrieved_celex_ids": [
           "32023L1791",
+          "32018L2002",
           "32023L1791",
           "32023L1791",
-          "32023L1791",
-          "32018R1999"
+          "32018L2002"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -1716,7 +1716,7 @@
       },
       {
         "query_id": "q027",
-        "query": "What requirements must a bond issuer meet to use the European Green Bond or EuGB designation?",
+        "query": "What does a company have to do before it can call its bond an official EU green bond?",
         "relevant_celex_ids": [
           "32023R2631"
         ],
@@ -1733,7 +1733,7 @@
       },
       {
         "query_id": "q028",
-        "query": "What are the registration requirements and supervisory obligations for external reviewers of European Green Bonds?",
+        "query": "How do the outfits that vet green bonds get registered and kept in check?",
         "relevant_celex_ids": [
           "32023R2631",
           "32025R0755"
@@ -1741,7 +1741,7 @@
         "retrieved_celex_ids": [
           "32023R2631",
           "32023R2631",
-          "32025R0755",
+          "32014R0517",
           "32023R2631",
           "32023R2631"
         ],
@@ -1751,15 +1751,137 @@
       },
       {
         "query_id": "q029",
-        "query": "Which territories and people are eligible for support from the Just Transition Fund and on what basis?",
+        "query": "Who can get help from the EU fund for regions hit hardest by moving off fossil fuels?",
         "relevant_celex_ids": [
           "32021R1056"
         ],
         "retrieved_celex_ids": [
-          "32021R1056",
-          "32021R1056",
           "32025R1914",
           "32021R1056",
+          "32024R3236",
+          "32023R0435",
+          "32023R0435"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.5,
+        "top_k": 5
+      },
+      {
+        "query_id": "q030",
+        "query": "What does a carbon-removal or soil project need to qualify for EU certification?",
+        "relevant_celex_ids": [
+          "32024R3012"
+        ],
+        "retrieved_celex_ids": [
+          "32024R3012",
+          "32024R3012",
+          "32024R3012",
+          "32024R3012",
+          "32024R3012"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q031",
+        "query": "If I run a carbon farming scheme, what plans do I have to hand to the certifier?",
+        "relevant_celex_ids": [
+          "32024R3012",
+          "32025R2358"
+        ],
+        "retrieved_celex_ids": [
+          "32025R2358",
+          "32024R3012",
+          "32025R2358",
+          "32024R3012",
+          "32024R3012"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q032",
+        "query": "What do countries have to do to bring damaged land habitats back to health under the new EU nature law?",
+        "relevant_celex_ids": [
+          "32024R1991"
+        ],
+        "retrieved_celex_ids": [
+          "32024R1991",
+          "32024R1991",
+          "32024R1991",
+          "32023R0839",
+          "32024R1991"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q033",
+        "query": "What share of road fuel was each country meant to make up with biofuel?",
+        "relevant_celex_ids": [
+          "32003L0030"
+        ],
+        "retrieved_celex_ids": [
+          "32003L0030",
+          "32003L0030",
+          "32003L0030",
+          "32003L0030",
+          "32018R1999"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q034",
+        "query": "How do you tell whether a meadow is too rich in wildlife to be ploughed up for biofuel crops?",
+        "relevant_celex_ids": [
+          "32014R1307"
+        ],
+        "retrieved_celex_ids": [
+          "32014R1307",
+          "32024R1991",
+          "32018R0841",
+          "32003L0030",
+          "32014R1307"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q035",
+        "query": "What's the EU's flagship funding programme for the environment trying to achieve?",
+        "relevant_celex_ids": [
+          "32021R0783",
+          "32013R1293"
+        ],
+        "retrieved_celex_ids": [
+          "32025R1914",
+          "32021R0783",
+          "32013R1300",
+          "32026R0667",
+          "32013R1293"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.5,
+        "top_k": 5
+      },
+      {
+        "query_id": "q036",
+        "query": "Has the EU pinned down a 2040 climate goal yet, and how does it sit with the 2050 one?",
+        "relevant_celex_ids": [
+          "32021R1119",
+          "32026R0667"
+        ],
+        "retrieved_celex_ids": [
+          "32026R0667",
+          "32021R1119",
+          "32023R0857",
+          "32021R1119",
           "32021R1056"
         ],
         "hit_at_k": true,
@@ -1767,9 +1889,520 @@
         "top_k": 5
       },
       {
-        "query_id": "q030",
-        "query": "What eligibility conditions must carbon removal and soil emission reduction activities meet to be certified under EU law?",
+        "query_id": "q037",
+        "query": "Why do some heavy industries get free carbon permits, and how is that amount worked out?",
         "relevant_celex_ids": [
+          "32003L0087",
+          "32023L0959"
+        ],
+        "retrieved_celex_ids": [
+          "32024R3012",
+          "32023L0959",
+          "32003L0087",
+          "32025R2083",
+          "32023R0956"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.5,
+        "top_k": 5
+      },
+      {
+        "query_id": "q038",
+        "query": "What is the EU planning to do about keeping soil healthy and cutting down on contamination?",
+        "relevant_celex_ids": [
+          "32025L2360"
+        ],
+        "retrieved_celex_ids": [
+          "32025L2360",
+          "32023R0839",
+          "32025L2360",
+          "32024R1991",
+          "32023R0857"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q039",
+        "query": "What's the system that keeps track of who holds which carbon allowances?",
+        "relevant_celex_ids": [
+          "32018R0208",
+          "32003L0087"
+        ],
+        "retrieved_celex_ids": [
+          "32024R3012",
+          "32003L0087",
+          "32024R3012",
+          "32023R0956",
+          "32018R1999"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.5,
+        "top_k": 5
+      },
+      {
+        "query_id": "q040",
+        "query": "Can a country carry forward, stockpile or trade away its yearly emissions budget?",
+        "relevant_celex_ids": [
+          "32018R0842"
+        ],
+        "retrieved_celex_ids": [
+          "32023R0839",
+          "32018R0842",
+          "32023R0839",
+          "32018R0842",
+          "32018R0841"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.5,
+        "top_k": 5
+      },
+      {
+        "query_id": "q041",
+        "query": "How is the baseline for forest emissions set when judging how well a country is doing on land accounting?",
+        "relevant_celex_ids": [
+          "32018R0841"
+        ],
+        "retrieved_celex_ids": [
+          "32018R0841",
+          "32018R0841",
+          "32018R0841",
+          "32018R0841",
+          "32018R0841"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q042",
+        "query": "What minimum rules apply to stock-market indices that claim to line up with the Paris Agreement?",
+        "relevant_celex_ids": [
+          "32020R1818"
+        ],
+        "retrieved_celex_ids": [
+          "32020R1818",
+          "32020R1818",
+          "32020R1818",
+          "32020R0852",
+          "32020R1818"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q043",
+        "query": "What's expected of a company that puts together a climate plan under the new corporate due-diligence rules?",
+        "relevant_celex_ids": [
+          "32024L1760"
+        ],
+        "retrieved_celex_ids": [
+          "32024L1760",
+          "32024L1760",
+          "32024L1760",
+          "32024L1760",
+          "32023L0959"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q044",
+        "query": "How is the carbon-border bill trimmed to account for the free permits domestic producers already get?",
+        "relevant_celex_ids": [
+          "32025R2620",
+          "32023R0956"
+        ],
+        "retrieved_celex_ids": [
+          "32023R0956",
+          "32023R0956",
+          "32025R2083",
+          "32023R0839",
+          "32024R3012"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q045",
+        "query": "What quality checks go into putting together the EU-wide greenhouse gas figures?",
+        "relevant_celex_ids": [
+          "32014R0666",
+          "32013R0525"
+        ],
+        "retrieved_celex_ids": [
+          "32020R1818",
+          "32014R0666",
+          "32014R0749",
+          "32014R0666",
+          "32013R0525"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.5,
+        "top_k": 5
+      },
+      {
+        "query_id": "q046",
+        "query": "What progress updates do member states owe under the EU's energy and climate governance setup?",
+        "relevant_celex_ids": [
+          "32018R1999",
+          "32020R1208"
+        ],
+        "retrieved_celex_ids": [
+          "32018R1999",
+          "32018R1999",
+          "32018R1999",
+          "32022R2299",
+          "32018R1999"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q047",
+        "query": "How are yearly emission limits handed out to countries for the sectors that sit outside the carbon market?",
+        "relevant_celex_ids": [
+          "32018R0842",
+          "32023R0857"
+        ],
+        "retrieved_celex_ids": [
+          "32018R0842",
+          "32023R0956",
+          "32018R0841",
+          "32018R0842",
+          "32023R0839"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q048",
+        "query": "What restoration duties cover seas, coasts and rivers under the EU nature law?",
+        "relevant_celex_ids": [
+          "32024R1991"
+        ],
+        "retrieved_celex_ids": [
+          "32024R1991",
+          "32024R1991",
+          "32024R1991",
+          "32024R1991",
+          "32024R1991"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q049",
+        "query": "What's the 'don't make anything else worse' test for activities in the EU green-investment rules?",
+        "relevant_celex_ids": [
+          "32021R2139",
+          "32020R0852"
+        ],
+        "retrieved_celex_ids": [
+          "32020R0852",
+          "32025R1914",
+          "32020R0852",
+          "32023R0857",
+          "32026R0667"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q050",
+        "query": "What does a country need to put in its plan to tap the fund that cushions carbon-price impacts?",
+        "relevant_celex_ids": [
+          "32023R0955"
+        ],
+        "retrieved_celex_ids": [
+          "32023R0955",
+          "32023R0955",
+          "32023R0955",
+          "32023R0955",
+          "32023R0955"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q051",
+        "query": "What kind of environment and transport projects does the EU's cohesion money pay for?",
+        "relevant_celex_ids": [
+          "32013R1300"
+        ],
+        "retrieved_celex_ids": [
+          "32013R1300",
+          "32013R1300",
+          "32013R1300",
+          "32025R1914",
+          "32021R0783"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q052",
+        "query": "How do you work out how much of a regional-funding programme counts as climate spending?",
+        "relevant_celex_ids": [
+          "32014R0215"
+        ],
+        "retrieved_celex_ids": [
+          "32014R0215",
+          "32014R0215",
+          "32014R0215",
+          "32021R1056",
+          "32025R1914"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q053",
+        "query": "How are old Kyoto-era carbon credits like CERs moved around inside the EU registry?",
+        "relevant_celex_ids": [
+          "32015R1844"
+        ],
+        "retrieved_celex_ids": [
+          "32015R1844",
+          "32015R1844",
+          "32014R0662",
+          "32015R1844",
+          "32025R2083"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q054",
+        "query": "What's the scheme that pairs EU grants with EIB loans for green public projects?",
+        "relevant_celex_ids": [
+          "32021R1229"
+        ],
+        "retrieved_celex_ids": [
+          "32021R0783",
+          "32025R1914",
+          "32023R2631",
+          "32023R2631",
+          "32021R0783"
+        ],
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q055",
+        "query": "How and when do the green-investment technical criteria get reviewed?",
+        "relevant_celex_ids": [
+          "32022R1214",
+          "32021R2139"
+        ],
+        "retrieved_celex_ids": [
+          "32020R0852",
+          "32020R0852",
+          "32023R2631",
+          "32023R2631",
+          "32014R0749"
+        ],
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q056",
+        "query": "What goes into the two-yearly progress report on the decarbonisation side of the governance rules?",
+        "relevant_celex_ids": [
+          "32022R2299",
+          "32018R1999"
+        ],
+        "retrieved_celex_ids": [
+          "32022R2299",
+          "32018R1999",
+          "32018R1999",
+          "32018R1999",
+          "32023R0839"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q057",
+        "query": "How does the EU recovery fund steer carbon-auction money into the energy transition?",
+        "relevant_celex_ids": [
+          "32023R0435"
+        ],
+        "retrieved_celex_ids": [
+          "32023R0435",
+          "32025R1914",
+          "32023R0435",
+          "32023R0435",
+          "32021R1056"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q058",
+        "query": "What steps does the EU markets watchdog take when it looks into green-bond rule-breaking?",
+        "relevant_celex_ids": [
+          "32025R0754",
+          "32023R2631"
+        ],
+        "retrieved_celex_ids": [
+          "32023R2631",
+          "32023R2631",
+          "32023R2631",
+          "32023R2631",
+          "32023R2631"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q059",
+        "query": "How are drought-stricken and climate-damaged areas pinned down for carbon farming?",
+        "relevant_celex_ids": [
+          "32025R2043",
+          "32024R3012"
+        ],
+        "retrieved_celex_ids": [
+          "32024R3012",
+          "32023R0839",
+          "32023R0955",
+          "32023R0839",
+          "32024R3012"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q060",
+        "query": "Is there a small-shipment exemption from the EU's carbon border rules?",
+        "relevant_celex_ids": [
+          "32025R2083",
+          "32023R0956"
+        ],
+        "retrieved_celex_ids": [
+          "32015R0757",
+          "32023R0956",
+          "32023R0956",
+          "32023L0959",
+          "32019L1161"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.5,
+        "top_k": 5
+      },
+      {
+        "query_id": "q061",
+        "query": "What standards of trustworthiness and qualifications do the bosses at green-bond reviewers need?",
+        "relevant_celex_ids": [
+          "32025R2180",
+          "32023R2631"
+        ],
+        "retrieved_celex_ids": [
+          "32023R2631",
+          "32023R2631",
+          "32023R2631",
+          "32023R2631",
+          "32023R2631"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q062",
+        "query": "When can a carbon-import checker do a remote inspection instead of turning up at the site?",
+        "relevant_celex_ids": [
+          "32025R2546",
+          "32023R0956"
+        ],
+        "retrieved_celex_ids": [
+          "32025R2546",
+          "32025R2358",
+          "32025R2546",
+          "32025R2546",
+          "32025R2083"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q063",
+        "query": "How is the price of a carbon border certificate set from the EU carbon auction results each quarter?",
+        "relevant_celex_ids": [
+          "32025R2548",
+          "32023R0956"
+        ],
+        "retrieved_celex_ids": [
+          "32023R0956",
+          "32025R2548",
+          "32025R2548",
+          "32023R1773",
+          "32020R1818"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q064",
+        "query": "Which companies get shut out of Paris-aligned investment indices because of their fossil fuel ties?",
+        "relevant_celex_ids": [
+          "32025R1775",
+          "32020R1818"
+        ],
+        "retrieved_celex_ids": [
+          "32020R1818",
+          "32023R2631",
+          "32020R1818",
+          "32020R1818",
+          "32023L0959"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q065",
+        "query": "Do smaller companies get any kind of break from the EU green-investment disclosure rules?",
+        "relevant_celex_ids": [
+          "32026R0073",
+          "32021R2178"
+        ],
+        "retrieved_celex_ids": [
+          "32021R2178",
+          "32021R2178",
+          "32020R0852",
+          "32020R0852",
+          "32026R0073"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q066",
+        "query": "How do projects that suck carbon out of the air and bury it get certified under the EU removal rules?",
+        "relevant_celex_ids": [
+          "32026R0285",
           "32024R3012"
         ],
         "retrieved_celex_ids": [
@@ -1784,667 +2417,34 @@
         "top_k": 5
       },
       {
-        "query_id": "q031",
-        "query": "What must a carbon farming operator include in an activity plan and monitoring plan submitted to a certification body?",
-        "relevant_celex_ids": [
-          "32024R3012",
-          "32025R2358"
-        ],
-        "retrieved_celex_ids": [
-          "32025R2358",
-          "32024R3012",
-          "32024R3012",
-          "32025R2358",
-          "32024R3012"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q032",
-        "query": "What restoration measures must member states implement for degraded terrestrial habitat types under EU nature restoration law?",
-        "relevant_celex_ids": [
-          "32024R1991"
-        ],
-        "retrieved_celex_ids": [
-          "32024R1991",
-          "32024R1991",
-          "32024R1991",
-          "32024R1991",
-          "32024R1991"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q033",
-        "query": "What minimum biofuel proportions must member states ensure are placed on the transport fuel market?",
-        "relevant_celex_ids": [
-          "32003L0030"
-        ],
-        "retrieved_celex_ids": [
-          "32003L0030",
-          "32003L0030",
-          "32003L0030",
-          "32014R0517",
-          "32018R1999"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q034",
-        "query": "What criteria determine whether grassland used for biofuel feedstock is considered highly biodiverse and therefore excluded from cultivation?",
-        "relevant_celex_ids": [
-          "32014R1307"
-        ],
-        "retrieved_celex_ids": [
-          "32014R1307",
-          "32014R1307",
-          "32003L0030",
-          "32018R0841",
-          "32018R0841"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q035",
-        "query": "What are the general objectives of the LIFE Programme for contributing to climate action?",
-        "relevant_celex_ids": [
-          "32021R0783",
-          "32013R1293"
-        ],
-        "retrieved_celex_ids": [
-          "32013R1293",
-          "32021R0783",
-          "32013R1293",
-          "32013R1293",
-          "32021R0783"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q036",
-        "query": "What is the EU's binding climate target for 2040 and how does it relate to the 2050 neutrality goal?",
-        "relevant_celex_ids": [
-          "32021R1119",
-          "32026R0667"
-        ],
-        "retrieved_celex_ids": [
-          "32026R0667",
-          "32021R1119",
-          "32021R1119",
-          "32023R0857",
-          "32021R1119"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q037",
-        "query": "How does the EU ETS determine free allowance allocation to energy-intensive industries to prevent carbon leakage?",
-        "relevant_celex_ids": [
-          "32003L0087",
-          "32023L0959"
-        ],
-        "retrieved_celex_ids": [
-          "32023R0956",
-          "32018R0842",
-          "32023R0956",
-          "32023L0959",
-          "32018R0842"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.25,
-        "top_k": 5
-      },
-      {
-        "query_id": "q038",
-        "query": "What are the objectives and scope of the EU framework for soil monitoring and reducing harmful contamination?",
-        "relevant_celex_ids": [
-          "32025L2360"
-        ],
-        "retrieved_celex_ids": [
-          "32025L2360",
-          "32025L2360",
-          "32023R0839",
-          "32024R3012",
-          "32025L2360"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q039",
-        "query": "What is the Union Registry and how does it support the tracking of emission allowances under the EU ETS?",
-        "relevant_celex_ids": [
-          "32018R0208",
-          "32003L0087"
-        ],
-        "retrieved_celex_ids": [
-          "32024R3012",
-          "32018R0842",
-          "32018R0841",
-          "32014R0666",
-          "32018R0208"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.2,
-        "top_k": 5
-      },
-      {
-        "query_id": "q040",
-        "query": "What flexibility mechanisms allow member states to borrow, bank or transfer annual emission allocations under the Effort Sharing Regulation?",
-        "relevant_celex_ids": [
-          "32018R0842"
-        ],
-        "retrieved_celex_ids": [
-          "32018R0842",
-          "32018R0841",
-          "32023R0839",
-          "32018R0842",
-          "32023R0839"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q041",
-        "query": "How are forest reference levels determined and used in LULUCF accounting to assess member state performance?",
-        "relevant_celex_ids": [
-          "32018R0841"
-        ],
-        "retrieved_celex_ids": [
-          "32018R0841",
-          "32018R0841",
-          "32023R0839",
-          "32018R0842",
-          "32024R1991"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q042",
-        "query": "What minimum standards must EU Paris-aligned benchmarks meet regarding greenhouse gas emission exclusions and reductions?",
-        "relevant_celex_ids": [
-          "32020R1818"
-        ],
-        "retrieved_celex_ids": [
-          "32018R0842",
-          "32020R1818",
-          "32021R1119",
-          "32020R1818",
-          "32020R1818"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
-        "top_k": 5
-      },
-      {
-        "query_id": "q043",
-        "query": "What obligations must companies fulfil when adopting a climate transition plan under the Corporate Sustainability Due Diligence Directive?",
-        "relevant_celex_ids": [
-          "32024L1760"
-        ],
-        "retrieved_celex_ids": [
-          "32024L1760",
-          "32024L1760",
-          "32024L1760",
-          "32024L1760",
-          "32023L0959"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q044",
-        "query": "How is the adjustment to the number of CBAM certificates calculated to account for ETS free allocations received by domestic producers?",
-        "relevant_celex_ids": [
-          "32025R2620",
-          "32023R0956"
-        ],
-        "retrieved_celex_ids": [
-          "32023R0956",
-          "32025R2620",
-          "32023R0956",
-          "32023R0956",
-          "32023R0956"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q045",
-        "query": "What quality assurance and quality control procedures apply to the compilation of the Union greenhouse gas inventory?",
-        "relevant_celex_ids": [
-          "32014R0666",
-          "32013R0525"
-        ],
-        "retrieved_celex_ids": [
-          "32014R0666",
-          "32013R0525",
-          "32014R0666",
-          "32018R1999",
-          "32014R0666"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q046",
-        "query": "What progress reporting obligations do member states have under the Energy Union Governance Regulation?",
-        "relevant_celex_ids": [
-          "32018R1999",
-          "32020R1208"
-        ],
-        "retrieved_celex_ids": [
-          "32018R1999",
-          "32022R2299",
-          "32018R1999",
-          "32018R1999",
-          "32022R2299"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q047",
-        "query": "How does the Effort Sharing Regulation allocate annual emission allocations to member states for sectors outside the ETS?",
-        "relevant_celex_ids": [
-          "32018R0842",
-          "32023R0857"
-        ],
-        "retrieved_celex_ids": [
-          "32018R0842",
-          "32023R0435",
-          "32021R1056",
-          "32018R0842",
-          "32023R0857"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q048",
-        "query": "What restoration obligations apply to marine, coastal and freshwater ecosystems under EU nature restoration law?",
-        "relevant_celex_ids": [
-          "32024R1991"
-        ],
-        "retrieved_celex_ids": [
-          "32024R1991",
-          "32024R1991",
-          "32024R1991",
-          "32024R1991",
-          "32024R1991"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q049",
-        "query": "What is the do no significant harm principle and how is it assessed for economic activities in the EU Taxonomy framework?",
-        "relevant_celex_ids": [
-          "32021R2139",
-          "32020R0852"
-        ],
-        "retrieved_celex_ids": [
-          "32023L0959",
-          "32020R0852",
-          "32020R0852",
-          "32020R0852",
-          "32026R0073"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
-        "top_k": 5
-      },
-      {
-        "query_id": "q050",
-        "query": "What must member states include in their national social climate plans to access support from the Social Climate Fund?",
-        "relevant_celex_ids": [
-          "32023R0955"
-        ],
-        "retrieved_celex_ids": [
-          "32023R0955",
-          "32023R0955",
-          "32023R0955",
-          "32018R1999",
-          "32023R0955"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q051",
-        "query": "What types of environmental and transport infrastructure investment does the EU Cohesion Fund support?",
-        "relevant_celex_ids": [
-          "32013R1300"
-        ],
-        "retrieved_celex_ids": [
-          "32013R1300",
-          "32013R1300",
-          "32013R1300",
-          "32025R1914",
-          "32013R1300"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q052",
-        "query": "How is the share of climate-related support calculated for ERDF, ESF and Cohesion Fund programmes?",
-        "relevant_celex_ids": [
-          "32014R0215"
-        ],
-        "retrieved_celex_ids": [
-          "32014R0215",
-          "32014R0215",
-          "32014R0215",
-          "32025R1914",
-          "32023R0435"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q053",
-        "query": "How are Kyoto protocol credits such as CERs and ERUs transferred within the EU ETS registry system?",
-        "relevant_celex_ids": [
-          "32015R1844"
-        ],
-        "retrieved_celex_ids": [
-          "32015R1844",
-          "32015R1844",
-          "32015R1844",
-          "32015R1844",
-          "32014R0662"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q054",
-        "query": "What is the Public Sector Loan Facility and how does it support green and digital transition investments?",
-        "relevant_celex_ids": [
-          "32021R1229"
-        ],
-        "retrieved_celex_ids": [
-          "32021R1229",
-          "32021R1229",
-          "32023L1791",
-          "32025R1914",
-          "32013R1300"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q055",
-        "query": "What review process applies to the technical screening criteria in the EU Taxonomy Delegated Regulation on climate?",
-        "relevant_celex_ids": [
-          "32022R1214",
-          "32021R2139"
-        ],
-        "retrieved_celex_ids": [
-          "32020R0852",
-          "32021R2139",
-          "32021R2139",
-          "32020R1208",
-          "32020R1208"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
-        "top_k": 5
-      },
-      {
-        "query_id": "q056",
-        "query": "What information must member states include in their biennial progress reports on the decarbonisation dimension under the Governance Regulation?",
-        "relevant_celex_ids": [
-          "32022R2299",
-          "32018R1999"
-        ],
-        "retrieved_celex_ids": [
-          "32022R2299",
-          "32022R2299",
-          "32018R1999",
-          "32014R0749",
-          "32018R1999"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q057",
-        "query": "How does the Recovery and Resilience Facility allocate ETS auction revenues to support the energy transition?",
-        "relevant_celex_ids": [
-          "32023R0435"
-        ],
-        "retrieved_celex_ids": [
-          "32023R0435",
-          "32023R0435",
-          "32023R0435",
-          "32023R0435",
-          "32025R1914"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q058",
-        "query": "What procedures does ESMA follow when investigating infringements of European Green Bond obligations?",
-        "relevant_celex_ids": [
-          "32025R0754",
-          "32023R2631"
-        ],
-        "retrieved_celex_ids": [
-          "32023R2631",
-          "32023R2631",
-          "32023R2631",
-          "32023R2631",
-          "32023R2631"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q059",
-        "query": "How are areas affected by desertification and long-term climate change impacts identified for carbon farming activities?",
-        "relevant_celex_ids": [
-          "32025R2043",
-          "32024R3012"
-        ],
-        "retrieved_celex_ids": [
-          "32024R3012",
-          "32025R2043",
-          "32018R0841",
-          "32023R0839",
-          "32024R3012"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q060",
-        "query": "What de minimis exemption applies to small importers from the obligations of the Carbon Border Adjustment Mechanism?",
-        "relevant_celex_ids": [
-          "32025R2083",
-          "32023R0956"
-        ],
-        "retrieved_celex_ids": [
-          "32025R2083",
-          "32023R0956",
-          "32023R0956",
-          "32025R2083",
-          "32019L1161"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q061",
-        "query": "What criteria determine the good repute and professional qualifications required of senior management at external reviewers of European Green Bonds?",
-        "relevant_celex_ids": [
-          "32025R2180",
-          "32023R2631"
-        ],
-        "retrieved_celex_ids": [
-          "32023R2631",
-          "32023R2631",
-          "32025R2180",
-          "32023R2631",
-          "32025R2180"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q062",
-        "query": "Under what conditions may a CBAM verifier replace a physical site visit with a virtual inspection?",
-        "relevant_celex_ids": [
-          "32025R2546",
-          "32023R0956"
-        ],
-        "retrieved_celex_ids": [
-          "32025R2546",
-          "32025R2546",
-          "32025R2546",
-          "32025R2083",
-          "32023R0956"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q063",
-        "query": "How is the quarterly price of CBAM certificates calculated from EU ETS auction clearing prices?",
-        "relevant_celex_ids": [
-          "32025R2548",
-          "32023R0956"
-        ],
-        "retrieved_celex_ids": [
-          "32023R0956",
-          "32025R2548",
-          "32025R2548",
-          "32025R2548",
-          "32025R2548"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q064",
-        "query": "What exclusion criteria apply to companies with significant involvement in fossil fuel activities under EU Paris-aligned benchmarks?",
-        "relevant_celex_ids": [
-          "32025R1775",
-          "32020R1818"
-        ],
-        "retrieved_celex_ids": [
-          "32020R1818",
-          "32020R1818",
-          "32023R2631",
-          "32020R1818",
-          "32023R0839"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q065",
-        "query": "What derogations from Taxonomy disclosure requirements are available for small and medium-sized portfolio companies?",
-        "relevant_celex_ids": [
-          "32026R0073",
-          "32021R2178"
-        ],
-        "retrieved_celex_ids": [
-          "32021R2178",
-          "32026R0073",
-          "32021R2178",
-          "32021R2178",
-          "32022R1214"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q066",
-        "query": "What certification methodology applies to direct air capture with carbon storage activities under the Carbon Removal Certification Framework?",
-        "relevant_celex_ids": [
-          "32026R0285",
-          "32024R3012"
-        ],
-        "retrieved_celex_ids": [
-          "32026R0285",
-          "32024R3012",
-          "32024R3012",
-          "32026R0285",
-          "32024R3012"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
         "query_id": "q067",
-        "query": "What are the annual LULUCF emission and removal limit values applicable to member states between 2026 and 2029?",
+        "query": "What yearly land-sector emission and removal limits apply to countries from 2026 to 2029?",
         "relevant_celex_ids": [
           "32026R0893",
           "32018R0841"
         ],
         "retrieved_celex_ids": [
+          "32023R0839",
           "32018R0841",
           "32023R0839",
-          "32026R0893",
-          "32023R0839",
-          "32018R0842"
+          "32018R0841",
+          "32018R0841"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
         "top_k": 5
       },
       {
         "query_id": "q068",
-        "query": "How can member states use the European Social Fund Plus to support workers and communities affected by natural disasters?",
+        "query": "Can the EU social fund be tapped to help workers and towns recover after a natural disaster?",
         "relevant_celex_ids": [
           "32024R3236"
         ],
         "retrieved_celex_ids": [
           "32024R3236",
           "32024R3236",
+          "32024R3236",
           "32023R0435",
-          "32021R0783",
           "32023R0435"
         ],
         "hit_at_k": true,
@@ -2453,7 +2453,7 @@
       },
       {
         "query_id": "q069",
-        "query": "What ERDF flexibility provisions apply during the mid-term review to redirect funding toward climate resilience?",
+        "query": "What wiggle room is there at the mid-point review to shift regional funds toward climate resilience?",
         "relevant_celex_ids": [
           "32025R1914"
         ],
@@ -2461,7 +2461,7 @@
           "32025R1914",
           "32025R1914",
           "32023R0839",
-          "32024R3236",
+          "32025R1914",
           "32023R0435"
         ],
         "hit_at_k": true,
@@ -2470,25 +2470,25 @@
       },
       {
         "query_id": "q070",
-        "query": "What changes were made to the common reporting tables that member states use for Governance Regulation progress reports?",
+        "query": "What changed in the standard reporting tables countries use for their governance progress reports?",
         "relevant_celex_ids": [
           "32024R1281",
           "32020R1208"
         ],
         "retrieved_celex_ids": [
           "32014R0749",
-          "32024R1281",
-          "32023R0857",
+          "32022R2299",
+          "32013R0525",
           "32022R2299",
           "32022R2299"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q071",
-        "query": "What uniform format must member states follow when submitting their national restoration plan under the Nature Restoration Regulation?",
+        "query": "What standard template do countries have to use when handing in their nature restoration plans?",
         "relevant_celex_ids": [
           "32025R0912",
           "32024R1991"
@@ -2496,7 +2496,7 @@
         "retrieved_celex_ids": [
           "32024R1991",
           "32024R1991",
-          "32025R0912",
+          "32023R2631",
           "32024R1991",
           "32024R1991"
         ],
@@ -2509,12 +2509,12 @@
   "hybrid": {
     "total_queries": 71,
     "top_k": 5,
-    "hit_rate": 1.0,
-    "mrr": 0.8673708920187794,
+    "hit_rate": 0.9436619718309859,
+    "mrr": 0.7448356807511737,
     "per_query": [
       {
         "query_id": "q001",
-        "query": "What are the obligations for monitoring and reporting carbon dioxide emissions from ships arriving at EU ports?",
+        "query": "If my company runs cargo ships that call at European ports, what do we have to measure and report about their CO2?",
         "relevant_celex_ids": [
           "32015R0757"
         ],
@@ -2531,60 +2531,60 @@
       },
       {
         "query_id": "q002",
-        "query": "What is the EU ETS cap and how are emission allowances allocated to industrial installations?",
+        "query": "How much pollution is allowed in total under the EU carbon market, and how do factories get their permits?",
         "relevant_celex_ids": [
           "32003L0087",
           "32023L0959"
         ],
         "retrieved_celex_ids": [
-          "32018R0842",
-          "32023R0956",
           "32023L0959",
-          "32023L0959",
-          "32023R0857"
+          "32024R3012",
+          "32020R0852",
+          "32024R3012",
+          "32023R0839"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q003",
+        "query": "How does the EU decide whether a business activity counts as genuinely green?",
+        "relevant_celex_ids": [
+          "32020R0852"
+        ],
+        "retrieved_celex_ids": [
+          "32023R2631",
+          "32023R2631",
+          "32020R0852",
+          "32021R2178",
+          "32020R0852"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.3333333333333333,
         "top_k": 5
       },
       {
-        "query_id": "q003",
-        "query": "What economic activities qualify as environmentally sustainable under the EU Taxonomy Regulation?",
-        "relevant_celex_ids": [
-          "32020R0852"
-        ],
-        "retrieved_celex_ids": [
-          "32020R0852",
-          "32020R0852",
-          "32020R0852",
-          "32020R0852",
-          "32020R0852"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
         "query_id": "q004",
-        "query": "What are the binding national targets for greenhouse gas emission reductions under the Effort Sharing Regulation?",
+        "query": "Which emission-cutting targets is each EU country legally on the hook for in areas like transport and farming?",
         "relevant_celex_ids": [
           "32018R0842",
           "32023R0857"
         ],
         "retrieved_celex_ids": [
+          "32019L1161",
           "32023R0857",
-          "32018R1999",
           "32023R0839",
-          "32024R3012",
+          "32025R2358",
           "32023R0955"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
         "top_k": 5
       },
       {
         "query_id": "q005",
-        "query": "How does the Carbon Border Adjustment Mechanism calculate the embedded emissions in imported goods?",
+        "query": "When goods come into the EU, how do they figure out how much carbon went into making them?",
         "relevant_celex_ids": [
           "32023R0956"
         ],
@@ -2592,8 +2592,8 @@
           "32023R0956",
           "32023R0956",
           "32023R0956",
-          "32023R1773",
-          "32023R0956"
+          "32023R0956",
+          "32023R0857"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -2601,16 +2601,16 @@
       },
       {
         "query_id": "q006",
-        "query": "What are the reporting obligations for fluorinated greenhouse gases under the F-Gas Regulation?",
+        "query": "What do businesses have to report about the refrigerant-type gases that warm the planet?",
         "relevant_celex_ids": [
           "32014R0517"
         ],
         "retrieved_celex_ids": [
           "32014R0517",
           "32014R0517",
-          "32014R0749",
           "32014R0517",
-          "32020R1208"
+          "32015R0757",
+          "32025L2360"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -2618,34 +2618,34 @@
       },
       {
         "query_id": "q007",
-        "query": "What requirements must member states meet for the land use, land use change and forestry sector?",
+        "query": "What rules apply to countries for the carbon stored or released by their forests and farmland?",
         "relevant_celex_ids": [
           "32018R0841",
           "32023R0839"
         ],
         "retrieved_celex_ids": [
-          "32023R0839",
+          "32024R3012",
+          "32024R3012",
           "32018R0841",
-          "32024R1991",
-          "32018R0841",
-          "32023R0839"
+          "32023R0956",
+          "32018R0841"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.3333333333333333,
         "top_k": 5
       },
       {
         "query_id": "q008",
-        "query": "What is the EU's legally binding 2050 climate neutrality target and governance framework?",
+        "query": "Where exactly is the EU's promise to be climate neutral by 2050 written into law?",
         "relevant_celex_ids": [
           "32021R1119"
         ],
         "retrieved_celex_ids": [
           "32023R0857",
           "32021R1119",
-          "32026R0667",
           "32021R1119",
-          "32024R1991"
+          "32021R1056",
+          "32021R1056"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
@@ -2653,16 +2653,16 @@
       },
       {
         "query_id": "q009",
-        "query": "What due diligence obligations do large companies have regarding adverse environmental impacts in their value chains?",
+        "query": "Do big firms have to check that their suppliers aren't wrecking the environment?",
         "relevant_celex_ids": [
           "32024L1760"
         ],
         "retrieved_celex_ids": [
           "32024L1760",
-          "32024L1760",
-          "32024L1760",
-          "32024L1760",
-          "32024L1760"
+          "32019L1161",
+          "32023L1791",
+          "32015R0757",
+          "32023L1791"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -2670,193 +2670,33 @@
       },
       {
         "query_id": "q010",
-        "query": "What financial support does the Social Climate Fund provide to households and vulnerable groups affected by carbon pricing?",
+        "query": "Is there EU money to help poorer households cope when carbon prices push up their bills?",
         "relevant_celex_ids": [
           "32023R0955"
         ],
         "retrieved_celex_ids": [
+          "32023R0435",
+          "32023R0435",
           "32023R0955",
-          "32023R0955",
-          "32023R0955",
-          "32023L1791",
+          "32026R0667",
           "32023R0955"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q011",
-        "query": "What are the minimum energy performance requirements for buildings under EU energy efficiency law?",
-        "relevant_celex_ids": [
-          "32018L2002",
-          "32023L1791"
-        ],
-        "retrieved_celex_ids": [
-          "32023L1791",
-          "32023L1791",
-          "32023L1791",
-          "32018L2002",
-          "32023L1791"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q012",
-        "query": "How are emission allowances auctioned in Phase 4 of the EU Emissions Trading System?",
-        "relevant_celex_ids": [
-          "32003L0087",
-          "32023L0959"
-        ],
-        "retrieved_celex_ids": [
-          "32023L0959",
-          "32023R0435",
-          "32023R0435",
-          "32008L0101",
-          "32023L0959"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q013",
-        "query": "What reporting obligations apply to importers of goods covered by CBAM during the transitional period before 2026?",
-        "relevant_celex_ids": [
-          "32023R1773",
-          "32023R0956"
-        ],
-        "retrieved_celex_ids": [
-          "32023R0956",
-          "32023R1773",
-          "32023R0956",
-          "32023R0956",
-          "32023R1773"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q014",
-        "query": "What are the procedures for applying to become an authorised CBAM declarant through the CBAM registry?",
-        "relevant_celex_ids": [
-          "32025R0486",
-          "32023R0956"
-        ],
-        "retrieved_celex_ids": [
-          "32025R0486",
-          "32023R0956",
-          "32023R0956",
-          "32023R0956",
-          "32023R0956"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q015",
-        "query": "What technical screening criteria determine whether an economic activity contributes substantially to climate change mitigation under the EU Taxonomy?",
-        "relevant_celex_ids": [
-          "32021R2139",
-          "32020R0852"
-        ],
-        "retrieved_celex_ids": [
-          "32021R2139",
-          "32020R0852",
-          "32021R2139",
-          "32020R0852",
-          "32020R0852"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q016",
-        "query": "What Taxonomy-aligned disclosure obligations apply to financial market participants offering investment products?",
-        "relevant_celex_ids": [
-          "32021R2178",
-          "32020R0852"
-        ],
-        "retrieved_celex_ids": [
-          "32021R2178",
-          "32020R0852",
-          "32021R2178",
-          "32023R2631",
-          "32026R0073"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q017",
-        "query": "What must member states include in their integrated national energy and climate plans and when must they be submitted?",
-        "relevant_celex_ids": [
-          "32018R1999"
-        ],
-        "retrieved_celex_ids": [
-          "32018R1999",
-          "32018R1999",
-          "32018R1999",
-          "32023L1791",
-          "32018R1999"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
-        "top_k": 5
-      },
-      {
-        "query_id": "q018",
-        "query": "What are the annual greenhouse gas inventory submission obligations for EU member states?",
-        "relevant_celex_ids": [
-          "32013R0525",
-          "32014R0749"
-        ],
-        "retrieved_celex_ids": [
-          "32018R1999",
-          "32014R0666",
-          "32018R1999",
-          "32013R0525",
-          "32013R0525"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.25,
-        "top_k": 5
-      },
-      {
-        "query_id": "q019",
-        "query": "What format and content must member states use when reporting national policies and measures to reduce greenhouse gas emissions?",
-        "relevant_celex_ids": [
-          "32020R1208",
-          "32018R1999"
-        ],
-        "retrieved_celex_ids": [
-          "32013R0525",
-          "32022R2299",
-          "32018R1999",
-          "32013R0525",
-          "32018R1999"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.3333333333333333,
         "top_k": 5
       },
       {
-        "query_id": "q020",
-        "query": "What are the obligations for member states to prepare and submit long-term low-emission development strategies to the Commission?",
+        "query_id": "q011",
+        "query": "What's the minimum energy standard a building has to meet under EU rules?",
         "relevant_celex_ids": [
-          "32018R1999"
+          "32018L2002",
+          "32023L1791"
         ],
         "retrieved_celex_ids": [
-          "32013R0525",
-          "32018R1999",
-          "32014R0749",
-          "32023R0857",
+          "32023R0955",
+          "32023L1791",
+          "32023L1791",
+          "32023L1791",
           "32023L1791"
         ],
         "hit_at_k": true,
@@ -2864,35 +2704,195 @@
         "top_k": 5
       },
       {
-        "query_id": "q021",
-        "query": "What monitoring and reporting plan obligations apply to aircraft operators under the EU ETS?",
+        "query_id": "q012",
+        "query": "How does selling carbon permits at auction work in the current trading phase?",
         "relevant_celex_ids": [
+          "32003L0087",
           "32023L0959"
         ],
         "retrieved_celex_ids": [
-          "32008L0101",
-          "32008L0101",
-          "32023L0959",
-          "32015R1844",
-          "32015R1844"
+          "32025R2548",
+          "32025R2548",
+          "32023R0956",
+          "32023R0435",
+          "32024R3012"
+        ],
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q013",
+        "query": "Before the carbon border charge fully kicks in, what paperwork do importers need to file?",
+        "relevant_celex_ids": [
+          "32023R1773",
+          "32023R0956"
+        ],
+        "retrieved_celex_ids": [
+          "32023R0956",
+          "32014R0517",
+          "32014R0517",
+          "32023R0956",
+          "32023R0956"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q014",
+        "query": "How do I get approved as the person allowed to declare carbon for goods I import?",
+        "relevant_celex_ids": [
+          "32025R0486",
+          "32023R0956"
+        ],
+        "retrieved_celex_ids": [
+          "32023R0956",
+          "32023R0956",
+          "32023R0956",
+          "32023R0956",
+          "32025R2083"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q015",
+        "query": "What exact tests prove an activity really helps fight climate change for green-investment purposes?",
+        "relevant_celex_ids": [
+          "32021R2139",
+          "32020R0852"
+        ],
+        "retrieved_celex_ids": [
+          "32020R0852",
+          "32020R0852",
+          "32020R0852",
+          "32024R3012",
+          "32021R2139"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q016",
+        "query": "What do investment funds have to tell people about how green their products actually are?",
+        "relevant_celex_ids": [
+          "32021R2178",
+          "32020R0852"
+        ],
+        "retrieved_celex_ids": [
+          "32020R0852",
+          "32023R2631",
+          "32023L1791",
+          "32023R2631",
+          "32020R0852"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q017",
+        "query": "What goes into a country's combined energy-and-climate plan, and when is it due?",
+        "relevant_celex_ids": [
+          "32018R1999"
+        ],
+        "retrieved_celex_ids": [
+          "32018R1999",
+          "32023L1791",
+          "32014R1307",
+          "32018R1999",
+          "32023R1773"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q018",
+        "query": "How do EU countries report their yearly greenhouse gas totals?",
+        "relevant_celex_ids": [
+          "32013R0525",
+          "32014R0749"
+        ],
+        "retrieved_celex_ids": [
+          "32020R1208",
+          "32018R1999",
+          "32014R0749",
+          "32014R0666",
+          "32025R2083"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.3333333333333333,
         "top_k": 5
       },
       {
+        "query_id": "q019",
+        "query": "In what form do governments have to report the steps they're taking to cut emissions?",
+        "relevant_celex_ids": [
+          "32020R1208",
+          "32018R1999"
+        ],
+        "retrieved_celex_ids": [
+          "32013R0525",
+          "32023R0956",
+          "32022R2299",
+          "32025L2360",
+          "32020R1208"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.2,
+        "top_k": 5
+      },
+      {
+        "query_id": "q020",
+        "query": "Do countries have to send Brussels a long-range plan for going low-carbon?",
+        "relevant_celex_ids": [
+          "32018R1999"
+        ],
+        "retrieved_celex_ids": [
+          "32013R0525",
+          "32014R0749",
+          "32024L1760",
+          "32023R0955",
+          "32018R1999"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.2,
+        "top_k": 5
+      },
+      {
+        "query_id": "q021",
+        "query": "What emissions-tracking plan do airlines have to file under the carbon market?",
+        "relevant_celex_ids": [
+          "32023L0959"
+        ],
+        "retrieved_celex_ids": [
+          "32023L0959",
+          "32025R2358",
+          "32023R0955",
+          "32024R3012",
+          "32023R2631"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
         "query_id": "q022",
-        "query": "How was aviation included in the EU Emissions Trading System and what flights and activities does it cover?",
+        "query": "How did flying get pulled into the EU carbon market, and which flights does it cover?",
         "relevant_celex_ids": [
           "32008L0101",
           "32003L0087"
         ],
         "retrieved_celex_ids": [
           "32008L0101",
+          "32023L0959",
           "32008L0101",
-          "32003L0087",
-          "32023R0956",
-          "32018R0842"
+          "32024R3012",
+          "32023L0959"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -2900,7 +2900,7 @@
       },
       {
         "query_id": "q023",
-        "query": "What obligations do shipping companies have under the EU ETS for maritime greenhouse gas emissions?",
+        "query": "What do shipping companies now owe under the carbon market for their vessels' emissions?",
         "relevant_celex_ids": [
           "32023L0959",
           "32015R0757"
@@ -2910,7 +2910,7 @@
           "32023L0959",
           "32023L0959",
           "32023L0959",
-          "32023L0959"
+          "32025R2083"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -2918,16 +2918,16 @@
       },
       {
         "query_id": "q024",
-        "query": "What minimum proportions of clean and zero-emission vehicles must public contracting authorities procure?",
+        "query": "When a public authority buys vehicles, how many have to be low- or zero-emission?",
         "relevant_celex_ids": [
           "32019L1161"
         ],
         "retrieved_celex_ids": [
           "32019L1161",
           "32019L1161",
+          "32023L1791",
           "32019L1161",
-          "32019L1161",
-          "32023L1791"
+          "32019L1161"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -2935,41 +2935,41 @@
       },
       {
         "query_id": "q025",
-        "query": "What cumulative end-use energy savings must member states achieve under the Energy Efficiency Directive?",
+        "query": "How much energy are member states required to save overall under EU efficiency rules?",
         "relevant_celex_ids": [
           "32023L1791"
         ],
         "retrieved_celex_ids": [
+          "32018L2002",
+          "32018L2002",
           "32023L1791",
-          "32018L2002",
-          "32018L2002",
-          "32018L2002",
+          "32023L1791",
           "32023L1791"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.3333333333333333,
         "top_k": 5
       },
       {
         "query_id": "q026",
-        "query": "What does the energy efficiency first principle require when assessing policy, planning and investment decisions?",
+        "query": "What's the rule that says you should weigh up energy savings first when making policy or investment calls?",
         "relevant_celex_ids": [
           "32023L1791"
         ],
         "retrieved_celex_ids": [
+          "32018L2002",
           "32023L1791",
-          "32023L1791",
-          "32023L1791",
+          "32018L2002",
           "32023L1791",
           "32023L1791"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
         "top_k": 5
       },
       {
         "query_id": "q027",
-        "query": "What requirements must a bond issuer meet to use the European Green Bond or EuGB designation?",
+        "query": "What does a company have to do before it can call its bond an official EU green bond?",
         "relevant_celex_ids": [
           "32023R2631"
         ],
@@ -2986,7 +2986,7 @@
       },
       {
         "query_id": "q028",
-        "query": "What are the registration requirements and supervisory obligations for external reviewers of European Green Bonds?",
+        "query": "How do the outfits that vet green bonds get registered and kept in check?",
         "relevant_celex_ids": [
           "32023R2631",
           "32025R0755"
@@ -2995,7 +2995,7 @@
           "32023R2631",
           "32023R2631",
           "32023R2631",
-          "32025R0755",
+          "32023R2631",
           "32023R2631"
         ],
         "hit_at_k": true,
@@ -3004,24 +3004,24 @@
       },
       {
         "query_id": "q029",
-        "query": "Which territories and people are eligible for support from the Just Transition Fund and on what basis?",
+        "query": "Who can get help from the EU fund for regions hit hardest by moving off fossil fuels?",
         "relevant_celex_ids": [
           "32021R1056"
         ],
         "retrieved_celex_ids": [
-          "32021R1056",
-          "32021R1056",
-          "32021R1056",
-          "32021R1229",
-          "32021R1056"
+          "32025R1914",
+          "32023R0435",
+          "32023R0435",
+          "32025R1914",
+          "32023R0955"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q030",
-        "query": "What eligibility conditions must carbon removal and soil emission reduction activities meet to be certified under EU law?",
+        "query": "What does a carbon-removal or soil project need to qualify for EU certification?",
         "relevant_celex_ids": [
           "32024R3012"
         ],
@@ -3029,8 +3029,8 @@
           "32024R3012",
           "32024R3012",
           "32024R3012",
-          "32024R3012",
-          "32024R3012"
+          "32025R2358",
+          "32025R2358"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3038,7 +3038,7 @@
       },
       {
         "query_id": "q031",
-        "query": "What must a carbon farming operator include in an activity plan and monitoring plan submitted to a certification body?",
+        "query": "If I run a carbon farming scheme, what plans do I have to hand to the certifier?",
         "relevant_celex_ids": [
           "32024R3012",
           "32025R2358"
@@ -3047,8 +3047,8 @@
           "32024R3012",
           "32024R3012",
           "32025R2358",
-          "32025R2358",
-          "32025R2358"
+          "32024R3012",
+          "32024R3012"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3056,7 +3056,7 @@
       },
       {
         "query_id": "q032",
-        "query": "What restoration measures must member states implement for degraded terrestrial habitat types under EU nature restoration law?",
+        "query": "What do countries have to do to bring damaged land habitats back to health under the new EU nature law?",
         "relevant_celex_ids": [
           "32024R1991"
         ],
@@ -3064,7 +3064,7 @@
           "32024R1991",
           "32024R1991",
           "32024R1991",
-          "32024R1991",
+          "32025L2360",
           "32024R1991"
         ],
         "hit_at_k": true,
@@ -3073,41 +3073,41 @@
       },
       {
         "query_id": "q033",
-        "query": "What minimum biofuel proportions must member states ensure are placed on the transport fuel market?",
+        "query": "What share of road fuel was each country meant to make up with biofuel?",
         "relevant_celex_ids": [
           "32003L0030"
         ],
         "retrieved_celex_ids": [
-          "32019L1161",
           "32003L0030",
+          "32018R1999",
+          "32018R1999",
           "32003L0030",
-          "32003L0030",
-          "32018R1999"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
-        "top_k": 5
-      },
-      {
-        "query_id": "q034",
-        "query": "What criteria determine whether grassland used for biofuel feedstock is considered highly biodiverse and therefore excluded from cultivation?",
-        "relevant_celex_ids": [
-          "32014R1307"
-        ],
-        "retrieved_celex_ids": [
-          "32014R1307",
-          "32014R1307",
-          "32003L0030",
-          "32018R0841",
-          "32026R0285"
+          "32019L1161"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
         "top_k": 5
       },
       {
+        "query_id": "q034",
+        "query": "How do you tell whether a meadow is too rich in wildlife to be ploughed up for biofuel crops?",
+        "relevant_celex_ids": [
+          "32014R1307"
+        ],
+        "retrieved_celex_ids": [
+          "32003L0030",
+          "32023R0839",
+          "32018R0841",
+          "32014R1307",
+          "32024R1991"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.25,
+        "top_k": 5
+      },
+      {
         "query_id": "q035",
-        "query": "What are the general objectives of the LIFE Programme for contributing to climate action?",
+        "query": "What's the EU's flagship funding programme for the environment trying to achieve?",
         "relevant_celex_ids": [
           "32021R0783",
           "32013R1293"
@@ -3116,8 +3116,8 @@
           "32013R1293",
           "32021R0783",
           "32021R0783",
-          "32013R1293",
-          "32021R0783"
+          "32021R0783",
+          "32025R1914"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3125,104 +3125,104 @@
       },
       {
         "query_id": "q036",
-        "query": "What is the EU's binding climate target for 2040 and how does it relate to the 2050 neutrality goal?",
+        "query": "Has the EU pinned down a 2040 climate goal yet, and how does it sit with the 2050 one?",
         "relevant_celex_ids": [
           "32021R1119",
           "32026R0667"
         ],
         "retrieved_celex_ids": [
-          "32023R0857",
-          "32021R1119",
           "32026R0667",
           "32021R1119",
-          "32021R1119"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
-        "top_k": 5
-      },
-      {
-        "query_id": "q037",
-        "query": "How does the EU ETS determine free allowance allocation to energy-intensive industries to prevent carbon leakage?",
-        "relevant_celex_ids": [
-          "32003L0087",
-          "32023L0959"
-        ],
-        "retrieved_celex_ids": [
-          "32023R0956",
-          "32023R0956",
-          "32023L0959",
-          "32018R0842",
-          "32023R0956"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
-        "top_k": 5
-      },
-      {
-        "query_id": "q038",
-        "query": "What are the objectives and scope of the EU framework for soil monitoring and reducing harmful contamination?",
-        "relevant_celex_ids": [
-          "32025L2360"
-        ],
-        "retrieved_celex_ids": [
           "32023R0857",
-          "32025L2360",
-          "32025L2360",
-          "32024R3012",
-          "32025L2360"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
-        "top_k": 5
-      },
-      {
-        "query_id": "q039",
-        "query": "What is the Union Registry and how does it support the tracking of emission allowances under the EU ETS?",
-        "relevant_celex_ids": [
-          "32018R0208",
-          "32003L0087"
-        ],
-        "retrieved_celex_ids": [
-          "32023R0857",
-          "32018R0208",
-          "32018R0842",
-          "32015R1844",
-          "32024R3012"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.5,
-        "top_k": 5
-      },
-      {
-        "query_id": "q040",
-        "query": "What flexibility mechanisms allow member states to borrow, bank or transfer annual emission allocations under the Effort Sharing Regulation?",
-        "relevant_celex_ids": [
-          "32018R0842"
-        ],
-        "retrieved_celex_ids": [
-          "32018R0842",
-          "32018R0841",
-          "32023R0839",
-          "32018R0842",
-          "32023R0857"
+          "32021R1119",
+          "32024L1760"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
         "top_k": 5
       },
       {
+        "query_id": "q037",
+        "query": "Why do some heavy industries get free carbon permits, and how is that amount worked out?",
+        "relevant_celex_ids": [
+          "32003L0087",
+          "32023L0959"
+        ],
+        "retrieved_celex_ids": [
+          "32024R3012",
+          "32023L0959",
+          "32023R1773",
+          "32025R2083",
+          "32023R0857"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.5,
+        "top_k": 5
+      },
+      {
+        "query_id": "q038",
+        "query": "What is the EU planning to do about keeping soil healthy and cutting down on contamination?",
+        "relevant_celex_ids": [
+          "32025L2360"
+        ],
+        "retrieved_celex_ids": [
+          "32025L2360",
+          "32025L2360",
+          "32025L2360",
+          "32025L2360",
+          "32025L2360"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q039",
+        "query": "What's the system that keeps track of who holds which carbon allowances?",
+        "relevant_celex_ids": [
+          "32018R0208",
+          "32003L0087"
+        ],
+        "retrieved_celex_ids": [
+          "32003L0087",
+          "32023R0956",
+          "32023L0959",
+          "32023L0959",
+          "32024R3012"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "top_k": 5
+      },
+      {
+        "query_id": "q040",
+        "query": "Can a country carry forward, stockpile or trade away its yearly emissions budget?",
+        "relevant_celex_ids": [
+          "32018R0842"
+        ],
+        "retrieved_celex_ids": [
+          "32023R0839",
+          "32023R0839",
+          "32025R2083",
+          "32018R0842",
+          "32023R1773"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.25,
+        "top_k": 5
+      },
+      {
         "query_id": "q041",
-        "query": "How are forest reference levels determined and used in LULUCF accounting to assess member state performance?",
+        "query": "How is the baseline for forest emissions set when judging how well a country is doing on land accounting?",
         "relevant_celex_ids": [
           "32018R0841"
         ],
         "retrieved_celex_ids": [
           "32023R0839",
           "32018R0841",
-          "32018R0842",
-          "32024R1991",
-          "32023R0839"
+          "32018R0841",
+          "32023R0839",
+          "32018R0841"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
@@ -3230,31 +3230,31 @@
       },
       {
         "query_id": "q042",
-        "query": "What minimum standards must EU Paris-aligned benchmarks meet regarding greenhouse gas emission exclusions and reductions?",
+        "query": "What minimum rules apply to stock-market indices that claim to line up with the Paris Agreement?",
         "relevant_celex_ids": [
           "32020R1818"
         ],
         "retrieved_celex_ids": [
-          "32020R1818",
-          "32020R1818",
-          "32020R1818",
-          "32020R1818",
+          "32018R0842",
+          "32021R1119",
+          "32026R0667",
+          "32018R0841",
           "32020R1818"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.2,
         "top_k": 5
       },
       {
         "query_id": "q043",
-        "query": "What obligations must companies fulfil when adopting a climate transition plan under the Corporate Sustainability Due Diligence Directive?",
+        "query": "What's expected of a company that puts together a climate plan under the new corporate due-diligence rules?",
         "relevant_celex_ids": [
           "32024L1760"
         ],
         "retrieved_celex_ids": [
           "32024L1760",
-          "32024L1760",
-          "32024L1760",
+          "32015R0757",
+          "32015R0757",
           "32024L1760",
           "32024L1760"
         ],
@@ -3264,35 +3264,35 @@
       },
       {
         "query_id": "q044",
-        "query": "How is the adjustment to the number of CBAM certificates calculated to account for ETS free allocations received by domestic producers?",
+        "query": "How is the carbon-border bill trimmed to account for the free permits domestic producers already get?",
         "relevant_celex_ids": [
           "32025R2620",
           "32023R0956"
         ],
         "retrieved_celex_ids": [
+          "32018L2002",
           "32023R0956",
-          "32025R2620",
+          "32023L1791",
           "32023R0956",
-          "32023R0956",
-          "32025R2083"
+          "32018L2002"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
         "top_k": 5
       },
       {
         "query_id": "q045",
-        "query": "What quality assurance and quality control procedures apply to the compilation of the Union greenhouse gas inventory?",
+        "query": "What quality checks go into putting together the EU-wide greenhouse gas figures?",
         "relevant_celex_ids": [
           "32014R0666",
           "32013R0525"
         ],
         "retrieved_celex_ids": [
           "32014R0666",
-          "32020R1208",
           "32013R0525",
+          "32020R1208",
           "32018R1999",
-          "32014R0749"
+          "32018R1999"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3300,17 +3300,17 @@
       },
       {
         "query_id": "q046",
-        "query": "What progress reporting obligations do member states have under the Energy Union Governance Regulation?",
+        "query": "What progress updates do member states owe under the EU's energy and climate governance setup?",
         "relevant_celex_ids": [
           "32018R1999",
           "32020R1208"
         ],
         "retrieved_celex_ids": [
           "32018R1999",
-          "32022R2299",
+          "32018R1999",
           "32018R1999",
           "32021R1119",
-          "32022R2299"
+          "32018R1999"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3318,25 +3318,25 @@
       },
       {
         "query_id": "q047",
-        "query": "How does the Effort Sharing Regulation allocate annual emission allocations to member states for sectors outside the ETS?",
+        "query": "How are yearly emission limits handed out to countries for the sectors that sit outside the carbon market?",
         "relevant_celex_ids": [
           "32018R0842",
           "32023R0857"
         ],
         "retrieved_celex_ids": [
-          "32023R0857",
-          "32018R0842",
-          "32018R0842",
-          "32018R0842",
+          "32023R0956",
+          "32023L0959",
+          "32023R1773",
+          "32023L0959",
           "32018R0842"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.2,
         "top_k": 5
       },
       {
         "query_id": "q048",
-        "query": "What restoration obligations apply to marine, coastal and freshwater ecosystems under EU nature restoration law?",
+        "query": "What restoration duties cover seas, coasts and rivers under the EU nature law?",
         "relevant_celex_ids": [
           "32024R1991"
         ],
@@ -3353,17 +3353,17 @@
       },
       {
         "query_id": "q049",
-        "query": "What is the do no significant harm principle and how is it assessed for economic activities in the EU Taxonomy framework?",
+        "query": "What's the 'don't make anything else worse' test for activities in the EU green-investment rules?",
         "relevant_celex_ids": [
           "32021R2139",
           "32020R0852"
         ],
         "retrieved_celex_ids": [
-          "32023L0959",
+          "32026R0667",
           "32020R0852",
-          "32020R0852",
-          "32020R0852",
-          "32021R2139"
+          "32025R2358",
+          "32025R1914",
+          "32013R1293"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
@@ -3371,16 +3371,16 @@
       },
       {
         "query_id": "q050",
-        "query": "What must member states include in their national social climate plans to access support from the Social Climate Fund?",
+        "query": "What does a country need to put in its plan to tap the fund that cushions carbon-price impacts?",
         "relevant_celex_ids": [
           "32023R0955"
         ],
         "retrieved_celex_ids": [
           "32023R0955",
           "32023R0955",
+          "32024L1760",
           "32023R0955",
-          "32023R0955",
-          "32021R1056"
+          "32024R1991"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3388,15 +3388,15 @@
       },
       {
         "query_id": "q051",
-        "query": "What types of environmental and transport infrastructure investment does the EU Cohesion Fund support?",
+        "query": "What kind of environment and transport projects does the EU's cohesion money pay for?",
         "relevant_celex_ids": [
           "32013R1300"
         ],
         "retrieved_celex_ids": [
           "32013R1300",
           "32013R1300",
-          "32013R1300",
-          "32013R1300",
+          "32021R0783",
+          "32021R0783",
           "32025R1914"
         ],
         "hit_at_k": true,
@@ -3405,32 +3405,32 @@
       },
       {
         "query_id": "q052",
-        "query": "How is the share of climate-related support calculated for ERDF, ESF and Cohesion Fund programmes?",
+        "query": "How do you work out how much of a regional-funding programme counts as climate spending?",
         "relevant_celex_ids": [
           "32014R0215"
         ],
         "retrieved_celex_ids": [
+          "32013R1293",
+          "32023R0955",
+          "32018R1999",
           "32014R0215",
-          "32023R0435",
-          "32023R0435",
-          "32025R1914",
-          "32025R1914"
+          "32023R0857"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.25,
         "top_k": 5
       },
       {
         "query_id": "q053",
-        "query": "How are Kyoto protocol credits such as CERs and ERUs transferred within the EU ETS registry system?",
+        "query": "How are old Kyoto-era carbon credits like CERs moved around inside the EU registry?",
         "relevant_celex_ids": [
           "32015R1844"
         ],
         "retrieved_celex_ids": [
           "32015R1844",
           "32015R1844",
-          "32014R0662",
           "32015R1844",
+          "32014R0662",
           "32015R1844"
         ],
         "hit_at_k": true,
@@ -3439,16 +3439,16 @@
       },
       {
         "query_id": "q054",
-        "query": "What is the Public Sector Loan Facility and how does it support green and digital transition investments?",
+        "query": "What's the scheme that pairs EU grants with EIB loans for green public projects?",
         "relevant_celex_ids": [
           "32021R1229"
         ],
         "retrieved_celex_ids": [
           "32021R1229",
           "32021R1229",
-          "32023L1791",
-          "32023R0435",
-          "32021R1056"
+          "32021R1229",
+          "32023R2631",
+          "32021R0783"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3456,7 +3456,7 @@
       },
       {
         "query_id": "q055",
-        "query": "What review process applies to the technical screening criteria in the EU Taxonomy Delegated Regulation on climate?",
+        "query": "How and when do the green-investment technical criteria get reviewed?",
         "relevant_celex_ids": [
           "32022R1214",
           "32021R2139"
@@ -3464,27 +3464,27 @@
         "retrieved_celex_ids": [
           "32020R0852",
           "32020R0852",
-          "32021R2139",
-          "32020R0852",
-          "32021R2139"
+          "32023R2631",
+          "32023R2631",
+          "32023R0955"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q056",
-        "query": "What information must member states include in their biennial progress reports on the decarbonisation dimension under the Governance Regulation?",
+        "query": "What goes into the two-yearly progress report on the decarbonisation side of the governance rules?",
         "relevant_celex_ids": [
           "32022R2299",
           "32018R1999"
         ],
         "retrieved_celex_ids": [
           "32022R2299",
-          "32022R2299",
           "32018R1999",
           "32018R1999",
-          "32022R2299"
+          "32023L1791",
+          "32021R1119"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3492,16 +3492,16 @@
       },
       {
         "query_id": "q057",
-        "query": "How does the Recovery and Resilience Facility allocate ETS auction revenues to support the energy transition?",
+        "query": "How does the EU recovery fund steer carbon-auction money into the energy transition?",
         "relevant_celex_ids": [
           "32023R0435"
         ],
         "retrieved_celex_ids": [
           "32023R0435",
-          "32023R0435",
-          "32023R0435",
-          "32023R0435",
-          "32023R0435"
+          "32021R1056",
+          "32025R1914",
+          "32023R0955",
+          "32023L1791"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3509,16 +3509,16 @@
       },
       {
         "query_id": "q058",
-        "query": "What procedures does ESMA follow when investigating infringements of European Green Bond obligations?",
+        "query": "What steps does the EU markets watchdog take when it looks into green-bond rule-breaking?",
         "relevant_celex_ids": [
           "32025R0754",
           "32023R2631"
         ],
         "retrieved_celex_ids": [
           "32023R2631",
+          "32025L2360",
           "32023R2631",
-          "32025R0754",
-          "32023R2631",
+          "32015R0757",
           "32023R2631"
         ],
         "hit_at_k": true,
@@ -3527,17 +3527,17 @@
       },
       {
         "query_id": "q059",
-        "query": "How are areas affected by desertification and long-term climate change impacts identified for carbon farming activities?",
+        "query": "How are drought-stricken and climate-damaged areas pinned down for carbon farming?",
         "relevant_celex_ids": [
           "32025R2043",
           "32024R3012"
         ],
         "retrieved_celex_ids": [
-          "32025R2043",
           "32024R3012",
           "32024R3012",
           "32024R3012",
-          "32025R2043"
+          "32024R3012",
+          "32024R3012"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3545,17 +3545,17 @@
       },
       {
         "query_id": "q060",
-        "query": "What de minimis exemption applies to small importers from the obligations of the Carbon Border Adjustment Mechanism?",
+        "query": "Is there a small-shipment exemption from the EU's carbon border rules?",
         "relevant_celex_ids": [
           "32025R2083",
           "32023R0956"
         ],
         "retrieved_celex_ids": [
-          "32025R2083",
           "32023R0956",
-          "32025R2083",
+          "32024R3012",
           "32023R0956",
-          "32014R0517"
+          "32015R0757",
+          "32024R3012"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3563,14 +3563,14 @@
       },
       {
         "query_id": "q061",
-        "query": "What criteria determine the good repute and professional qualifications required of senior management at external reviewers of European Green Bonds?",
+        "query": "What standards of trustworthiness and qualifications do the bosses at green-bond reviewers need?",
         "relevant_celex_ids": [
           "32025R2180",
           "32023R2631"
         ],
         "retrieved_celex_ids": [
           "32023R2631",
-          "32025R2180",
+          "32023R2631",
           "32025R2180",
           "32023R2631",
           "32023R2631"
@@ -3581,7 +3581,7 @@
       },
       {
         "query_id": "q062",
-        "query": "Under what conditions may a CBAM verifier replace a physical site visit with a virtual inspection?",
+        "query": "When can a carbon-import checker do a remote inspection instead of turning up at the site?",
         "relevant_celex_ids": [
           "32025R2546",
           "32023R0956"
@@ -3590,8 +3590,8 @@
           "32025R2546",
           "32025R2546",
           "32025R2546",
-          "32023R0956",
-          "32025R2083"
+          "32025R2358",
+          "32023R2631"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3599,17 +3599,17 @@
       },
       {
         "query_id": "q063",
-        "query": "How is the quarterly price of CBAM certificates calculated from EU ETS auction clearing prices?",
+        "query": "How is the price of a carbon border certificate set from the EU carbon auction results each quarter?",
         "relevant_celex_ids": [
           "32025R2548",
           "32023R0956"
         ],
         "retrieved_celex_ids": [
           "32025R2548",
-          "32023R0956",
-          "32025R2548",
-          "32025R2548",
-          "32025R2548"
+          "32023R1773",
+          "32025R2083",
+          "32024R3012",
+          "32023R0956"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3617,7 +3617,7 @@
       },
       {
         "query_id": "q064",
-        "query": "What exclusion criteria apply to companies with significant involvement in fossil fuel activities under EU Paris-aligned benchmarks?",
+        "query": "Which companies get shut out of Paris-aligned investment indices because of their fossil fuel ties?",
         "relevant_celex_ids": [
           "32025R1775",
           "32020R1818"
@@ -3625,9 +3625,9 @@
         "retrieved_celex_ids": [
           "32020R1818",
           "32020R1818",
-          "32023R2631",
           "32020R1818",
-          "32020R1818"
+          "32023R2631",
+          "32014R0749"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3635,7 +3635,7 @@
       },
       {
         "query_id": "q065",
-        "query": "What derogations from Taxonomy disclosure requirements are available for small and medium-sized portfolio companies?",
+        "query": "Do smaller companies get any kind of break from the EU green-investment disclosure rules?",
         "relevant_celex_ids": [
           "32026R0073",
           "32021R2178"
@@ -3643,9 +3643,9 @@
         "retrieved_celex_ids": [
           "32021R2178",
           "32021R2178",
-          "32023R2631",
-          "32026R0073",
-          "32024L1760"
+          "32024L1760",
+          "32024L1760",
+          "32020R0852"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
@@ -3653,15 +3653,15 @@
       },
       {
         "query_id": "q066",
-        "query": "What certification methodology applies to direct air capture with carbon storage activities under the Carbon Removal Certification Framework?",
+        "query": "How do projects that suck carbon out of the air and bury it get certified under the EU removal rules?",
         "relevant_celex_ids": [
           "32026R0285",
           "32024R3012"
         ],
         "retrieved_celex_ids": [
+          "32024R3012",
+          "32024R3012",
           "32026R0285",
-          "32024R3012",
-          "32024R3012",
           "32024R3012",
           "32024R3012"
         ],
@@ -3671,7 +3671,7 @@
       },
       {
         "query_id": "q067",
-        "query": "What are the annual LULUCF emission and removal limit values applicable to member states between 2026 and 2029?",
+        "query": "What yearly land-sector emission and removal limits apply to countries from 2026 to 2029?",
         "relevant_celex_ids": [
           "32026R0893",
           "32018R0841"
@@ -3681,7 +3681,7 @@
           "32023R0839",
           "32026R0893",
           "32018R0842",
-          "32023R0857"
+          "32018R0842"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.3333333333333333,
@@ -3689,31 +3689,14 @@
       },
       {
         "query_id": "q068",
-        "query": "How can member states use the European Social Fund Plus to support workers and communities affected by natural disasters?",
+        "query": "Can the EU social fund be tapped to help workers and towns recover after a natural disaster?",
         "relevant_celex_ids": [
           "32024R3236"
         ],
         "retrieved_celex_ids": [
-          "32021R0783",
-          "32023R0435",
           "32024R3236",
-          "32023R0435",
-          "32021R1056"
-        ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
-        "top_k": 5
-      },
-      {
-        "query_id": "q069",
-        "query": "What ERDF flexibility provisions apply during the mid-term review to redirect funding toward climate resilience?",
-        "relevant_celex_ids": [
-          "32025R1914"
-        ],
-        "retrieved_celex_ids": [
-          "32025R1914",
-          "32025R1914",
-          "32023R0435",
+          "32024R3236",
+          "32024R3236",
           "32023R0435",
           "32023R0435"
         ],
@@ -3722,33 +3705,50 @@
         "top_k": 5
       },
       {
+        "query_id": "q069",
+        "query": "What wiggle room is there at the mid-point review to shift regional funds toward climate resilience?",
+        "relevant_celex_ids": [
+          "32025R1914"
+        ],
+        "retrieved_celex_ids": [
+          "32023R0435",
+          "32018R1999",
+          "32025R1914",
+          "32025L2360",
+          "32025R1914"
+        ],
+        "hit_at_k": true,
+        "reciprocal_rank": 0.3333333333333333,
+        "top_k": 5
+      },
+      {
         "query_id": "q070",
-        "query": "What changes were made to the common reporting tables that member states use for Governance Regulation progress reports?",
+        "query": "What changed in the standard reporting tables countries use for their governance progress reports?",
         "relevant_celex_ids": [
           "32024R1281",
           "32020R1208"
         ],
         "retrieved_celex_ids": [
-          "32024R1281",
-          "32022R2299",
-          "32022R2299",
+          "32018R1999",
           "32014R0749",
+          "32014R0749",
+          "32022R2299",
           "32014R0749"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
         "top_k": 5
       },
       {
         "query_id": "q071",
-        "query": "What uniform format must member states follow when submitting their national restoration plan under the Nature Restoration Regulation?",
+        "query": "What standard template do countries have to use when handing in their nature restoration plans?",
         "relevant_celex_ids": [
           "32025R0912",
           "32024R1991"
         ],
         "retrieved_celex_ids": [
           "32024R1991",
-          "32025R0912",
+          "32024R1991",
           "32024R1991",
           "32024R1991",
           "32024R1991"

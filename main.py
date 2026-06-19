@@ -1,5 +1,5 @@
 """
-main.py — Lexico-Semantic Fusion Legal RAG: end-to-end pipeline entry point.
+main.py - Lexico-Semantic Fusion Legal RAG: end-to-end pipeline entry point.
 
 Execution modes (controlled by --mode flag):
   index      : Load corpus, build dense + sparse indices, persist to disk.
@@ -46,7 +46,7 @@ from src.retrieval.sparse import SparseRetriever
 # ── Logging setup ─────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(name)s — %(message)s",
+    format="%(asctime)s [%(levelname)s] %(name)s - %(message)s",
     datefmt="%H:%M:%S",
     stream=sys.stdout,
 )
@@ -77,6 +77,8 @@ def _build_controller(dense: DenseRetriever, sparse: SparseRetriever) -> RankFus
         rrf_k=settings.rrf_k,
         top_k_retrieval=settings.top_k_retrieval,
         top_k_fused=settings.top_k_fused,
+        dense_weight=settings.rrf_dense_weight,
+        sparse_weight=settings.rrf_sparse_weight,
     )
 
 
@@ -183,7 +185,7 @@ def run_baselines() -> None:
     """
     Run ablation study: BM25-only vs Dense-only vs Hybrid RRF.
 
-    Produces a side-by-side comparison table — essential for validating
+    Produces a side-by-side comparison table - essential for validating
     that hybrid fusion outperforms each individual retriever.
     """
     console.rule("[bold blue]Stage: Baselines[/bold blue]")
@@ -244,7 +246,7 @@ def run_pipeline(query: str) -> None:
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _print_fused_results(query: str, fused: list) -> None:
-    table = Table(title=f"Fused Retrieval Results — '{query[:60]}…'", show_lines=True)
+    table = Table(title=f"Fused Retrieval Results - '{query[:60]}…'", show_lines=True)
     table.add_column("Rank", style="bold cyan", width=5)
     table.add_column("CELEX ID", style="yellow", width=22)
     table.add_column("Article", width=14)
