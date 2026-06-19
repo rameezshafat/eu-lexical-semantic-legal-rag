@@ -15,6 +15,108 @@ Hybrid RRF     Hit@5 1.0000   MRR@5 0.8674
 Writing down everything I think we need to fix or at least talk about before
 the paper. Roughly in order of how much it worries me.
 
+---
+
+## UPDATE - I went ahead and rewrote the queries, and it changes the story
+
+After writing the notes below I actually did the thing I was worried about: I
+rewrote all 71 queries so they sound like a real person asking, stripped out the
+statute wording and the instrument names, and tagged 19 of them "hard" (the ones
+where the question uses completely different words from the law, e.g. "the
+don't-make-anything-else-worse test" instead of "do no significant harm"). The
+CELEX mappings are unchanged, only the question text. Then I re-ran everything.
+
+The leakage was real and it was basically holding BM25 up. Same corpus, same
+indices, just the de-leaked queries:
+
+```
+              before (leaky)        after (realistic queries)
+BM25 only     0.9577 / 0.8397   ->  0.6901 / 0.5408
+BGE-M3 only   0.9859 / 0.8901   ->  0.9577 / 0.8291
+Hybrid RRF    1.0000 / 0.8674   ->  0.9437 / 0.7448
+                                    (Hit@5 / MRR@5)
+```
+
+BM25 falls off a cliff (-27 points hit, -30 MRR). Dense barely moves (-3, -6)
+because it works on meaning not words. And the thing nobody wanted to see:
+the hybrid is now WORSE than dense-only on both metrics. Equal-weight RRF is
+blending BM25's bad rankings into dense's good ones and dragging it down. So
+"hybrid wins" is dead on the realistic benchmark.
+
+### Experiment 1 - can weighting dense higher save the hybrid?
+
+Added per-retriever weights to the fusion (`rrf_dense_weight` / `rrf_sparse_weight`
+in config, plumbed through the controller) and swept the dense:sparse ratio.
+Script is `scripts/sweep_weights.py`.
+
+```
+System         Hit@5    MRR@5
+BM25 only      0.6901   0.5408
+BGE-M3 only    0.9577   0.8291   <- the bar to beat
+Hybrid 1:1     0.9437   0.7448
+Hybrid 2:1     0.9437   0.7408
+Hybrid 3:1     0.9437   0.7549
+Hybrid 5:1     0.9437   0.7570
+Hybrid 10:1    0.9437   0.7852
+```
+
+Weighting dense up does help - MRR climbs from 0.745 toward 0.785 - but it only
+ever approaches dense-only from below and never beats it. Makes sense: crank the
+dense weight to infinity and the hybrid just becomes dense-only. There is no
+ratio where adding BM25 improves on pure dense. Hit@5 is stuck at 0.9437 the whole
+way, which is exactly one query that dense alone gets but any amount of BM25 weight
+knocks out of the top 5.
+
+### Experiment 2 - does BM25 at least win on the keyword-heavy queries?
+
+This was my last hope for a fusion story - maybe BM25 wins on the "standard"
+queries (the ones still using fairly legal wording) even if it loses on the hard
+ones, in which case the contribution becomes query routing instead of blind
+fusion. Split the results by the difficulty tag. Script is
+`scripts/breakdown_by_difficulty.py`.
+
+```
+System         standard (n=52)        hard (n=19)
+BM25 only      Hit 0.731  MRR 0.589   Hit 0.579  MRR 0.408
+BGE-M3 only    Hit 0.942  MRR 0.813   Hit 1.000  MRR 0.873
+Hybrid 1:1     Hit 0.923  MRR 0.727   Hit 1.000  MRR 0.794
+```
+
+BM25 loses in BOTH buckets, even the keyword-heavy one (0.731 vs 0.942). So
+routing won't save it either - there's no slice where lexical or fusion beats
+dense. Funny detail: dense is actually better on the hard queries (1.000) than
+the standard ones (0.942), because the hard ones are weirdly worded but
+conceptually sharp, which is exactly what embeddings are good at. The standard
+bucket has the genuinely ambiguous multi-document queries that trip everything up.
+
+### So what's the actual paper now
+
+I think we stop trying to prove "hybrid wins" because on a clean benchmark it
+doesn't. The honest and more interesting story is: once you remove query-corpus
+vocabulary leakage, dense retrieval beats BM25 and fusion across every query type,
+and naive fusion actively hurts. That's a proper negative/cautionary result for
+legal RAG and we've got the mechanism and the numbers to back it up. It's a better
+paper than the one we were going to write.
+
+Big caveats before any of this goes in the paper, in fairness:
+
+- I wrote these queries myself, which is exactly the thing the notes below say we
+  shouldn't do. They need a blind second author and someone checking the relevance
+  judgements. Treat these numbers as directional, not final.
+- I deliberately took away BM25's best case by never putting instrument names or
+  article numbers in the queries. Real users mostly don't know those, so I think
+  it's fair, but if our users include experts who do cite article numbers, that
+  group needs its own queries before we write BM25 off completely.
+- Still document-level scoring, and n=19 on the hard bucket is small. We need the
+  significance tests and article-level scoring before trusting the exact margins.
+  The direction is clear though.
+
+Everything below is the original notes. Most of it still stands; the gold-standard
+section is now partly done (queries rewritten, still need blind validation and
+article-level judgements).
+
+---
+
 ## The gold standard is too easy
 
 This is the big one. Hit@5 of 1.0 across all 71 queries is not a good sign, it
