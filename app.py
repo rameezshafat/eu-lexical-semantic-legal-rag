@@ -1,14 +1,14 @@
 """
-app.py — Demo UI for the Lexico-Semantic Fusion Legal RAG system.
+app.py - Demo UI for the Lexico-Semantic Fusion Legal RAG system.
 
 Run:
     pip install gradio==6.15.2
     python app.py
 
 Graceful degradation by capability:
-  Full RAG       — hybrid retrieval + LLM generation   (Ollama running with llama3.3:70b)
-  Retrieval-only — hybrid BM25 + BGE-M3, no LLM        (dense index exists, Ollama not running)
-  Sparse-only    — BM25 only, fully offline             (no index needed)
+  Full RAG       - hybrid retrieval + LLM generation   (Ollama running with llama3.3:70b)
+  Retrieval-only - hybrid BM25 + BGE-M3, no LLM        (dense index exists, Ollama not running)
+  Sparse-only    - BM25 only, fully offline             (no index needed)
 """
 
 from __future__ import annotations
@@ -61,6 +61,8 @@ if _HAS_DENSE:
         rrf_k=settings.rrf_k,
         top_k_retrieval=settings.top_k_retrieval,
         top_k_fused=settings.top_k_fused,
+        dense_weight=settings.rrf_dense_weight,
+        sparse_weight=settings.rrf_sparse_weight,
     )
     print("  Dense (BGE-M3) index + RankFusionController loaded")
 
@@ -407,12 +409,12 @@ _PIPELINE_DESC = (
     "&nbsp;→&nbsp; Reciprocal Rank Fusion &nbsp;→&nbsp; LLM (Ollama cited answer)"
 )
 
-with gr.Blocks(title="EU Climate Law — Legal RAG") as demo:
+with gr.Blocks(title="EU Climate Law - Legal RAG") as demo:
 
     # ── Hero ─────────────────────────────────────────────────────────────────
     gr.HTML(f"""
     <div class="hero">
-      <h1>EU Climate Law — Legal RAG</h1>
+      <h1>EU Climate Law - Legal RAG</h1>
       <p class="subtitle">
         Ask questions in plain English. Get answers grounded in EU legislation,
         with every claim cited to a specific article.
@@ -443,7 +445,7 @@ with gr.Blocks(title="EU Climate Law — Legal RAG") as demo:
 
             gr.HTML('<div class="sample-label">Example queries</div>')
             for topic, q in _SAMPLES.items():
-                gr.Button(f"{topic} — {q[:55]}…", size="sm", variant="secondary").click(
+                gr.Button(f"{topic} - {q[:55]}…", size="sm", variant="secondary").click(
                     fn=lambda text=q: text,
                     outputs=query_box,
                 )
@@ -492,15 +494,15 @@ with gr.Blocks(title="EU Climate Law — Legal RAG") as demo:
       <b style="color:#374151;">Provenance legend:</b>
       <span style="background:#fef9c3;border:1px solid #fbbf24;color:#92400e;
                    padding:2px 8px;border-radius:10px;font-weight:600;">
-        ● BM25 #n · Dense #n — found by both retrievers (strongest signal)
+        ● BM25 #n · Dense #n - found by both retrievers (strongest signal)
       </span>
       <span style="background:#eff6ff;border:1px solid #93c5fd;color:#1e40af;
                    padding:2px 8px;border-radius:10px;font-weight:600;">
-        ◆ Dense #n — semantic match only
+        ◆ Dense #n - semantic match only
       </span>
       <span style="background:#f0fdf4;border:1px solid #86efac;color:#14532d;
                    padding:2px 8px;border-radius:10px;font-weight:600;">
-        ◈ BM25 #n — keyword match only
+        ◈ BM25 #n - keyword match only
       </span>
     </div>
     """)

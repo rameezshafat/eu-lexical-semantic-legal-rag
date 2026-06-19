@@ -28,6 +28,11 @@ class Settings(BaseSettings):
     rrf_k: int = 60
     top_k_retrieval: int = 20
     top_k_fused: int = 5
+    # Per-retriever fusion weights. Equal (1.0/1.0) = standard RRF. Raising
+    # rrf_dense_weight relative to rrf_sparse_weight favours the dense retriever
+    # in the merged ranking - useful when one retriever is much stronger.
+    rrf_dense_weight: float = 1.0
+    rrf_sparse_weight: float = 1.0
 
     # ── LLM Generation ───────────────────────────────────────────────────────
     llm_model: str = "llama3.3:70b"
@@ -50,5 +55,5 @@ class Settings(BaseSettings):
         return Path(self.index_dir) / "sparse.bm25.pkl"
 
 
-# Module-level singleton — import this everywhere
+# Module-level singleton - import this everywhere
 settings = Settings()

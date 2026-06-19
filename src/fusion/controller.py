@@ -1,15 +1,18 @@
 """
 Rank Fusion Controller: the core brain of the Lexico-Semantic Fusion system.
 
-Algorithm: Reciprocal Rank Fusion (RRF)
+Algorithm: (Weighted) Reciprocal Rank Fusion (RRF)
 ----------------------------------------
 Given two ranked lists L_dense and L_sparse, each document d receives:
 
-    RRF(d) = Σ_r  1 / (k + rank_r(d))
+    RRF(d) = Σ_r  w_r / (k + rank_r(d))
 
 where k = 60 (literature default, Cormack et al. 2009) dampens the influence
 of very high-ranked documents so that presence in both lists consistently
-outscores dominance in a single list.
+outscores dominance in a single list. The per-retriever weights w_r default
+to 1.0 (standard unweighted RRF); raising the dense weight relative to the
+sparse weight lets a stronger retriever dominate the merge - useful when the
+two retrievers differ substantially in quality.
 
 Design principles
 -----------------
@@ -61,12 +64,16 @@ class RankFusionController:
         rrf_k: int = 60,
         top_k_retrieval: int = 20,
         top_k_fused: int = 5,
+        dense_weight: float = 1.0,
+        sparse_weight: float = 1.0,
     ) -> None:
-        self._dense   = dense_retriever
-        self._sparse  = sparse_retriever
-        self._rrf_k   = rrf_k
-        self._top_k_r = top_k_retrieval
-        self._top_k_f = top_k_fused
+        self._dense        = dense_retriever
+        self._sparse       = sparse_retriever
+        self._rrf_k        = rrf_k
+        self._top_k_r      = top_k_retrieval
+        self._top_k_f      = top_k_fused
+        self._dense_weight  = dense_weight
+        self._sparse_weight = sparse_weight
 
     # ── Public API ────────────────────────────────────────────────────────────
 
@@ -148,7 +155,7 @@ class RankFusionController:
 
         if len(failures) == 2:
             raise RuntimeError(
-                f"Both retrievers failed — cannot fuse results. "
+                f"Both retrievers failed - cannot fuse results. "
                 f"Dense error: {failures.get('dense')}; "
                 f"Sparse error: {failures.get('sparse')}"
             )
@@ -182,13 +189,13 @@ class RankFusionController:
 
         for result in dense_results:
             doc_id = result.doc_id
-            rrf_scores[doc_id]    += 1.0 / (self._rrf_k + result.rank)
+            rrf_scores[doc_id]    += self._dense_weight / (self._rrf_k + result.rank)
             dense_ranks[doc_id]    = result.rank
             article_store[doc_id]  = result.article
 
         for result in sparse_results:
             doc_id = result.doc_id
-            rrf_scores[doc_id]    += 1.0 / (self._rrf_k + result.rank)
+            rrf_scores[doc_id]    += self._sparse_weight / (self._rrf_k + result.rank)
             sparse_ranks[doc_id]   = result.rank
             article_store.setdefault(doc_id, result.article)
 
