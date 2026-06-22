@@ -16,7 +16,11 @@ class Settings(BaseSettings):
     )
 
     # ── Dense retrieval ───────────────────────────────────────────────────────
-    dense_model: str = "BAAI/bge-m3"
+    # bge-large-en-v1.5 is a pure bi-encoder (no sparse/ColBERT components).
+    # This keeps the dense baseline clean for comparison against BM25 and the
+    # hybrid RRF system.  Do NOT switch back to bge-m3: its multi-functional
+    # training contaminates the dense-vs-sparse investigation.
+    dense_model: str = "BAAI/bge-large-en-v1.5"
     dense_embed_dim: int = 1024
     dense_batch_size: int = 64
 
