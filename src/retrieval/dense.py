@@ -1,13 +1,24 @@
 """
-Dense retriever: BGE-M3 embeddings stored in a FAISS flat index.
+Dense retriever: pure bi-encoder embeddings stored in a FAISS flat index.
 
 Architecture
 ------------
-- Embedding model : BAAI/bge-m3  (1024-dim, multilingual, top MTEB performer)
+- Embedding model : BAAI/bge-large-en-v1.5  (1024-dim, pure dense bi-encoder)
 - Index type      : IndexFlatIP on L2-normalised vectors  ≡ cosine similarity
 - Persistence     : faiss.write_index / read_index + pickle for article map
 - Batching        : texts are embedded in chunks of `batch_size` to stay within
                     memory limits during large corpus indexing
+
+Why bge-large-en-v1.5 and not bge-m3
+--------------------------------------
+bge-m3 is a multi-functional model trained jointly for dense, sparse (SPLADE-
+style), and ColBERT-style retrieval.  Using it as the "dense" baseline
+contaminates the comparison: its dense vectors already encode sparse/lexical
+signals, so adding BM25 via RRF does not cleanly add a new signal.
+
+bge-large-en-v1.5 is a pure bi-encoder trained only for dense retrieval.
+This gives a clean three-way comparison:
+  BM25 (pure lexical)  vs  bge-large (pure semantic)  vs  RRF hybrid (both)
 
 The index stores all document vectors; at query time only one embedding call
 is made, then FAISS returns exact nearest-neighbours in sub-millisecond time.
@@ -28,13 +39,21 @@ from src.retrieval.base import BaseRetriever
 
 log = logging.getLogger(__name__)
 
-_FAISS_FILE = "dense.faiss"
-_MAP_FILE   = "dense_article_map.pkl"
+_FAISS_FILE   = "dense.faiss"
+_MAP_FILE     = "dense_article_map.pkl"
+
+# BGE retrieval models expect a short instruction prepended to queries at
+# inference time.  Documents are encoded without any prefix.
+# Source: https://huggingface.co/BAAI/bge-large-en-v1.5
+_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 
 
 class DenseRetriever(BaseRetriever):
     """
-    Cosine-similarity retriever backed by BGE-M3 embeddings and FAISS.
+    Cosine-similarity retriever backed by a pure bi-encoder and FAISS.
+
+    Uses BAAI/bge-large-en-v1.5 by default: a pure dense model with no sparse
+    or ColBERT components, enabling a clean comparison against BM25.
 
     Parameters
     ----------
@@ -48,7 +67,7 @@ class DenseRetriever(BaseRetriever):
 
     def __init__(
         self,
-        model: str = "BAAI/bge-m3",
+        model: str = "BAAI/bge-large-en-v1.5",
         embed_dim: int = 1024,
         batch_size: int = 64,
     ) -> None:
@@ -72,7 +91,7 @@ class DenseRetriever(BaseRetriever):
 
     def index(self, articles: list[LegalArticle]) -> None:
         """
-        Embed all articles with BGE-M3 and load them into FAISS.
+        Embed all articles (no prefix) and load them into FAISS.
         """
         log.info("Dense indexing: embedding %d articles …", len(articles))
 
@@ -108,15 +127,18 @@ class DenseRetriever(BaseRetriever):
 
     def retrieve(self, query: str, top_k: int) -> list[RetrievedResult]:
         """
-        Embed *query* with prompt_name='query' and return top-k nearest articles.
+        Embed *query* with the BGE query prefix and return top-k nearest articles.
+
+        BGE bi-encoders use asymmetric encoding: documents are embedded as-is
+        but queries are prefixed with a short instruction so the model produces
+        a retrieval-oriented representation rather than a symmetric similarity.
         """
         if not self.is_indexed:
             raise RuntimeError("DenseRetriever has not been indexed yet.")
 
         q_vec = self._model.encode(
-            [query],
+            [_QUERY_PREFIX + query],
             normalize_embeddings=True,
-            prompt_name="query",
         )
         q_vec = np.array(q_vec, dtype=np.float32)
         faiss.normalize_L2(q_vec)
