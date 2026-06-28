@@ -9,7 +9,14 @@ import tempfile
 import unittest
 from unittest.mock import MagicMock
 
-from src.evaluation.evaluator import Evaluator, _base_celex
+import math
+
+from src.evaluation.evaluator import (
+    Evaluator,
+    _base_celex,
+    _count_hard_negatives,
+    _ndcg,
+)
 from src.models.schemas import FusedResult, LegalArticle
 
 
@@ -136,6 +143,82 @@ class TestMRR(unittest.TestCase):
         hit, rr = Evaluator._score(["32003L0087"], ["32003L0087R(02)"])
         self.assertTrue(hit)
         self.assertAlmostEqual(rr, 1.0)
+
+
+class TestNDCG(unittest.TestCase):
+
+    def test_single_relevant_at_rank_one(self):
+        result = _ndcg({"32003L0087"}, ["32003L0087", "32020R0852"], k=5)
+        self.assertAlmostEqual(result, 1.0)
+
+    def test_single_relevant_at_rank_two(self):
+        result = _ndcg({"32003L0087"}, ["32020R0852", "32003L0087"], k=5)
+        expected = (1.0 / math.log2(3)) / (1.0 / math.log2(2))
+        self.assertAlmostEqual(result, expected, places=6)
+
+    def test_no_relevant_returned_is_zero(self):
+        result = _ndcg({"32003L0087"}, ["32020R0852", "32023R0956"], k=5)
+        self.assertAlmostEqual(result, 0.0)
+
+    def test_two_relevant_both_at_top(self):
+        result = _ndcg(
+            {"32003L0087", "32020R0852"},
+            ["32003L0087", "32020R0852", "32023R0956"],
+            k=5,
+        )
+        self.assertAlmostEqual(result, 1.0)
+
+    def test_two_relevant_one_missing(self):
+        result = _ndcg(
+            {"32003L0087", "32020R0852"},
+            ["32003L0087", "32023R0956", "32023L0959"],
+            k=3,
+        )
+        self.assertGreater(result, 0.0)
+        self.assertLess(result, 1.0)
+
+    def test_corrigendum_counts_as_relevant(self):
+        result = _ndcg({"32003L0087"}, ["32003L0087R(02)"], k=5)
+        self.assertAlmostEqual(result, 1.0)
+
+    def test_empty_retrieved_is_zero(self):
+        result = _ndcg({"32003L0087"}, [], k=5)
+        self.assertAlmostEqual(result, 0.0)
+
+
+class TestHardNegativeCount(unittest.TestCase):
+
+    def test_counts_hard_negative_in_results(self):
+        count = _count_hard_negatives(
+            {"32008L0101"},
+            ["32003L0087", "32008L0101", "32020R0852"],
+            k=5,
+        )
+        self.assertEqual(count, 1)
+
+    def test_no_hard_negatives_returns_zero(self):
+        count = _count_hard_negatives(
+            {"32008L0101"},
+            ["32003L0087", "32020R0852"],
+            k=5,
+        )
+        self.assertEqual(count, 0)
+
+    def test_hard_negative_outside_top_k_not_counted(self):
+        count = _count_hard_negatives(
+            {"32008L0101"},
+            ["32003L0087", "32020R0852", "32008L0101"],
+            k=2,
+        )
+        self.assertEqual(count, 0)
+
+    def test_multiple_hard_negatives_all_counted(self):
+        count = _count_hard_negatives(
+            {"32008L0101", "32018L2002"},
+            ["32008L0101", "32018L2002", "32003L0087"],
+            k=5,
+        )
+        self.assertEqual(count, 2)
 
 
 if __name__ == "__main__":

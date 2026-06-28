@@ -137,6 +137,14 @@ class GoldQuery(BaseModel):
     relevant_celex_ids: list[str] = Field(
         ..., min_length=1, description="Ground-truth CELEX IDs for this query"
     )
+    hard_negative_celex_ids: list[str] = Field(
+        default_factory=list,
+        description=(
+            "CELEX IDs that share surface vocabulary with this query but are legally "
+            "incorrect answers. Used to compute HN_Rate@k and test discrimination."
+        ),
+    )
+    difficulty: str = "standard"
     notes: str = ""
 
 
@@ -156,6 +164,14 @@ class EvaluatedQuery(BaseModel):
     reciprocal_rank: float = Field(
         description="1/rank of the first relevant result, 0 if not found"
     )
+    ndcg_at_k: float = Field(
+        default=0.0,
+        description="Normalised Discounted Cumulative Gain at cut-off k",
+    )
+    hard_negatives_in_top_k: int = Field(
+        default=0,
+        description="Count of annotated hard-negative documents retrieved in top-k",
+    )
     top_k: int
 
     @model_validator(mode="after")
@@ -172,6 +188,17 @@ class EvaluationReport(BaseModel):
     top_k: int
     hit_rate: float = Field(description="Hit_Rate@k = fraction of queries with a hit")
     mrr: float = Field(description="Mean Reciprocal Rank across all queries")
+    ndcg: float = Field(
+        default=0.0,
+        description="Mean NDCG@k across all queries",
+    )
+    hard_negative_rate: float = Field(
+        default=0.0,
+        description=(
+            "Mean fraction of top-k slots occupied by hard-negative documents, "
+            "computed only over queries that have annotated hard negatives."
+        ),
+    )
     per_query: list[EvaluatedQuery]
 
     @property
@@ -179,5 +206,7 @@ class EvaluationReport(BaseModel):
         return (
             f"Queries: {self.total_queries} | "
             f"Hit_Rate@{self.top_k}: {self.hit_rate:.4f} | "
-            f"MRR@{self.top_k}: {self.mrr:.4f}"
+            f"MRR@{self.top_k}: {self.mrr:.4f} | "
+            f"NDCG@{self.top_k}: {self.ndcg:.4f} | "
+            f"HN_Rate@{self.top_k}: {self.hard_negative_rate:.4f}"
         )
