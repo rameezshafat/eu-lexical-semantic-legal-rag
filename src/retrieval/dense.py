@@ -3,25 +3,31 @@ Dense retriever: pure bi-encoder embeddings stored in a FAISS flat index.
 
 Architecture
 ------------
-- Embedding model : BAAI/bge-large-en-v1.5  (1024-dim, pure dense bi-encoder)
+- Embedding model : nomic-ai/nomic-embed-text-v1.5  (768-dim, pure dense bi-encoder)
+- Context window  : 8192 tokens — eliminates the 512-token truncation problem
+                    of bge-large-en-v1.5 for long EU legislative articles
 - Index type      : IndexFlatIP on L2-normalised vectors  ≡ cosine similarity
 - Persistence     : faiss.write_index / read_index + pickle for article map
 - Batching        : texts are embedded in chunks of `batch_size` to stay within
                     memory limits during large corpus indexing
 
-Why bge-large-en-v1.5 and not bge-m3
---------------------------------------
+Why nomic-embed-text-v1.5 and not bge-m3
+------------------------------------------
 bge-m3 is a multi-functional model trained jointly for dense, sparse (SPLADE-
 style), and ColBERT-style retrieval.  Using it as the "dense" baseline
 contaminates the comparison: its dense vectors already encode sparse/lexical
 signals, so adding BM25 via RRF does not cleanly add a new signal.
 
-bge-large-en-v1.5 is a pure bi-encoder trained only for dense retrieval.
-This gives a clean three-way comparison:
-  BM25 (pure lexical)  vs  bge-large (pure semantic)  vs  RRF hybrid (both)
+nomic-embed-text-v1.5 is a pure bi-encoder trained only for dense retrieval,
+with an 8192-token context window. This gives a clean three-way comparison:
+  BM25 (pure lexical)  vs  nomic-embed (pure semantic)  vs  RRF hybrid (both)
 
-The index stores all document vectors; at query time only one embedding call
-is made, then FAISS returns exact nearest-neighbours in sub-millisecond time.
+Asymmetric encoding
+-------------------
+nomic-embed-text-v1.5 requires task prefixes on BOTH queries and documents:
+  queries   : "search_query: "    + query_text
+  documents : "search_document: " + article_text
+Omitting either prefix causes measurable quality degradation.
 """
 
 from __future__ import annotations
@@ -39,21 +45,22 @@ from src.retrieval.base import BaseRetriever
 
 log = logging.getLogger(__name__)
 
-_FAISS_FILE   = "dense.faiss"
-_MAP_FILE     = "dense_article_map.pkl"
+_FAISS_FILE = "dense.faiss"
+_MAP_FILE   = "dense_article_map.pkl"
 
-# BGE retrieval models expect a short instruction prepended to queries at
-# inference time.  Documents are encoded without any prefix.
-# Source: https://huggingface.co/BAAI/bge-large-en-v1.5
-_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
+# nomic-embed-text-v1.5 uses asymmetric task prefixes for both queries and
+# documents. Source: https://huggingface.co/nomic-ai/nomic-embed-text-v1.5
+_QUERY_PREFIX = "search_query: "
+_DOC_PREFIX   = "search_document: "
 
 
 class DenseRetriever(BaseRetriever):
     """
     Cosine-similarity retriever backed by a pure bi-encoder and FAISS.
 
-    Uses BAAI/bge-large-en-v1.5 by default: a pure dense model with no sparse
-    or ColBERT components, enabling a clean comparison against BM25.
+    Uses nomic-ai/nomic-embed-text-v1.5 by default: a pure dense model with
+    an 8192-token context window and no sparse or ColBERT components, enabling
+    a clean comparison against BM25 without truncating long legal articles.
 
     Parameters
     ----------
@@ -67,12 +74,12 @@ class DenseRetriever(BaseRetriever):
 
     def __init__(
         self,
-        model: str = "BAAI/bge-large-en-v1.5",
-        embed_dim: int = 1024,
+        model: str = "nomic-ai/nomic-embed-text-v1.5",
+        embed_dim: int = 768,
         batch_size: int = 64,
     ) -> None:
         self._model_name = model
-        self._model      = SentenceTransformer(model)
+        self._model      = SentenceTransformer(model, trust_remote_code=True)
         self._embed_dim  = embed_dim
         self._batch_size = batch_size
 
@@ -91,11 +98,11 @@ class DenseRetriever(BaseRetriever):
 
     def index(self, articles: list[LegalArticle]) -> None:
         """
-        Embed all articles (no prefix) and load them into FAISS.
+        Embed all articles with the document prefix and load them into FAISS.
         """
         log.info("Dense indexing: embedding %d articles …", len(articles))
 
-        texts = [a.article_text for a in articles]
+        texts = [_DOC_PREFIX + a.article_text for a in articles]
 
         matrix = self._model.encode(
             texts,
@@ -127,11 +134,11 @@ class DenseRetriever(BaseRetriever):
 
     def retrieve(self, query: str, top_k: int) -> list[RetrievedResult]:
         """
-        Embed *query* with the BGE query prefix and return top-k nearest articles.
+        Embed *query* with the search_query prefix and return top-k nearest articles.
 
-        BGE bi-encoders use asymmetric encoding: documents are embedded as-is
-        but queries are prefixed with a short instruction so the model produces
-        a retrieval-oriented representation rather than a symmetric similarity.
+        nomic-embed-text-v1.5 uses asymmetric encoding: queries are prefixed
+        with "search_query: " and documents with "search_document: " so the
+        model produces task-appropriate representations for retrieval.
         """
         if not self.is_indexed:
             raise RuntimeError("DenseRetriever has not been indexed yet.")
