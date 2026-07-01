@@ -1,7 +1,7 @@
 # Lexico-Semantic Fusion for EU Climate Law Retrieval
 
 A hybrid retrieval-augmented generation (RAG) system for EU climate legislation.
-Combines BM25 lexical search with BGE-M3 dense retrieval, fused via
+Combines BM25 lexical search with nomic-embed-text-v1.5 dense retrieval, fused via
 Reciprocal Rank Fusion (RRF), and grounded answer generation via Llama 3.3 70B (Ollama).
 
 ---
@@ -11,7 +11,7 @@ Reciprocal Rank Fusion (RRF), and grounded answer generation via Llama 3.3 70B (
 Given a natural-language legal question, the system:
 
 1. Retrieves relevant legislative articles from 72 EU climate law documents
-   using both keyword search (BM25) and semantic search (BGE-M3 + FAISS)
+   using both keyword search (BM25) and semantic search (nomic-embed-text-v1.5 + FAISS)
 2. Fuses both ranked lists into a single ranking using Reciprocal Rank Fusion
 3. Generates a strictly grounded answer via Llama 3.3 70B (Ollama), with every claim cited
    to a specific `[CELEX_ID — Article N]`
@@ -25,6 +25,7 @@ Given a natural-language legal question, the system:
 | Source | EU CELLAR database (publications.europa.eu) |
 | Documents | 72 EU legislative acts |
 | Articles | 1,156 article-level provisions |
+| Indexed chunks | 1,166 (5 oversized articles split via hierarchical chunking) |
 | Instruments | ETS, CBAM, Taxonomy, LULUCF, F-Gas, MRV, ESR, European Climate Law |
 | Format | JSONL — one line per article |
 | Fields | `celex_id`, `doc_type`, `article_number`, `article_text`, `cross_references`, `concept_ids` |
@@ -37,30 +38,35 @@ The ETL pipeline is in `notebooks/cellar_etl.ipynb`.
 
 ```
 ├── src/
-│   ├── models/schemas.py        # Pydantic data contracts
-│   ├── ingestion/loader.py      # JSONL loader with validation
+│   ├── models/schemas.py           # Pydantic data contracts
+│   ├── ingestion/
+│   │   ├── loader.py               # JSONL loader with validation
+│   │   └── chunker.py              # Hierarchical chunking for oversized articles
 │   ├── retrieval/
-│   │   ├── base.py              # BaseRetriever ABC
-│   │   ├── dense.py             # DenseRetriever (BGE-M3 + FAISS)
-│   │   └── sparse.py            # SparseRetriever (BM25Okapi)
-│   ├── fusion/controller.py     # RankFusionController (concurrent + RRF)
-│   ├── generation/generator.py  # LegalGenerator (Ollama/Llama, strict grounding)
-│   └── evaluation/evaluator.py  # Evaluator (Hit_Rate@k, MRR, baselines)
+│   │   ├── base.py                 # BaseRetriever ABC
+│   │   ├── dense.py                # DenseRetriever (nomic-embed-text-v1.5 + FAISS)
+│   │   └── sparse.py               # SparseRetriever (BM25Okapi)
+│   ├── fusion/controller.py        # RankFusionController (concurrent + RRF)
+│   ├── generation/generator.py     # LegalGenerator (Ollama/Llama, strict grounding)
+│   └── evaluation/evaluator.py     # Evaluator (HR@k, MRR@k, NDCG@k, HN_Rate@k)
 ├── data/
 │   ├── corpus/eu_climate_articles.jsonl
 │   ├── evaluation/gold_standard.json
-│   ├── indices/                 # built by --mode index
-│   └── etl/                     # ETL cache (manifest, raw zips)
+│   ├── indices/                    # built by --mode index
+│   └── etl/                        # ETL cache (manifest, raw zips)
 ├── notebooks/
-│   └── cellar_etl.ipynb         # EU CELLAR ETL pipeline
+│   └── cellar_etl.ipynb            # EU CELLAR ETL pipeline
 ├── docs/
-│   └── first_principles_audit.docx
+│   ├── TECHNICAL_DOCUMENTATION.md
+│   └── evaluation_upgrade_notes.md
 ├── scripts/
-│   └── generate_audit.py
+│   ├── sweep_weights.py            # Weighted-RRF ablation grid search
+│   └── breakdown_by_difficulty.py  # Per-difficulty retrieval breakdown
 ├── tests/
 │   ├── test_retrieval.py
 │   ├── test_fusion.py
-│   └── test_evaluation.py
+│   ├── test_evaluation.py
+│   └── test_chunker.py
 ├── main.py        # CLI entry point
 ├── app.py         # Gradio demo UI
 ├── config.py      # Pydantic BaseSettings
@@ -85,7 +91,7 @@ pip install -r requirements.txt
 ```bash
 # Pull the generation model (one-time, ~40GB)
 ollama pull llama3.3:70b
-# BGE-M3 (~2.3GB) downloads automatically on first run via sentence-transformers
+# nomic-embed-text-v1.5 (~280MB) downloads automatically on first run via sentence-transformers
 ```
 
 ---
@@ -96,7 +102,8 @@ ollama pull llama3.3:70b
 
 ```bash
 python main.py --mode index
-# Embeds 1,156 articles with BGE-M3 (downloads model on first run)
+# Applies hierarchical chunking (1,156 articles → 1,166 chunks)
+# Embeds chunks with nomic-embed-text-v1.5 (downloads model on first run)
 # Saves: data/indices/dense.faiss + data/indices/sparse.bm25.pkl
 ```
 
@@ -109,11 +116,11 @@ python main.py --mode baselines
 This evaluates three systems side by side on the 71-query gold standard:
 
 ```
-System               Hit_Rate@5       MRR@5
-----------------------------------------------
-BM25 (sparse-only)   x.xxxx           x.xxxx
-BGE-M3 (dense-only)  x.xxxx           x.xxxx
-Hybrid RRF (ours)    x.xxxx           x.xxxx
+System                 HR@5      MRR@5     NDCG@5    HN_Rate@5
+----------------------------------------------------------------
+BM25 (sparse-only)     x.xxxx    x.xxxx    x.xxxx    x.xxxx
+nomic-embed (dense)    x.xxxx    x.xxxx    x.xxxx    x.xxxx
+Hybrid RRF (ours)      x.xxxx    x.xxxx    x.xxxx    x.xxxx
 ```
 
 Full per-query results saved to `data/indices/baseline_report.json`.
@@ -142,7 +149,7 @@ No API keys required. All tests are fully offline.
 ```bash
 pip install pytest==9.0.3
 python -m pytest tests/ -v
-# Expected: 35 passed
+# Expected: 63 passed
 ```
 
 ---
@@ -150,19 +157,21 @@ python -m pytest tests/ -v
 ## Evaluation Methodology
 
 **Gold standard:** 71 manually curated queries in `data/evaluation/gold_standard.json`.
-Each query maps to one or more relevant CELEX document IDs.
+Each query maps to one or more relevant CELEX document IDs. 20 of 71 queries also
+carry annotated hard-negative CELEX IDs (documents that share surface vocabulary but
+are legally incorrect answers).
 
 **Metrics:**
-- `Hit_Rate@5` — fraction of queries where at least one relevant document
-  appears in the top-5 results
+- `HR@5` — fraction of queries where at least one relevant document appears in top-5
 - `MRR@5` — mean reciprocal rank of the first relevant result
+- `NDCG@5` — normalised discounted cumulative gain; rewards finding *all* relevant
+  documents at high ranks (38 of 71 queries have 2+ relevant instruments)
+- `HN_Rate@5` — mean fraction of top-5 slots occupied by hard-negative documents
+  (lower is better; computed only over the 20 annotated queries)
 
 **Matching:** CELEX-level (document, not article). Corrigenda suffixes stripped
-before comparison (e.g. `32003L0087R(02)` matches gold `32003L0087`).
-
-**Known limitations:**
-- Some gold queries may reference documents not yet in the corpus. These will always
-  score MRR=0, creating a lower bound on reported metrics.
+before comparison (e.g. `32003L0087R(02)` matches gold `32003L0087`). Sub-chunks
+produced by hierarchical chunking (e.g. `Article 1 §2`) match on the parent CELEX ID.
 
 ---
 
@@ -178,14 +187,24 @@ appropriate for small candidate pools (top-20 per retriever).
 EU legislative articles are semantically self-contained — each article
 addresses one obligation, definition, or procedure. Article-level chunking
 avoids the arbitrary window-size decisions of token-based chunking and
-produces units that align with how lawyers reason about law.
+produces units that align with how lawyers reason about law. Chunking strategy
+is held constant across BM25, dense, and hybrid to avoid confounding the comparison.
 
-**Why BGE-M3?**
-BGE-M3 is free, fully reproducible (no API key required), supports an
-8192-token context window (handles long EU legislative articles without
-truncation), and ranks at the top of the MTEB retrieval benchmark. As a
-domain-agnostic strong baseline it lets any researcher reproduce results
-without cost, which is essential for academic credibility.
+**Why hierarchical chunking for oversized articles?**
+Five articles (all `Article 1` of amending instruments) exceed the 8,192-token
+context window. Rather than excluding them, we split at EU legal paragraph
+boundaries (the `;  (N)` amendment-point separators) and fall back to sentence
+boundaries where needed. Each sub-chunk carries the parent CELEX ID, so
+evaluation and citation are unaffected.
+
+**Why nomic-embed-text-v1.5?**
+nomic-embed-text-v1.5 is a pure bi-encoder trained exclusively for dense
+retrieval, with an 8,192-token context window. This gives a clean three-way
+comparison — BM25 (pure lexical) vs nomic-embed (pure semantic) vs Hybrid RRF
+(both) — without the contamination introduced by multi-functional models that
+jointly encode sparse and dense signals. The model is fully reproducible (no API
+key), downloaded automatically via sentence-transformers, and requires asymmetric
+task prefixes: `"search_query: "` on queries, `"search_document: "` on documents.
 
 **Why strict grounding in the system prompt?**
 Legal analysis requires traceable claims. A response that cites
@@ -200,8 +219,9 @@ All hyperparameters are in `config.py` / `.env`. Key settings:
 
 | Parameter | Default | Effect |
 |---|---|---|
-| `dense_model` | `BAAI/bge-m3` | Embedding model |
-| `dense_embed_dim` | `1024` | Must match model output |
+| `dense_model` | `nomic-ai/nomic-embed-text-v1.5` | Embedding model |
+| `dense_embed_dim` | `768` | Must match model output dimension |
+| `chunk_token_limit` | `7000` | Max tokens per chunk (hierarchical splitting) |
 | `bm25_k1` | `1.5` | Term frequency saturation |
 | `bm25_b` | `0.75` | Document length normalization |
 | `rrf_k` | `60` | RRF smoothing constant |
@@ -215,7 +235,7 @@ All hyperparameters are in `config.py` / `.env`. Key settings:
 ## Limitations
 
 1. **Corpus completeness** — 72 documents covers the core EU climate acquis
-   but excludes delegated acts, implementing regulations, and amendments.
+   but excludes delegated acts, implementing regulations, and some amendments.
 2. **Gold standard size** — 71 queries provides reasonable coverage but
    independent validation of a subset is recommended before publication.
 3. **No temporal filtering** — the system treats all corpus documents as
