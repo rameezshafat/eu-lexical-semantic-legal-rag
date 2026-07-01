@@ -39,6 +39,7 @@ from config import settings
 from src.evaluation.evaluator import Evaluator
 from src.fusion.controller import RankFusionController
 from src.generation.generator import LegalGenerator
+from src.ingestion.chunker import apply_hierarchical_chunking
 from src.ingestion.loader import CorpusLoader
 from src.retrieval.dense import DenseRetriever
 from src.retrieval.sparse import SparseRetriever
@@ -96,13 +97,14 @@ def _load_indices(dense: DenseRetriever, sparse: SparseRetriever) -> None:
 # ─────────────────────────────────────────────────────────────────────────────
 
 def run_index() -> None:
-    """Load corpus, embed with BGE-M3, build BM25, persist both indices."""
+    """Load corpus, apply hierarchical chunking, build BM25 + dense indices."""
     console.rule("[bold blue]Stage: Index[/bold blue]")
 
     loader   = CorpusLoader(settings.corpus_path)
     articles = loader.load()
+    articles = apply_hierarchical_chunking(articles, settings.chunk_token_limit)
 
-    console.print(f"Loaded [bold]{len(articles)}[/bold] articles from [cyan]{settings.corpus_path}[/cyan]")
+    console.print(f"Loaded [bold]{len(articles)}[/bold] chunks from [cyan]{settings.corpus_path}[/cyan]")
 
     dense  = _build_dense_retriever()
     sparse = _build_sparse_retriever()
@@ -111,7 +113,7 @@ def run_index() -> None:
     sparse.index(articles)
     sparse.save(settings.index_dir)
 
-    console.print("\n[yellow]Building dense (BGE-M3) index…[/yellow]")
+    console.print("\n[yellow]Building dense (nomic-embed-text-v1.5) index…[/yellow]")
     dense.index(articles)
     dense.save(settings.index_dir)
 

@@ -15,6 +15,11 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
+    # ── Chunking ──────────────────────────────────────────────────────────────
+    # Token limit per chunk (approx: chars // 4). Set below the nomic model's
+    # 8,192-token context window to leave headroom for the task prefix.
+    chunk_token_limit: int = 7000
+
     # ── Dense retrieval ───────────────────────────────────────────────────────
     # nomic-embed-text-v1.5 is a pure bi-encoder with an 8192-token context
     # window, eliminating the 512-token truncation problem of bge-large-en-v1.5
