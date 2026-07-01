@@ -41,7 +41,7 @@ Baselines
 run_baselines() evaluates three conditions in one pass for paper-quality
 ablations:
   - sparse_only : BM25 retrieval, no fusion
-  - dense_only  : bge-large-en-v1.5 + FAISS, no fusion
+  - dense_only  : nomic-embed-text-v1.5 + FAISS, no fusion
   - hybrid      : RRF-fused dense + sparse (the proposed system)
 """
 
@@ -111,7 +111,7 @@ class BaselineReport:
 
         rows.append(_row("BM25 (sparse-only)", self.sparse_only))
         if self.dense_only:
-            rows.append(_row("bge-large (dense-only)", self.dense_only))
+            rows.append(_row("nomic-embed (dense-only)", self.dense_only))
         rows.append(_row("Hybrid RRF (ours)", self.hybrid))
         return "\n".join(rows)
 
