@@ -70,7 +70,7 @@ def main() -> None:
 
     systems = {
         "BM25 only":   _SingleRetrieverWrapper(sparse, settings.top_k_fused),
-        "BGE-M3 only": _SingleRetrieverWrapper(dense, settings.top_k_fused),
+        "nomic-embed only": _SingleRetrieverWrapper(dense, settings.top_k_fused),
         "Hybrid 1:1":  RankFusionController(
             dense_retriever=dense, sparse_retriever=sparse,
             rrf_k=settings.rrf_k, top_k_retrieval=settings.top_k_retrieval,

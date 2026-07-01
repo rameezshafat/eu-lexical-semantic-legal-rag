@@ -7,7 +7,7 @@ Run:
 
 Graceful degradation by capability:
   Full RAG       - hybrid retrieval + LLM generation   (Ollama running with llama3.3:70b)
-  Retrieval-only - hybrid BM25 + BGE-M3, no LLM        (dense index exists, Ollama not running)
+  Retrieval-only - hybrid BM25 + nomic-embed, no LLM    (dense index exists, Ollama not running)
   Sparse-only    - BM25 only, fully offline             (no index needed)
 """
 
@@ -19,6 +19,7 @@ from pathlib import Path
 import gradio as gr
 
 from config import settings
+from src.ingestion.chunker import apply_hierarchical_chunking
 from src.ingestion.loader import CorpusLoader
 from src.retrieval.sparse import SparseRetriever
 
@@ -31,8 +32,10 @@ _HAS_DENSE = (_INDEX_DIR / "dense.faiss").exists()
 
 print("Initialising demo…")
 _loader   = CorpusLoader(settings.corpus_path)
-_articles = _loader.load()
-print(f"  {len(_articles)} articles loaded")
+_articles = apply_hierarchical_chunking(
+    _loader.load(), settings.chunk_token_limit
+)
+print(f"  {len(_articles)} chunks loaded")
 
 _sparse = SparseRetriever(k1=settings.bm25_k1, b=settings.bm25_b)
 if (_INDEX_DIR / "sparse.bm25.pkl").exists():
@@ -64,7 +67,7 @@ if _HAS_DENSE:
         dense_weight=settings.rrf_dense_weight,
         sparse_weight=settings.rrf_sparse_weight,
     )
-    print("  Dense (BGE-M3) index + RankFusionController loaded")
+    print("  Dense (nomic-embed-text-v1.5) index + RankFusionController loaded")
 
 try:
     from src.generation.generator import LegalGenerator
@@ -357,7 +360,7 @@ def handle_query(query: str):
     if _controller:
         fused   = _controller.fuse_results(query)
         results = fused
-        mode    = "Hybrid (BM25 + BGE-M3 + RRF)"
+        mode    = "Hybrid (BM25 + nomic-embed + RRF)"
     else:
         raw     = _sparse.retrieve(query, top_k=settings.top_k_fused)
         # Wrap as FusedResult-compatible objects for uniform rendering
@@ -403,9 +406,9 @@ def handle_query(query: str):
 
 # ── Gradio layout ─────────────────────────────────────────────────────────────
 
-_CORPUS_COUNTS = f"{len(_articles):,} articles · 72 EU legislative acts"
+_CORPUS_COUNTS = f"{len(_articles):,} chunks · 72 EU legislative acts"
 _PIPELINE_DESC = (
-    "BM25 lexical search &nbsp;+&nbsp; BGE-M3 semantic search "
+    "BM25 lexical search &nbsp;+&nbsp; nomic-embed-text-v1.5 semantic search "
     "&nbsp;→&nbsp; Reciprocal Rank Fusion &nbsp;→&nbsp; LLM (Ollama cited answer)"
 )
 

@@ -4,7 +4,12 @@ from __future__ import annotations
 
 import pytest
 
-from src.ingestion.chunker import _approx_tokens, _sentence_split, apply_hierarchical_chunking
+from src.ingestion.chunker import (
+    _approx_tokens,
+    _paragraph_split,
+    _sentence_split,
+    apply_hierarchical_chunking,
+)
 from src.models.schemas import LegalArticle
 
 
@@ -37,6 +42,52 @@ class TestApproxTokens:
 
     def test_proportional(self):
         assert _approx_tokens("x" * 8000) == 2000
+
+
+# ── _paragraph_split ─────────────────────────────────────────────────────────
+
+class TestParagraphSplit:
+    _AMENDING_TEXT = (
+        "Regulation (EU) X is amended as follows: (1) Article 2 is replaced "
+        "by the following text about climate obligations and targets. "
+        "This is a long provision that spans multiple sentences. "
+        "; (2) Article 5 is deleted in its entirety and replaced with new rules "
+        "on monitoring that apply to all Member States from 2025 onwards. "
+        "; (3) In Article 7, paragraph 1 is amended to read as follows: "
+        "Member States shall report annually."
+    )
+
+    def test_splits_on_amendment_points(self):
+        parts = _paragraph_split(self._AMENDING_TEXT, max_tokens=1000)
+        assert len(parts) == 1  # all fit in one chunk at 1000 tokens
+
+    def test_groups_amendment_points_into_chunks(self):
+        # Make the text large enough to force a split
+        long_seg = "This is a very detailed provision. " * 600  # ~5400 tok per seg
+        text = (
+            f"Regulation amended as follows: (1) {long_seg}"
+            f"; (2) {long_seg}"
+            f"; (3) {long_seg}"
+        )
+        parts = _paragraph_split(text, max_tokens=7000)
+        assert len(parts) >= 2
+        for part in parts:
+            assert _approx_tokens(part) <= 7000
+
+    def test_falls_back_to_sentence_split_without_amendment_markers(self):
+        text = _long_text(15000)  # no "; (N)" markers
+        parts = _paragraph_split(text, max_tokens=7000)
+        assert len(parts) >= 2
+        for part in parts:
+            assert _approx_tokens(part) <= 7000
+
+    def test_no_empty_chunks(self):
+        text = (
+            "Act amended as follows: (1) First amendment is long. " * 400
+            + "; (2) Second amendment. " * 400
+        )
+        parts = _paragraph_split(text, max_tokens=7000)
+        assert all(p.strip() for p in parts)
 
 
 # ── _sentence_split ───────────────────────────────────────────────────────────
