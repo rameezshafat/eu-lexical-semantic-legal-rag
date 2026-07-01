@@ -16,12 +16,13 @@ class Settings(BaseSettings):
     )
 
     # ── Dense retrieval ───────────────────────────────────────────────────────
-    # bge-large-en-v1.5 is a pure bi-encoder (no sparse/ColBERT components).
-    # This keeps the dense baseline clean for comparison against BM25 and the
-    # hybrid RRF system.  Do NOT switch back to bge-m3: its multi-functional
-    # training contaminates the dense-vs-sparse investigation.
-    dense_model: str = "BAAI/bge-large-en-v1.5"
-    dense_embed_dim: int = 1024
+    # nomic-embed-text-v1.5 is a pure bi-encoder with an 8192-token context
+    # window, eliminating the 512-token truncation problem of bge-large-en-v1.5
+    # while keeping the dense baseline clean (no sparse/ColBERT components).
+    # Do NOT switch to bge-m3: its multi-functional training contaminates the
+    # dense-vs-sparse investigation.
+    dense_model: str = "nomic-ai/nomic-embed-text-v1.5"
+    dense_embed_dim: int = 768
     dense_batch_size: int = 64
 
     # ── BM25 / Sparse retrieval ───────────────────────────────────────────────
