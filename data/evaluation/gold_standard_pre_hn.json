@@ -33,9 +33,7 @@
       ],
       "difficulty": "hard",
       "notes": "Taxonomy Regulation 2020/852. 'genuinely green'=environmentally sustainable; instrument unnamed.",
-      "hard_negative_celex_ids": [
-        "32021R2178"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q004",
@@ -46,9 +44,7 @@
       ],
       "difficulty": "standard",
       "notes": "Effort Sharing Regulation 2018/842 + 2023 amendment 2023/857. Non-ETS sectors.",
-      "hard_negative_celex_ids": [
-        "32021R1119"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q005",
@@ -70,9 +66,7 @@
       ],
       "difficulty": "hard",
       "notes": "F-Gas Regulation 2014/517. 'refrigerant-type gases that warm the planet'=fluorinated greenhouse gases.",
-      "hard_negative_celex_ids": [
-        "32013R0525"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q007",
@@ -95,9 +89,7 @@
       ],
       "difficulty": "standard",
       "notes": "European Climate Law 2021/1119.",
-      "hard_negative_celex_ids": [
-        "32018R1999"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q009",
@@ -107,9 +99,7 @@
       ],
       "difficulty": "hard",
       "notes": "CSDDD 2024/1760. Colloquial; 'wrecking the environment'=adverse environmental impacts in value chains.",
-      "hard_negative_celex_ids": [
-        "32020R0852"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q010",
@@ -119,9 +109,7 @@
       ],
       "difficulty": "standard",
       "notes": "Social Climate Fund Regulation 2023/955. 'poorer households'=vulnerable groups.",
-      "hard_negative_celex_ids": [
-        "32021R1056"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q011",
@@ -132,9 +120,7 @@
       ],
       "difficulty": "standard",
       "notes": "EED amendment 2018/2002 + Energy Efficiency Directive recast 2023/1791.",
-      "hard_negative_celex_ids": [
-        "32018R1999"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q012",
@@ -158,9 +144,7 @@
       ],
       "difficulty": "standard",
       "notes": "CBAM transitional implementing reg 2023/1773 + CBAM 2023/956. 'before it fully kicks in'=transitional period.",
-      "hard_negative_celex_ids": [
-        "32025R0486"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q014",
@@ -171,9 +155,7 @@
       ],
       "difficulty": "standard",
       "notes": "CBAM declarant authorisation implementing reg 2025/486 + CBAM 2023/956.",
-      "hard_negative_celex_ids": [
-        "32023R1773"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q015",
@@ -209,9 +191,7 @@
       ],
       "difficulty": "standard",
       "notes": "Governance Regulation 2018/1999, NECPs.",
-      "hard_negative_celex_ids": [
-        "32020R1208"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q018",
@@ -222,9 +202,7 @@
       ],
       "difficulty": "standard",
       "notes": "Monitoring Mechanism Reg 525/2013 + implementing reg 2014/749.",
-      "hard_negative_celex_ids": [
-        "32014R0666"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q019",
@@ -235,9 +213,7 @@
       ],
       "difficulty": "standard",
       "notes": "Governance implementing reg 2020/1208 + 2018/1999. 'steps they're taking'=policies and measures.",
-      "hard_negative_celex_ids": [
-        "32022R2299"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q020",
@@ -247,9 +223,7 @@
       ],
       "difficulty": "standard",
       "notes": "Governance Regulation 2018/1999, long-term strategies.",
-      "hard_negative_celex_ids": [
-        "32021R1119"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q021",
@@ -297,9 +271,7 @@
       ],
       "difficulty": "standard",
       "notes": "Clean Vehicles Directive 2019/1161.",
-      "hard_negative_celex_ids": [
-        "32023L1791"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q025",
@@ -346,9 +318,7 @@
       ],
       "difficulty": "hard",
       "notes": "EuGB 2023/2631 + implementing reg 2025/755 on ESMA fees. 'outfits that vet'=external reviewers.",
-      "hard_negative_celex_ids": [
-        "32025R0754"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q029",
@@ -358,9 +328,7 @@
       ],
       "difficulty": "standard",
       "notes": "Just Transition Fund Regulation 2021/1056.",
-      "hard_negative_celex_ids": [
-        "32023R0955"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q030",
@@ -370,9 +338,7 @@
       ],
       "difficulty": "standard",
       "notes": "Carbon Removal Certification Framework 2024/3012.",
-      "hard_negative_celex_ids": [
-        "32020R0852"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q031",
@@ -383,9 +349,7 @@
       ],
       "difficulty": "standard",
       "notes": "CRCF 2024/3012 + implementing reg 2025/2358 on monitoring plan structure.",
-      "hard_negative_celex_ids": [
-        "32026R0285"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q032",
@@ -395,9 +359,7 @@
       ],
       "difficulty": "standard",
       "notes": "Nature Restoration Regulation 2024/1991, terrestrial habitats.",
-      "hard_negative_celex_ids": [
-        "32018R0841"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q033",
@@ -407,9 +369,7 @@
       ],
       "difficulty": "standard",
       "notes": "Biofuels Directive 2003/30. Past tense reflects the older directive.",
-      "hard_negative_celex_ids": [
-        "32014R1307"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q034",
@@ -419,9 +379,7 @@
       ],
       "difficulty": "hard",
       "notes": "Implementing Reg 2014/1307 on grassland sustainability. 'too rich in wildlife'=highly biodiverse grassland.",
-      "hard_negative_celex_ids": [
-        "32003L0030"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q035",
@@ -432,9 +390,7 @@
       ],
       "difficulty": "standard",
       "notes": "LIFE Programme 2021/783 (2021-27) + predecessor 2013/1293.",
-      "hard_negative_celex_ids": [
-        "32021R1056"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q036",
@@ -445,9 +401,7 @@
       ],
       "difficulty": "standard",
       "notes": "European Climate Law 2021/1119 + amendment 2026/667 adding the 2040 target.",
-      "hard_negative_celex_ids": [
-        "32018R1999"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q037",
@@ -470,9 +424,7 @@
       ],
       "difficulty": "standard",
       "notes": "Soil Monitoring Directive 2025/2360.",
-      "hard_negative_celex_ids": [
-        "32024R1991"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q039",
@@ -519,9 +471,7 @@
       ],
       "difficulty": "standard",
       "notes": "Delegated Reg 2020/1818, Paris-aligned and Climate Transition Benchmarks.",
-      "hard_negative_celex_ids": [
-        "32021R2178"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q043",
@@ -531,9 +481,7 @@
       ],
       "difficulty": "standard",
       "notes": "CSDDD 2024/1760, climate transition plans.",
-      "hard_negative_celex_ids": [
-        "32021R2178"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q044",
@@ -557,9 +505,7 @@
       ],
       "difficulty": "standard",
       "notes": "Union GHG Inventory Reg 2014/666 + Monitoring Mechanism 525/2013. Note: Union-level, vs q018 member-state level.",
-      "hard_negative_celex_ids": [
-        "32014R0749"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q046",
@@ -570,9 +516,7 @@
       ],
       "difficulty": "standard",
       "notes": "Governance Regulation 2018/1999 + implementing reg 2020/1208.",
-      "hard_negative_celex_ids": [
-        "32022R2299"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q047",
@@ -583,9 +527,7 @@
       ],
       "difficulty": "standard",
       "notes": "Effort Sharing Reg 2018/842 + 2023 amendment 2023/857.",
-      "hard_negative_celex_ids": [
-        "32021R1119"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q048",
@@ -595,9 +537,7 @@
       ],
       "difficulty": "standard",
       "notes": "Nature Restoration Regulation 2024/1991, marine/coastal/freshwater.",
-      "hard_negative_celex_ids": [
-        "32015R0757"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q049",
@@ -620,9 +560,7 @@
       ],
       "difficulty": "standard",
       "notes": "Social Climate Fund Regulation 2023/955, national social climate plans.",
-      "hard_negative_celex_ids": [
-        "32021R1056"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q051",
@@ -632,9 +570,7 @@
       ],
       "difficulty": "standard",
       "notes": "Cohesion Fund Regulation 2013/1300.",
-      "hard_negative_celex_ids": [
-        "32021R1056"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q052",
@@ -644,9 +580,7 @@
       ],
       "difficulty": "hard",
       "notes": "Implementing Reg 2014/215, methodology for climate-tagged structural fund expenditure.",
-      "hard_negative_celex_ids": [
-        "32020R0852"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q053",
@@ -656,9 +590,7 @@
       ],
       "difficulty": "standard",
       "notes": "Implementing Reg 2015/1844, transfer of CERs and ERUs.",
-      "hard_negative_celex_ids": [
-        "32018R0208"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q054",
@@ -668,9 +600,7 @@
       ],
       "difficulty": "standard",
       "notes": "Public Sector Loan Facility Regulation 2021/1229.",
-      "hard_negative_celex_ids": [
-        "32021R1056"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q055",
@@ -681,9 +611,7 @@
       ],
       "difficulty": "standard",
       "notes": "Taxonomy amendment 2022/1214 (review provision) + Delegated Reg 2021/2139.",
-      "hard_negative_celex_ids": [
-        "32020R0852"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q056",
@@ -694,9 +622,7 @@
       ],
       "difficulty": "standard",
       "notes": "Governance reporting implementing reg 2022/2299 + 2018/1999. 'two-yearly'=biennial.",
-      "hard_negative_celex_ids": [
-        "32020R1208"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q057",
@@ -706,9 +632,7 @@
       ],
       "difficulty": "standard",
       "notes": "RRF amendment 2023/435, REPowerEU chapter and ETS revenue.",
-      "hard_negative_celex_ids": [
-        "32003L0087"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q058",
@@ -719,9 +643,7 @@
       ],
       "difficulty": "hard",
       "notes": "EuGB enforcement implementing reg 2025/754 + EuGB 2023/2631. 'EU markets watchdog'=ESMA.",
-      "hard_negative_celex_ids": [
-        "32025R0755"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q059",
@@ -732,9 +654,7 @@
       ],
       "difficulty": "hard",
       "notes": "CRCF implementing reg 2025/2043 (aridity/climate-impact definitions) + CRCF 2024/3012.",
-      "hard_negative_celex_ids": [
-        "32025R2358"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q060",
@@ -745,9 +665,7 @@
       ],
       "difficulty": "hard",
       "notes": "CBAM amendment 2025/2083 (de minimis threshold) + CBAM 2023/956. 'small-shipment exemption'=de minimis.",
-      "hard_negative_celex_ids": [
-        "32023R1773"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q061",
@@ -758,9 +676,7 @@
       ],
       "difficulty": "hard",
       "notes": "EuGB implementing reg 2025/2180 (repute criteria) + EuGB 2023/2631. 'trustworthiness'=good repute.",
-      "hard_negative_celex_ids": [
-        "32025R0754"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q062",
@@ -771,9 +687,7 @@
       ],
       "difficulty": "standard",
       "notes": "CBAM verification implementing reg 2025/2546 + CBAM 2023/956.",
-      "hard_negative_celex_ids": [
-        "32025R0486"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q063",
@@ -784,9 +698,7 @@
       ],
       "difficulty": "standard",
       "notes": "CBAM certificate price implementing reg 2025/2548 + CBAM 2023/956.",
-      "hard_negative_celex_ids": [
-        "32003L0087"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q064",
@@ -797,9 +709,7 @@
       ],
       "difficulty": "standard",
       "notes": "Climate benchmarks amendment 2025/1775 + Paris-aligned Benchmarks 2020/1818.",
-      "hard_negative_celex_ids": [
-        "32021R2178"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q065",
@@ -810,9 +720,7 @@
       ],
       "difficulty": "hard",
       "notes": "Taxonomy disclosure amendment 2026/73 (SME derogations) + Delegated Reg 2021/2178. 'any kind of break'=derogation.",
-      "hard_negative_celex_ids": [
-        "32020R0852"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q066",
@@ -823,9 +731,7 @@
       ],
       "difficulty": "hard",
       "notes": "CRCF implementing reg 2026/285 (DACCS methodology) + CRCF 2024/3012. 'suck carbon out of the air and bury it'=direct air capture with storage.",
-      "hard_negative_celex_ids": [
-        "32025R2043"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q067",
@@ -848,9 +754,7 @@
       ],
       "difficulty": "standard",
       "notes": "ESF+ amendment 2024/3236, support for natural-disaster consequences.",
-      "hard_negative_celex_ids": [
-        "32021R1056"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q069",
@@ -860,9 +764,7 @@
       ],
       "difficulty": "standard",
       "notes": "ERDF amendment 2025/1914, mid-term review flexibility.",
-      "hard_negative_celex_ids": [
-        "32021R1056"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q070",
@@ -873,9 +775,7 @@
       ],
       "difficulty": "standard",
       "notes": "Governance reporting amendment 2024/1281 + implementing reg 2020/1208.",
-      "hard_negative_celex_ids": [
-        "32022R2299"
-      ]
+      "hard_negative_celex_ids": []
     },
     {
       "query_id": "q071",
@@ -886,9 +786,7 @@
       ],
       "difficulty": "standard",
       "notes": "Nature Restoration plan format implementing reg 2025/912 + Nature Restoration 2024/1991.",
-      "hard_negative_celex_ids": [
-        "32018R1999"
-      ]
+      "hard_negative_celex_ids": []
     }
   ]
 }

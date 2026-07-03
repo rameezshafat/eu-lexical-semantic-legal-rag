@@ -1,0 +1,59 @@
+{
+  "metric": "reciprocal_rank",
+  "metric_label": "MRR",
+  "n_queries": 22,
+  "alpha": 0.05,
+  "comparisons": [
+    {
+      "comparison": "H1: Hybrid vs BM25",
+      "label_a": "Hybrid RRF",
+      "label_b": "BM25",
+      "n": 22,
+      "mean_a": 0.7606,
+      "mean_b": 0.6136,
+      "mean_diff": 0.147,
+      "wilcoxon_W": 8.5,
+      "p_value": 0.09544,
+      "effect_r": 0.8168,
+      "effect_r_interpretation": "large",
+      "cohen_d": 0.3708,
+      "cohen_d_interpretation": "small",
+      "significant": false,
+      "direction": "higher"
+    },
+    {
+      "comparison": "H2: Hybrid vs Dense",
+      "label_a": "Hybrid RRF",
+      "label_b": "Dense-only",
+      "n": 22,
+      "mean_a": 0.7606,
+      "mean_b": 0.7765,
+      "mean_diff": -0.0159,
+      "wilcoxon_W": 15.0,
+      "p_value": 0.666632,
+      "effect_r": 0.7718,
+      "effect_r_interpretation": "large",
+      "cohen_d": -0.0558,
+      "cohen_d_interpretation": "negligible",
+      "significant": false,
+      "direction": "lower"
+    },
+    {
+      "comparison": "H3: Dense vs BM25",
+      "label_a": "Dense-only",
+      "label_b": "BM25",
+      "n": 22,
+      "mean_a": 0.7765,
+      "mean_b": 0.6136,
+      "mean_diff": 0.1629,
+      "wilcoxon_W": 25.0,
+      "p_value": 0.148945,
+      "effect_r": 0.7026,
+      "effect_r_interpretation": "large",
+      "cohen_d": 0.3067,
+      "cohen_d_interpretation": "small",
+      "significant": false,
+      "direction": "higher"
+    }
+  ]
+}

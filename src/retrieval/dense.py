@@ -36,9 +36,12 @@ import logging
 import pickle
 from typing import Literal
 
+# sentence_transformers must be imported before faiss — loading the nomic-bert
+# custom architecture after faiss causes a segfault (native library conflict).
+from sentence_transformers import SentenceTransformer
+
 import faiss
 import numpy as np
-from sentence_transformers import SentenceTransformer
 
 from src.models.schemas import LegalArticle, RetrievedResult
 from src.retrieval.base import BaseRetriever
@@ -62,6 +65,16 @@ class DenseRetriever(BaseRetriever):
     an 8192-token context window and no sparse or ColBERT components, enabling
     a clean comparison against BM25 without truncating long legal articles.
 
+    To use intfloat/e5-large-v2 as an alternative baseline:
+        DenseRetriever(
+            model="intfloat/e5-large-v2",
+            embed_dim=1024,
+            query_prefix="query: ",
+            doc_prefix="passage: ",
+            trust_remote_code=False,
+            index_prefix="dense_e5",
+        )
+
     Parameters
     ----------
     model:
@@ -70,6 +83,19 @@ class DenseRetriever(BaseRetriever):
         Dimension of the embedding vectors produced by *model*.
     batch_size:
         Number of texts to embed per encoding call.
+    device:
+        Torch device string ('cpu', 'cuda', 'mps'). Defaults to 'cpu' because
+        nomic-bert uses custom ops that segfault on MPS (Apple Silicon).
+    query_prefix:
+        Text prepended to every query before encoding.
+    doc_prefix:
+        Text prepended to every document before encoding.
+    trust_remote_code:
+        Passed to SentenceTransformer — required for nomic-bert custom ops.
+    index_prefix:
+        Filename stem for the FAISS index and article map files.
+        Defaults to "dense" (→ dense.faiss, dense_article_map.pkl).
+        Set to e.g. "dense_e5" to keep multiple indices side by side.
     """
 
     def __init__(
@@ -77,14 +103,22 @@ class DenseRetriever(BaseRetriever):
         model: str = "nomic-ai/nomic-embed-text-v1.5",
         embed_dim: int = 768,
         batch_size: int = 64,
+        device: str = "cpu",
+        query_prefix: str = _QUERY_PREFIX,
+        doc_prefix: str = _DOC_PREFIX,
+        trust_remote_code: bool = True,
+        index_prefix: str = "dense",
     ) -> None:
-        self._model_name = model
-        self._model      = SentenceTransformer(model, trust_remote_code=True)
-        self._embed_dim  = embed_dim
-        self._batch_size = batch_size
+        self._model_name      = model
+        self._model           = SentenceTransformer(model, trust_remote_code=trust_remote_code, device=device)
+        self._embed_dim       = embed_dim
+        self._batch_size      = batch_size
+        self._query_prefix    = query_prefix
+        self._doc_prefix      = doc_prefix
+        self._index_prefix    = index_prefix
 
-        self._index: faiss.IndexFlatIP | None = None
-        self._article_map: list[LegalArticle] = []
+        self._index:       faiss.IndexFlatIP | None = None
+        self._article_map: list[LegalArticle]       = []
 
     # ── BaseRetriever interface ───────────────────────────────────────────────
 
@@ -102,7 +136,7 @@ class DenseRetriever(BaseRetriever):
         """
         log.info("Dense indexing: embedding %d articles …", len(articles))
 
-        texts = [_DOC_PREFIX + a.article_text for a in articles]
+        texts = [self._doc_prefix + a.article_text for a in articles]
 
         matrix = self._model.encode(
             texts,
@@ -144,7 +178,7 @@ class DenseRetriever(BaseRetriever):
             raise RuntimeError("DenseRetriever has not been indexed yet.")
 
         q_vec = self._model.encode(
-            [_QUERY_PREFIX + query],
+            [self._query_prefix + query],
             normalize_embeddings=True,
         )
         q_vec = np.array(q_vec, dtype=np.float32)
@@ -182,21 +216,25 @@ class DenseRetriever(BaseRetriever):
             raise RuntimeError(
                 "DenseRetriever cannot save: index() or load() must be called first."
             )
-        dir_path = self._resolve_dir(directory)
+        dir_path  = self._resolve_dir(directory)
+        faiss_file = f"{self._index_prefix}.faiss"
+        map_file   = f"{self._index_prefix}_article_map.pkl"
 
-        faiss.write_index(self._index, str(dir_path / _FAISS_FILE))
-        with open(dir_path / _MAP_FILE, "wb") as f:
+        faiss.write_index(self._index, str(dir_path / faiss_file))
+        with open(dir_path / map_file, "wb") as f:
             pickle.dump(self._article_map, f)
 
-        log.info("Dense index saved to %s", dir_path)
+        log.info("Dense index saved to %s (prefix=%s)", dir_path, self._index_prefix)
 
     def load(self, directory: str) -> None:
         """Restore a previously saved FAISS index from *directory*."""
-        dir_path = self._resolve_dir(directory)
+        dir_path  = self._resolve_dir(directory)
+        faiss_file = f"{self._index_prefix}.faiss"
+        map_file   = f"{self._index_prefix}_article_map.pkl"
 
-        self._index = faiss.read_index(str(dir_path / _FAISS_FILE))
+        self._index = faiss.read_index(str(dir_path / faiss_file))
 
-        with open(dir_path / _MAP_FILE, "rb") as f:
+        with open(dir_path / map_file, "rb") as f:
             article_map = pickle.load(f)
 
         if not isinstance(article_map, list):
