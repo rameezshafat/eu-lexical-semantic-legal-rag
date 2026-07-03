@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "eu-lexical-semantic-legal-rag"
+version = "1.0.0"
+description = "Hybrid BM25 + dense retrieval with RRF fusion for EU climate legislation"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    # Core
+    "pydantic==2.13.4",
+    "pydantic-settings==2.14.1",
+    "python-dotenv==1.2.2",
+
+    # Data
+    "numpy==2.4.6",
+
+    # Sparse retrieval
+    "rank-bm25==0.2.2",
+
+    # Dense retrieval
+    "sentence-transformers==5.5.1",
+    "faiss-cpu==1.14.2",
+
+    # LLM generation
+    "openai==2.41.0",
+
+    # CLI / output
+    "rich==15.0.0",
+    "tqdm==4.67.3",
+
+    # Statistical testing (significance_test.py, compute_iaa.py)
+    "scipy==1.17.1",
+    "scikit-learn==1.9.0",
+]
+
+[project.optional-dependencies]
+etl = [
+    "requests==2.34.2",
+    "lxml==6.1.1",
+    "beautifulsoup4==4.14.3",
+    "SPARQLWrapper==2.0.0",
+]
+ui = [
+    "gradio==6.15.2",
+]
+dev = [
+    "pytest==9.0.3",
+    "pytest-cov",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

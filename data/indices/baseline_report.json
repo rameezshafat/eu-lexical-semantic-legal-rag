@@ -3,8 +3,10 @@
   "sparse_only": {
     "total_queries": 71,
     "top_k": 5,
-    "hit_rate": 0.6901408450704225,
-    "mrr": 0.5408450704225352,
+    "hit_rate": 0.704225352112676,
+    "mrr": 0.5556338028169014,
+    "ndcg": 0.9130073077940736,
+    "hard_negative_rate": 0.033802816901408454,
     "per_query": [
       {
         "query_id": "q001",
@@ -15,12 +17,14 @@
         "retrieved_celex_ids": [
           "32015R0757",
           "32023L0959",
-          "32015R0757",
           "32023L0959",
-          "32015R0757"
+          "32015R0757",
+          "32023L0959"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.4306765580733931,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -34,11 +38,13 @@
           "32024R3012",
           "32023R0955",
           "32014R0749",
-          "32020R1208",
-          "32014R0749"
+          "32014R0749",
+          "32020R1208"
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -56,6 +62,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -69,11 +77,13 @@
           "32025R2358",
           "32023R0955",
           "32023R2631",
-          "32018R1999",
-          "32003L0030"
+          "32003L0030",
+          "32018R1999"
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -91,6 +101,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.5,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -108,6 +120,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.9306765580733931,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -126,6 +140,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.38685280723454163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -143,6 +159,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -160,6 +178,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -171,12 +191,14 @@
         "retrieved_celex_ids": [
           "32023R0435",
           "32023R0435",
-          "32025R2083",
           "32023R0955",
+          "32025R2083",
           "32023R0955"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.25,
+        "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.8868528072345416,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -195,6 +217,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -206,13 +230,15 @@
         ],
         "retrieved_celex_ids": [
           "32023L0959",
-          "32014R0749",
+          "32023L0959",
           "32023R0857",
           "32023R0839",
-          "32018R1999"
+          "32014R0749"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -225,12 +251,14 @@
         "retrieved_celex_ids": [
           "32023R0956",
           "32023R2631",
-          "32023R2631",
           "32014R0517",
+          "32023R2631",
           "32014R0517"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.6131471927654584,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -244,11 +272,13 @@
           "32023R0956",
           "32023R0956",
           "32023R0956",
-          "32023R0956",
+          "32025R2083",
           "32023R0956"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.5437713091520255,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -267,6 +297,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.9574945261898617,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -279,12 +311,14 @@
         "retrieved_celex_ids": [
           "32023L1791",
           "32023L1791",
-          "32023L1791",
           "32023R2631",
+          "32023L1791",
           "32020R0852"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.2,
+        "ndcg_at_k": 0.23719771276929622,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -302,6 +336,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -316,10 +352,12 @@
           "32013R0525",
           "32023R0956",
           "32020R1208",
-          "32020R1208"
+          "32013R0525"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.6240505200038379,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -333,11 +371,13 @@
           "32023R0956",
           "32025L2360",
           "32024L1760",
-          "32023R1773",
-          "32021R2178"
+          "32021R2178",
+          "32023R1773"
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -350,11 +390,13 @@
           "32018R1999",
           "32013R0525",
           "32014R0749",
-          "32014R0749",
-          "32024R3012"
+          "32024R3012",
+          "32014R0749"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -368,10 +410,12 @@
           "32025L2360",
           "32023L0959",
           "32023R2631",
-          "32018R1999"
+          "32025R0754"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.5,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -382,14 +426,16 @@
           "32003L0087"
         ],
         "retrieved_celex_ids": [
+          "32008L0101",
           "32018R0841",
           "32003L0087",
           "32008L0101",
-          "32023L0959",
-          "32023R0956"
+          "32023L0959"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.1837889117207785,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -408,6 +454,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -421,10 +469,12 @@
           "32023R0955",
           "32019L1161",
           "32023L0959",
-          "32023L1791"
+          "32019L1161"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8868528072345416,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -442,6 +492,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8868528072345416,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -459,6 +511,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
+        "ndcg_at_k": 1.0616063116448506,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -476,6 +530,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -494,6 +550,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -511,6 +569,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -528,6 +588,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8868528072345416,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -546,6 +608,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -563,6 +627,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -575,11 +641,13 @@
           "32003L0030",
           "32018R1999",
           "32018R1999",
-          "32025R2083",
-          "32008L0101"
+          "32008L0101",
+          "32025R2083"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -597,6 +665,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -615,6 +685,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -633,6 +705,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -645,12 +719,14 @@
         "retrieved_celex_ids": [
           "32023R0857",
           "32023R0839",
+          "32023L0959",
           "32023R0956",
-          "32018L2002",
-          "32023L1791"
+          "32018L2002"
         ],
-        "hit_at_k": false,
-        "reciprocal_rank": 0.0,
+        "hit_at_k": true,
+        "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.3065735963827292,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -668,6 +744,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -686,6 +764,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -699,10 +779,12 @@
           "32023R1773",
           "32023R0956",
           "32021R0783",
-          "32023R0956"
+          "32025R2083"
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -720,6 +802,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8175293653079347,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -730,13 +814,15 @@
         ],
         "retrieved_celex_ids": [
           "32018R0842",
-          "32018R1999",
           "32024L1760",
+          "32018R1999",
           "32024L1760",
           "32021R1119"
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -754,6 +840,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.1309297535714578,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -772,6 +860,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -790,6 +880,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.5437713091520254,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -808,6 +900,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
+        "ndcg_at_k": 1.1946922389591579,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -826,6 +920,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -839,10 +935,12 @@
           "32024R1991",
           "32023R0956",
           "32024R1991",
-          "32023R2631"
+          "32024R1991"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.4484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -855,12 +953,14 @@
         "retrieved_celex_ids": [
           "32025R2358",
           "32013R1293",
-          "32023L1791",
           "32020R0852",
+          "32023L1791",
           "32024L1760"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.25,
+        "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.3065735963827292,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -873,11 +973,13 @@
           "32024L1760",
           "32024R1991",
           "32024R1991",
-          "32018R1999",
-          "32023R0956"
+          "32023R0956",
+          "32018R1999"
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -895,6 +997,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.6309297535714575,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -912,6 +1016,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -929,6 +1035,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5616063116448506,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -946,6 +1054,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5616063116448506,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -964,6 +1074,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -974,14 +1086,16 @@
           "32018R1999"
         ],
         "retrieved_celex_ids": [
-          "32022R2299",
           "32018R1999",
+          "32022R2299",
           "32023R0956",
           "32018R1999",
           "32024R1991"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.264068122572591,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -999,6 +1113,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
+        "ndcg_at_k": 1.1309297535714575,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1017,6 +1133,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.5437713091520254,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1035,6 +1153,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.5706417189553201,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -1053,6 +1173,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.8503449055347546,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1071,6 +1193,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1089,6 +1213,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.8772153153380493,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1107,6 +1233,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.6131471927654584,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1121,10 +1249,12 @@
           "32020R1818",
           "32014R0749",
           "32020R1208",
-          "32015R0757"
+          "32020R1818"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.2371977127692964,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1143,6 +1273,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -1154,13 +1286,15 @@
         ],
         "retrieved_celex_ids": [
           "32024R3012",
-          "32024R3012",
           "32025R2358",
+          "32024R3012",
           "32026R0285",
           "32026R0285"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.4209866244900746,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1174,11 +1308,13 @@
           "32018R0842",
           "32023R0839",
           "32025R2083",
-          "32023L0959",
-          "32026R0893"
+          "32026R0893",
+          "32023L0959"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.2,
+        "reciprocal_rank": 0.25,
+        "ndcg_at_k": 0.2640681225725909,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -1196,6 +1332,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.1309297535714578,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1207,12 +1345,14 @@
         "retrieved_celex_ids": [
           "32025L2360",
           "32025L2360",
-          "32013R1300",
           "32013R1293",
+          "32013R1300",
           "32014R0215"
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1231,6 +1371,8 @@
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1249,6 +1391,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.1569185019174837,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       }
     ]
@@ -1257,7 +1401,9 @@
     "total_queries": 71,
     "top_k": 5,
     "hit_rate": 0.9577464788732394,
-    "mrr": 0.8291079812206573,
+    "mrr": 0.7854460093896714,
+    "ndcg": 1.3599310335298278,
+    "hard_negative_rate": 0.06478873239436621,
     "per_query": [
       {
         "query_id": "q001",
@@ -1270,10 +1416,12 @@
           "32015R0757",
           "32015R0757",
           "32015R0757",
-          "32015R0757"
+          "32023L0959"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5616063116448506,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1284,14 +1432,16 @@
           "32023L0959"
         ],
         "retrieved_celex_ids": [
-          "32023L0959",
-          "32023R0839",
           "32024R3012",
-          "32020R1818",
-          "32024R3012"
+          "32023R0956",
+          "32024R3012",
+          "32014R0517",
+          "32023L0959"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.2,
+        "ndcg_at_k": 0.23719771276929622,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1301,14 +1451,16 @@
           "32020R0852"
         ],
         "retrieved_celex_ids": [
-          "32020R0852",
           "32023R2631",
           "32020R0852",
-          "32020R0852",
+          "32023R2631",
+          "32021R2178",
           "32023R2631"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.6309297535714575,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -1321,12 +1473,14 @@
         "retrieved_celex_ids": [
           "32023R0839",
           "32023R0857",
-          "32020R1818",
-          "32019L1161",
-          "32023L0959"
+          "32023R0839",
+          "32023R0839",
+          "32018R0842"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.6240505200038379,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1336,14 +1490,16 @@
           "32023R0956"
         ],
         "retrieved_celex_ids": [
-          "32023R0956",
           "32023R1773",
+          "32014R0749",
           "32023R0956",
-          "32023R0956",
-          "32023R0956"
+          "32018R1999",
+          "32020R1208"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.5,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1353,14 +1509,16 @@
           "32014R0517"
         ],
         "retrieved_celex_ids": [
-          "32015R0757",
-          "32020R1208",
           "32014R0517",
-          "32020R1208",
-          "32014R0749"
+          "32014R0749",
+          "32014R0517",
+          "32014R0517",
+          "32015R0757"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.9306765580733931,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1372,13 +1530,15 @@
         ],
         "retrieved_celex_ids": [
           "32018R0841",
-          "32018R0841",
-          "32023R0839",
           "32024R3012",
-          "32018R0841"
+          "32024R3012",
+          "32023R0839",
+          "32023R0839"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.1144130281073454,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1389,13 +1549,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R0857",
-          "32023R0839",
-          "32026R0667",
           "32021R1119",
-          "32023R0857"
+          "32021R1119",
+          "32026R0667",
+          "32021R1119"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.25,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 1.5177825608059992,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1405,14 +1567,16 @@
           "32024L1760"
         ],
         "retrieved_celex_ids": [
-          "32019L1161",
-          "32015R0757",
-          "32020R0852",
-          "32024L1760",
-          "32024L1760"
+          "32025R2358",
+          "32020R1818",
+          "32021R2245",
+          "32013R0525",
+          "32015R0757"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 0.25,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1422,14 +1586,16 @@
           "32023R0955"
         ],
         "retrieved_celex_ids": [
+          "32023L1791",
           "32023R0955",
-          "32023L0959",
-          "32025R1914",
+          "32023R0955",
           "32023R0435",
-          "32018L2002"
+          "32023R0955"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 1.5177825608059992,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1440,14 +1606,16 @@
           "32023L1791"
         ],
         "retrieved_celex_ids": [
-          "32018L2002",
           "32023L1791",
-          "32023R0955",
-          "32025R1914",
-          "32023L1791"
+          "32023L1791",
+          "32023L1791",
+          "32022R2299",
+          "32018R1999"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.3065735963827294,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -1458,14 +1626,16 @@
           "32023L0959"
         ],
         "retrieved_celex_ids": [
-          "32023R0956",
-          "32003L0087",
+          "32023L0959",
           "32008L0101",
-          "32023R0435",
-          "32024R3012"
+          "32023L0959",
+          "32023L0959",
+          "32023L0959"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.4209866244900746,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -1477,13 +1647,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R0956",
+          "32023R0956",
+          "32023R0956",
           "32014R0517",
-          "32023R0956",
-          "32023R0956",
-          "32023R0956"
+          "32025R2083"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.3065735963827294,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1494,14 +1666,16 @@
           "32023R0956"
         ],
         "retrieved_celex_ids": [
+          "32014R0517",
           "32023R0956",
           "32023R0956",
-          "32025R2083",
-          "32024R3012",
+          "32023R0956",
           "32023R0956"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 1.1946922389591579,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1513,13 +1687,15 @@
         ],
         "retrieved_celex_ids": [
           "32020R0852",
-          "32025R2043",
-          "32020R0852",
+          "32021R2139",
           "32024R3012",
-          "32020R0852"
+          "32021R2139",
+          "32023R0955"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.264068122572591,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1534,10 +1710,12 @@
           "32020R0852",
           "32020R0852",
           "32020R0852",
-          "32023R2631"
+          "32013R1300"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.5706417189553201,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1555,6 +1733,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1565,14 +1745,16 @@
           "32014R0749"
         ],
         "retrieved_celex_ids": [
-          "32014R0666",
           "32020R1208",
-          "32023R0857",
           "32018R1999",
-          "32014R0749"
+          "32020R1208",
+          "32013R0525",
+          "32020R1208"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.2,
+        "reciprocal_rank": 0.25,
+        "ndcg_at_k": 0.2640681225725909,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1583,14 +1765,16 @@
           "32018R1999"
         ],
         "retrieved_celex_ids": [
-          "32013R0525",
-          "32022R2299",
           "32020R1208",
+          "32020R1208",
+          "32014R0749",
           "32020R1208",
           "32014R0749"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.264068122572591,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1600,14 +1784,16 @@
           "32018R1999"
         ],
         "retrieved_celex_ids": [
-          "32018R1999",
           "32013R0525",
+          "32018R1999",
           "32023R0955",
-          "32014R0749",
-          "32020R1818"
+          "32018R0842",
+          "32023R0857"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.6309297535714575,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1617,14 +1803,16 @@
           "32023L0959"
         ],
         "retrieved_celex_ids": [
-          "32023L0959",
+          "32023R1773",
           "32015R0757",
           "32015R0757",
-          "32025R2358",
-          "32015R0757"
+          "32008L0101",
+          "32014R0749"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -1635,14 +1823,16 @@
           "32003L0087"
         ],
         "retrieved_celex_ids": [
-          "32023L0959",
-          "32008L0101",
           "32008L0101",
           "32023R0956",
-          "32023R1773"
+          "32008L0101",
+          "32023R1773",
+          "32023R0435"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.9197207891481876,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1654,13 +1844,15 @@
         ],
         "retrieved_celex_ids": [
           "32023L0959",
-          "32023L0959",
           "32015R0757",
-          "32023R1773",
-          "32015R0757"
+          "32015R0757",
+          "32023L0959",
+          "32023L0959"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1672,12 +1864,14 @@
         "retrieved_celex_ids": [
           "32019L1161",
           "32019L1161",
-          "32019L1161",
           "32023L1791",
-          "32023L1791"
+          "32023L1791",
+          "32008L0101"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.6309297535714575,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -1687,14 +1881,16 @@
           "32023L1791"
         ],
         "retrieved_celex_ids": [
-          "32023L1791",
-          "32023L1791",
           "32018R1999",
+          "32023L1791",
+          "32023L1791",
           "32018L2002",
           "32018L2002"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 1.1309297535714575,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -1706,12 +1902,14 @@
         "retrieved_celex_ids": [
           "32023L1791",
           "32018L2002",
-          "32023L1791",
+          "32018L2002",
           "32023L1791",
           "32018L2002"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.4306765580733931,
+        "hard_negatives_in_top_k": 3,
         "top_k": 5
       },
       {
@@ -1729,6 +1927,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1741,12 +1941,14 @@
         "retrieved_celex_ids": [
           "32023R2631",
           "32023R2631",
-          "32014R0517",
+          "32025R2179",
           "32023R2631",
           "32023R2631"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.501265835341887,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1756,14 +1958,16 @@
           "32021R1056"
         ],
         "retrieved_celex_ids": [
-          "32025R1914",
-          "32021R1056",
-          "32024R3236",
           "32023R0435",
-          "32023R0435"
+          "32023L1791",
+          "32023R0955",
+          "32021R1056",
+          "32023L1791"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 0.25,
+        "ndcg_at_k": 0.43067655807339306,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -1781,6 +1985,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1791,14 +1997,16 @@
           "32025R2358"
         ],
         "retrieved_celex_ids": [
-          "32025R2358",
+          "32024R3012",
           "32024R3012",
           "32025R2358",
-          "32024R3012",
-          "32024R3012"
+          "32025R2358",
+          "32025R2358"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1811,11 +2019,13 @@
           "32024R1991",
           "32024R1991",
           "32024R1991",
-          "32023R0839",
+          "32024R1991",
           "32024R1991"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1833,6 +2043,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5616063116448506,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1843,13 +2055,15 @@
         ],
         "retrieved_celex_ids": [
           "32014R1307",
+          "32014R1307",
           "32024R1991",
-          "32018R0841",
-          "32003L0030",
-          "32014R1307"
+          "32014R1307",
+          "32020R0852"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.0616063116448506,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1860,14 +2074,16 @@
           "32013R1293"
         ],
         "retrieved_celex_ids": [
-          "32025R1914",
           "32021R0783",
-          "32013R1300",
-          "32026R0667",
-          "32013R1293"
+          "32013R1293",
+          "32021R1229",
+          "32021R0783",
+          "32021R0783"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.501265835341887,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1878,14 +2094,16 @@
           "32026R0667"
         ],
         "retrieved_celex_ids": [
-          "32026R0667",
           "32021R1119",
+          "32023R0839",
           "32023R0857",
-          "32021R1119",
-          "32021R1056"
+          "32026R0667",
+          "32021R1119"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.1144130281073454,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1897,13 +2115,15 @@
         ],
         "retrieved_celex_ids": [
           "32024R3012",
+          "32024R3012",
+          "32024R3012",
           "32023L0959",
-          "32003L0087",
-          "32025R2083",
-          "32023R0956"
+          "32024R3012"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 0.25,
+        "ndcg_at_k": 0.2640681225725909,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1914,13 +2134,15 @@
         ],
         "retrieved_celex_ids": [
           "32025L2360",
-          "32023R0839",
           "32025L2360",
-          "32024R1991",
-          "32023R0857"
+          "32025L2360",
+          "32025L2360",
+          "32025L2360"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1931,14 +2153,16 @@
           "32003L0087"
         ],
         "retrieved_celex_ids": [
-          "32024R3012",
           "32003L0087",
+          "32013R0525",
           "32024R3012",
-          "32023R0956",
-          "32018R1999"
+          "32013R0525",
+          "32025R2083"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.6131471927654584,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1948,14 +2172,16 @@
           "32018R0842"
         ],
         "retrieved_celex_ids": [
-          "32023R0839",
           "32018R0842",
           "32023R0839",
+          "32018R0841",
           "32018R0842",
           "32018R0841"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.4306765580733931,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -1969,10 +2195,12 @@
           "32018R0841",
           "32018R0841",
           "32018R0841",
-          "32018R0841"
+          "32023R0839"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5616063116448506,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -1982,14 +2210,16 @@
           "32020R1818"
         ],
         "retrieved_celex_ids": [
-          "32020R1818",
-          "32020R1818",
+          "32021R1119",
+          "32018R0842",
           "32020R1818",
           "32020R0852",
           "32020R1818"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.8868528072345416,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2003,10 +2233,12 @@
           "32024L1760",
           "32024L1760",
           "32024L1760",
-          "32023L0959"
+          "32024L1760"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2018,13 +2250,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R0956",
-          "32023R0956",
           "32025R2083",
           "32023R0839",
-          "32024R3012"
+          "32023R0956",
+          "32023R1773"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.8772153153380493,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2035,14 +2269,16 @@
           "32013R0525"
         ],
         "retrieved_celex_ids": [
-          "32020R1818",
           "32014R0666",
+          "32020R1208",
           "32014R0749",
-          "32014R0666",
-          "32013R0525"
+          "32014R0749",
+          "32018R1999"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.6131471927654584,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -2056,11 +2292,13 @@
           "32018R1999",
           "32018R1999",
           "32018R1999",
-          "32022R2299",
-          "32018R1999"
+          "32018R1999",
+          "32023L1791"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.5706417189553201,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2072,13 +2310,15 @@
         ],
         "retrieved_celex_ids": [
           "32018R0842",
-          "32023R0956",
-          "32018R0841",
           "32018R0842",
-          "32023R0839"
+          "32023R0839",
+          "32014R0749",
+          "32018R0842"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.2371977127692964,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2096,6 +2336,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2106,14 +2348,16 @@
           "32020R0852"
         ],
         "retrieved_celex_ids": [
+          "32023L0959",
           "32020R0852",
-          "32025R1914",
+          "32023R2631",
           "32020R0852",
-          "32023R0857",
-          "32026R0667"
+          "32023R2631"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.6509209298071326,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2126,11 +2370,13 @@
           "32023R0955",
           "32023R0955",
           "32023R0955",
-          "32023R0955",
+          "32023R1773",
           "32023R0955"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5177825608059994,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2143,11 +2389,13 @@
           "32013R1300",
           "32013R1300",
           "32013R1300",
-          "32025R1914",
-          "32021R0783"
+          "32013R1300",
+          "32013R1293"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5616063116448506,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2157,14 +2405,16 @@
           "32014R0215"
         ],
         "retrieved_celex_ids": [
+          "32013R1293",
+          "32021R0783",
+          "32023R0955",
           "32014R0215",
-          "32014R0215",
-          "32014R0215",
-          "32021R1056",
-          "32025R1914"
+          "32014R0215"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.25,
+        "ndcg_at_k": 0.8175293653079347,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2174,14 +2424,16 @@
           "32015R1844"
         ],
         "retrieved_celex_ids": [
-          "32015R1844",
-          "32015R1844",
           "32014R0662",
           "32015R1844",
-          "32025R2083"
+          "32024R3012",
+          "32013R0525",
+          "32015R1844"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 1.0177825608059992,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2191,14 +2443,16 @@
           "32021R1229"
         ],
         "retrieved_celex_ids": [
+          "32023R2631",
+          "32023R2631",
           "32021R0783",
-          "32025R1914",
-          "32023R2631",
-          "32023R2631",
-          "32021R0783"
+          "32018R1999",
+          "32023R2631"
         ],
         "hit_at_k": false,
         "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2210,13 +2464,15 @@
         ],
         "retrieved_celex_ids": [
           "32020R0852",
+          "32023R2631",
           "32020R0852",
           "32023R2631",
-          "32023R2631",
-          "32014R0749"
+          "32021R2139"
         ],
-        "hit_at_k": false,
-        "reciprocal_rank": 0.0,
+        "hit_at_k": true,
+        "reciprocal_rank": 0.2,
+        "ndcg_at_k": 0.23719771276929622,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -2229,12 +2485,14 @@
         "retrieved_celex_ids": [
           "32022R2299",
           "32018R1999",
-          "32018R1999",
-          "32018R1999",
-          "32023R0839"
+          "32014R0749",
+          "32013R0525",
+          "32023R0857"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2245,13 +2503,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R0435",
-          "32025R1914",
+          "32018L2002",
           "32023R0435",
-          "32023R0435",
+          "32023L1791",
           "32021R1056"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.5,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2270,6 +2530,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2280,14 +2542,16 @@
           "32024R3012"
         ],
         "retrieved_celex_ids": [
+          "32020R0852",
           "32024R3012",
-          "32023R0839",
-          "32023R0955",
-          "32023R0839",
+          "32025R2043",
+          "32024R1991",
           "32024R3012"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.9306241163865671,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2298,14 +2562,16 @@
           "32023R0956"
         ],
         "retrieved_celex_ids": [
-          "32015R0757",
+          "32025R2083",
           "32023R0956",
           "32023R0956",
-          "32023L0959",
-          "32019L1161"
+          "32018R0842",
+          "32024R3012"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.3065735963827294,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2319,11 +2585,13 @@
           "32023R2631",
           "32023R2631",
           "32023R2631",
-          "32023R2631",
-          "32023R2631"
+          "32025R2180",
+          "32025R2180"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2334,14 +2602,16 @@
           "32023R0956"
         ],
         "retrieved_celex_ids": [
+          "32014R0517",
           "32025R2546",
-          "32025R2358",
-          "32025R2546",
-          "32025R2546",
-          "32025R2083"
+          "32024R3012",
+          "32015R0757",
+          "32023R0956"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.6240505200038379,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2352,14 +2622,16 @@
           "32023R0956"
         ],
         "retrieved_celex_ids": [
+          "32025R2548",
           "32023R0956",
-          "32025R2548",
-          "32025R2548",
+          "32025R2083",
           "32023R1773",
-          "32020R1818"
+          "32023R0956"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.2371977127692964,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2372,12 +2644,14 @@
         "retrieved_celex_ids": [
           "32020R1818",
           "32023R2631",
+          "32022R2299",
           "32020R1818",
-          "32020R1818",
-          "32023L0959"
+          "32023L1791"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.8772153153380493,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2388,14 +2662,16 @@
           "32021R2178"
         ],
         "retrieved_celex_ids": [
-          "32021R2178",
-          "32021R2178",
+          "32023R2631",
           "32020R0852",
-          "32020R0852",
-          "32026R0073"
+          "32020R1818",
+          "32023R2631",
+          "32021R2178"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.2,
+        "ndcg_at_k": 0.23719771276929622,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -2407,13 +2683,15 @@
         ],
         "retrieved_celex_ids": [
           "32024R3012",
+          "32026R0285",
           "32024R3012",
-          "32024R3012",
-          "32024R3012",
-          "32026R0285"
+          "32026R0285",
+          "32024R3012"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2424,14 +2702,16 @@
           "32018R0841"
         ],
         "retrieved_celex_ids": [
-          "32023R0839",
           "32018R0841",
+          "32023R0839",
           "32023R0839",
           "32018R0841",
           "32018R0841"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.1144130281073454,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -2443,12 +2723,14 @@
         "retrieved_celex_ids": [
           "32024R3236",
           "32024R3236",
-          "32024R3236",
           "32023R0435",
-          "32023R0435"
+          "32023R0955",
+          "32023L1791"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.6309297535714575,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2459,13 +2741,15 @@
         ],
         "retrieved_celex_ids": [
           "32025R1914",
-          "32025R1914",
-          "32023R0839",
-          "32025R1914",
-          "32023R0435"
+          "32013R1300",
+          "32025L2360",
+          "32021R1119",
+          "32023R0955"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2476,14 +2760,16 @@
           "32020R1208"
         ],
         "retrieved_celex_ids": [
+          "32020R1208",
           "32014R0749",
-          "32022R2299",
-          "32013R0525",
-          "32022R2299",
+          "32014R0749",
+          "32018R1999",
           "32022R2299"
         ],
-        "hit_at_k": false,
-        "reciprocal_rank": 0.0,
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.6131471927654584,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -2496,12 +2782,14 @@
         "retrieved_celex_ids": [
           "32024R1991",
           "32024R1991",
-          "32023R2631",
+          "32025R0912",
           "32024R1991",
           "32024R1991"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       }
     ]
@@ -2509,8 +2797,10 @@
   "hybrid": {
     "total_queries": 71,
     "top_k": 5,
-    "hit_rate": 0.9436619718309859,
-    "mrr": 0.7448356807511737,
+    "hit_rate": 0.971830985915493,
+    "mrr": 0.7946009389671361,
+    "ndcg": 1.384398109281103,
+    "hard_negative_rate": 0.0676056338028169,
     "per_query": [
       {
         "query_id": "q001",
@@ -2527,6 +2817,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5177825608059994,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2537,14 +2829,16 @@
           "32023L0959"
         ],
         "retrieved_celex_ids": [
+          "32023R0956",
+          "32024R3012",
+          "32024R3012",
           "32023L0959",
-          "32024R3012",
-          "32020R0852",
-          "32024R3012",
-          "32023R0839"
+          "32014R0749"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.25,
+        "ndcg_at_k": 0.2640681225725909,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2555,13 +2849,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R2631",
-          "32023R2631",
           "32020R0852",
           "32021R2178",
-          "32020R0852"
+          "32023R2631",
+          "32023R2631"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.6309297535714575,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -2572,14 +2868,16 @@
           "32023R0857"
         ],
         "retrieved_celex_ids": [
-          "32019L1161",
+          "32023R0839",
           "32023R0857",
           "32023R0839",
-          "32025R2358",
-          "32023R0955"
+          "32018R1999",
+          "32023R0839"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.38685280723454163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2590,13 +2888,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R0956",
-          "32023R0956",
-          "32023R0956",
-          "32023R0956",
-          "32023R0857"
+          "32023R1773",
+          "32014R0749",
+          "32020R1208",
+          "32018R1999"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2609,11 +2909,13 @@
           "32014R0517",
           "32014R0517",
           "32014R0517",
-          "32015R0757",
-          "32025L2360"
+          "32014R0517",
+          "32014R0749"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5616063116448506,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2625,13 +2927,15 @@
         ],
         "retrieved_celex_ids": [
           "32024R3012",
-          "32024R3012",
           "32018R0841",
-          "32023R0956",
-          "32018R0841"
+          "32023R0839",
+          "32024R3012",
+          "32023R0839"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.9306241163865671,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2644,11 +2948,13 @@
           "32023R0857",
           "32021R1119",
           "32021R1119",
-          "32021R1056",
-          "32021R1056"
+          "32026R0667",
+          "32021R1119"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
+        "ndcg_at_k": 1.5177825608059992,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2658,14 +2964,16 @@
           "32024L1760"
         ],
         "retrieved_celex_ids": [
-          "32024L1760",
-          "32019L1161",
-          "32023L1791",
-          "32015R0757",
-          "32023L1791"
+          "32025R2358",
+          "32020R1818",
+          "32021R2245",
+          "32013R0525",
+          "32015R0757"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2675,14 +2983,16 @@
           "32023R0955"
         ],
         "retrieved_celex_ids": [
-          "32023R0435",
-          "32023R0435",
           "32023R0955",
-          "32026R0667",
+          "32023R0435",
+          "32023L1791",
+          "32023R0955",
           "32023R0955"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8175293653079347,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2693,14 +3003,16 @@
           "32023L1791"
         ],
         "retrieved_celex_ids": [
-          "32023R0955",
           "32023L1791",
           "32023L1791",
           "32023L1791",
-          "32023L1791"
+          "32023L1791",
+          "32018R1999"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.5706417189553201,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -2711,14 +3023,16 @@
           "32023L0959"
         ],
         "retrieved_celex_ids": [
-          "32025R2548",
-          "32025R2548",
-          "32023R0956",
-          "32023R0435",
-          "32024R3012"
+          "32023L0959",
+          "32008L0101",
+          "32023L0959",
+          "32023L0959",
+          "32023L0959"
         ],
-        "hit_at_k": false,
-        "reciprocal_rank": 0.0,
+        "hit_at_k": true,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.4209866244900746,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -2730,13 +3044,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R0956",
-          "32014R0517",
-          "32014R0517",
           "32023R0956",
-          "32023R0956"
+          "32023R0956",
+          "32023R0956",
+          "32025R2083"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.5706417189553201,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2750,11 +3066,13 @@
           "32023R0956",
           "32023R0956",
           "32023R0956",
-          "32023R0956",
-          "32025R2083"
+          "32014R0517",
+          "32023R0956"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.5437713091520255,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2766,13 +3084,15 @@
         ],
         "retrieved_celex_ids": [
           "32020R0852",
-          "32020R0852",
-          "32020R0852",
+          "32021R2139",
           "32024R3012",
-          "32021R2139"
+          "32021R2139",
+          "32020R0852"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.501265835341887,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2784,13 +3104,15 @@
         ],
         "retrieved_celex_ids": [
           "32020R0852",
-          "32023R2631",
-          "32023L1791",
-          "32023R2631",
-          "32020R0852"
+          "32020R0852",
+          "32020R0852",
+          "32020R0852",
+          "32013R1300"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.5706417189553201,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2801,13 +3123,15 @@
         ],
         "retrieved_celex_ids": [
           "32018R1999",
-          "32023L1791",
-          "32014R1307",
           "32018R1999",
-          "32023R1773"
+          "32018R1999",
+          "32018R1999",
+          "32018R1999"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2820,12 +3144,14 @@
         "retrieved_celex_ids": [
           "32020R1208",
           "32018R1999",
-          "32014R0749",
-          "32014R0666",
-          "32025R2083"
+          "32020R1208",
+          "32013R0525",
+          "32014R0749"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
+        "reciprocal_rank": 0.25,
+        "ndcg_at_k": 0.5012658353418871,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2836,14 +3162,16 @@
           "32018R1999"
         ],
         "retrieved_celex_ids": [
-          "32013R0525",
-          "32023R0956",
-          "32022R2299",
-          "32025L2360",
-          "32020R1208"
+          "32020R1208",
+          "32020R1208",
+          "32020R1208",
+          "32014R0749",
+          "32014R0749"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.2,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.3065735963827294,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2854,13 +3182,15 @@
         ],
         "retrieved_celex_ids": [
           "32013R0525",
-          "32014R0749",
-          "32024L1760",
+          "32018R1999",
           "32023R0955",
-          "32018R1999"
+          "32018R0842",
+          "32014R0749"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.2,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.6309297535714575,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2870,14 +3200,16 @@
           "32023L0959"
         ],
         "retrieved_celex_ids": [
-          "32023L0959",
-          "32025R2358",
-          "32023R0955",
-          "32024R3012",
-          "32023R2631"
+          "32023R1773",
+          "32015R0757",
+          "32025R2083",
+          "32015R0757",
+          "32023L0959"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.2,
+        "ndcg_at_k": 0.38685280723454163,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -2889,13 +3221,15 @@
         ],
         "retrieved_celex_ids": [
           "32008L0101",
-          "32023L0959",
           "32008L0101",
-          "32024R3012",
-          "32023L0959"
+          "32023R0956",
+          "32008L0101",
+          "32023R1773"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.264068122572591,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2908,12 +3242,14 @@
         "retrieved_celex_ids": [
           "32023L0959",
           "32023L0959",
+          "32015R0757",
           "32023L0959",
-          "32023L0959",
-          "32025R2083"
+          "32015R0757"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2926,11 +3262,13 @@
           "32019L1161",
           "32019L1161",
           "32023L1791",
-          "32019L1161",
-          "32019L1161"
+          "32023L1791",
+          "32008L0101"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.6309297535714575,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -2940,14 +3278,16 @@
           "32023L1791"
         ],
         "retrieved_celex_ids": [
-          "32018L2002",
+          "32023L1791",
+          "32018R1999",
           "32018L2002",
           "32023L1791",
-          "32023L1791",
-          "32023L1791"
+          "32018L2002"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.4306765580733931,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -2961,10 +3301,12 @@
           "32023L1791",
           "32018L2002",
           "32023L1791",
-          "32023L1791"
+          "32018L2002"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
+        "ndcg_at_k": 1.0616063116448506,
+        "hard_negatives_in_top_k": 3,
         "top_k": 5
       },
       {
@@ -2982,6 +3324,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -2993,13 +3337,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R2631",
-          "32023R2631",
+          "32025R2179",
           "32023R2631",
           "32023R2631",
           "32023R2631"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.4209866244900746,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3009,14 +3355,16 @@
           "32021R1056"
         ],
         "retrieved_celex_ids": [
-          "32025R1914",
           "32023R0435",
+          "32023R0955",
+          "32023L1791",
           "32023R0435",
-          "32025R1914",
-          "32023R0955"
+          "32021R1056"
         ],
-        "hit_at_k": false,
-        "reciprocal_rank": 0.0,
+        "hit_at_k": true,
+        "reciprocal_rank": 0.2,
+        "ndcg_at_k": 0.38685280723454163,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -3029,11 +3377,13 @@
           "32024R3012",
           "32024R3012",
           "32024R3012",
-          "32025R2358",
-          "32025R2358"
+          "32024R3012",
+          "32024R3012"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3047,11 +3397,13 @@
           "32024R3012",
           "32024R3012",
           "32025R2358",
-          "32024R3012",
+          "32025R2358",
           "32024R3012"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3062,13 +3414,15 @@
         ],
         "retrieved_celex_ids": [
           "32024R1991",
+          "32023R0839",
           "32024R1991",
           "32024R1991",
-          "32025L2360",
           "32024R1991"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.3175293653079345,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3079,13 +3433,15 @@
         ],
         "retrieved_celex_ids": [
           "32003L0030",
-          "32018R1999",
-          "32018R1999",
           "32003L0030",
-          "32019L1161"
+          "32003L0030",
+          "32003L0030",
+          "32018R1999"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5616063116448506,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3095,14 +3451,16 @@
           "32014R1307"
         ],
         "retrieved_celex_ids": [
-          "32003L0030",
-          "32023R0839",
-          "32018R0841",
           "32014R1307",
-          "32024R1991"
+          "32014R1307",
+          "32024R1991",
+          "32014R1307",
+          "32003L0030"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.25,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.0616063116448506,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -3113,14 +3471,16 @@
           "32013R1293"
         ],
         "retrieved_celex_ids": [
+          "32021R0783",
           "32013R1293",
           "32021R0783",
-          "32021R0783",
-          "32021R0783",
-          "32025R1914"
+          "32013R1293",
+          "32021R0783"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3131,14 +3491,16 @@
           "32026R0667"
         ],
         "retrieved_celex_ids": [
-          "32026R0667",
           "32021R1119",
           "32023R0857",
+          "32026R0667",
           "32021R1119",
-          "32024L1760"
+          "32023R0839"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.1837889117207785,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3150,13 +3512,15 @@
         ],
         "retrieved_celex_ids": [
           "32024R3012",
+          "32024R3012",
           "32023L0959",
-          "32023R1773",
-          "32025R2083",
-          "32023R0857"
+          "32024R3012",
+          "32025R2083"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.3065735963827292,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3174,6 +3538,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3185,13 +3551,15 @@
         ],
         "retrieved_celex_ids": [
           "32003L0087",
-          "32023R0956",
-          "32023L0959",
-          "32023L0959",
-          "32024R3012"
+          "32024R3012",
+          "32013R0525",
+          "32025R2083",
+          "32023R0956"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.6131471927654584,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3202,13 +3570,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R0839",
-          "32023R0839",
-          "32025R2083",
           "32018R0842",
-          "32023R1773"
+          "32023R0839",
+          "32018R0841",
+          "32018R0842"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.25,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 1.0177825608059992,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -3218,14 +3588,16 @@
           "32018R0841"
         ],
         "retrieved_celex_ids": [
-          "32023R0839",
+          "32018R0841",
           "32018R0841",
           "32018R0841",
           "32023R0839",
           "32018R0841"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5177825608059994,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3237,12 +3609,14 @@
         "retrieved_celex_ids": [
           "32018R0842",
           "32021R1119",
-          "32026R0667",
-          "32018R0841",
+          "32023R0857",
+          "32020R0852",
           "32020R1818"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.2,
+        "ndcg_at_k": 0.38685280723454163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3253,13 +3627,15 @@
         ],
         "retrieved_celex_ids": [
           "32024L1760",
-          "32015R0757",
-          "32015R0757",
+          "32024L1760",
+          "32024L1760",
           "32024L1760",
           "32024L1760"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3270,14 +3646,16 @@
           "32023R0956"
         ],
         "retrieved_celex_ids": [
-          "32018L2002",
           "32023R0956",
-          "32023L1791",
+          "32025R2083",
+          "32023R0839",
           "32023R0956",
-          "32018L2002"
+          "32023R1773"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.8772153153380493,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3289,13 +3667,15 @@
         ],
         "retrieved_celex_ids": [
           "32014R0666",
-          "32013R0525",
           "32020R1208",
-          "32018R1999",
+          "32014R0749",
+          "32014R0749",
           "32018R1999"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.6131471927654584,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -3309,11 +3689,13 @@
           "32018R1999",
           "32018R1999",
           "32018R1999",
-          "32021R1119",
-          "32018R1999"
+          "32018R1999",
+          "32023L1791"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.5706417189553201,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3324,14 +3706,16 @@
           "32023R0857"
         ],
         "retrieved_celex_ids": [
-          "32023R0956",
-          "32023L0959",
-          "32023R1773",
-          "32023L0959",
-          "32018R0842"
+          "32018R0842",
+          "32023R0839",
+          "32018R0842",
+          "32014R0749",
+          "32023R0956"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.2,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.9197207891481876,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3349,6 +3733,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.9484591188793923,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3359,14 +3745,16 @@
           "32020R0852"
         ],
         "retrieved_celex_ids": [
-          "32026R0667",
+          "32023L0959",
           "32020R0852",
-          "32025R2358",
-          "32025R1914",
-          "32013R1293"
+          "32023R2631",
+          "32023R2631",
+          "32020R0852"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.6240505200038379,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3378,12 +3766,14 @@
         "retrieved_celex_ids": [
           "32023R0955",
           "32023R0955",
-          "32024L1760",
           "32023R0955",
-          "32024R1991"
+          "32023R1773",
+          "32023R0955"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5177825608059994,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3395,12 +3785,14 @@
         "retrieved_celex_ids": [
           "32013R1300",
           "32013R1300",
-          "32021R0783",
-          "32021R0783",
-          "32025R1914"
+          "32013R1300",
+          "32013R1293",
+          "32013R1300"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.5177825608059994,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3411,13 +3803,15 @@
         ],
         "retrieved_celex_ids": [
           "32013R1293",
+          "32021R0783",
+          "32021R0783",
           "32023R0955",
-          "32018R1999",
-          "32014R0215",
-          "32023R0857"
+          "32014R0215"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.25,
+        "reciprocal_rank": 0.2,
+        "ndcg_at_k": 0.38685280723454163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3428,13 +3822,15 @@
         ],
         "retrieved_celex_ids": [
           "32015R1844",
-          "32015R1844",
-          "32015R1844",
           "32014R0662",
+          "32024R3012",
+          "32013R0525",
           "32015R1844"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.3868528072345416,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3444,14 +3840,16 @@
           "32021R1229"
         ],
         "retrieved_celex_ids": [
-          "32021R1229",
-          "32021R1229",
-          "32021R1229",
           "32023R2631",
+          "32023R2631",
+          "32021R0783",
+          "32018R1999",
           "32021R0783"
         ],
-        "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "hit_at_k": false,
+        "reciprocal_rank": 0.0,
+        "ndcg_at_k": 0.0,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3463,13 +3861,15 @@
         ],
         "retrieved_celex_ids": [
           "32020R0852",
+          "32023R2631",
           "32020R0852",
           "32023R2631",
-          "32023R2631",
-          "32023R0955"
+          "32021R2139"
         ],
-        "hit_at_k": false,
-        "reciprocal_rank": 0.0,
+        "hit_at_k": true,
+        "reciprocal_rank": 0.2,
+        "ndcg_at_k": 0.23719771276929622,
+        "hard_negatives_in_top_k": 2,
         "top_k": 5
       },
       {
@@ -3482,12 +3882,14 @@
         "retrieved_celex_ids": [
           "32022R2299",
           "32018R1999",
-          "32018R1999",
-          "32023L1791",
-          "32021R1119"
+          "32013R0525",
+          "32014R0749",
+          "32018R1999"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.2371977127692964,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3498,13 +3900,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R0435",
-          "32021R1056",
-          "32025R1914",
-          "32023R0955",
-          "32023L1791"
+          "32023R0435",
+          "32023L1791",
+          "32018L2002",
+          "32021R1056"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.6309297535714575,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3516,13 +3920,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R2631",
-          "32025L2360",
           "32023R2631",
-          "32015R0757",
+          "32023R2631",
+          "32023R2631",
           "32023R2631"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3534,13 +3940,15 @@
         ],
         "retrieved_celex_ids": [
           "32024R3012",
+          "32025R2043",
+          "32020R0852",
           "32024R3012",
-          "32024R3012",
-          "32024R3012",
-          "32024R3012"
+          "32024R1991"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.264068122572591,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3552,13 +3960,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R0956",
-          "32024R3012",
+          "32025R2083",
           "32023R0956",
-          "32015R0757",
-          "32024R3012"
+          "32024R3012",
+          "32018R0842"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.3065735963827294,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3569,14 +3979,16 @@
           "32023R2631"
         ],
         "retrieved_celex_ids": [
-          "32023R2631",
-          "32023R2631",
           "32025R2180",
           "32023R2631",
-          "32023R2631"
+          "32023R2631",
+          "32023R2631",
+          "32025R2180"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3588,13 +4000,15 @@
         ],
         "retrieved_celex_ids": [
           "32025R2546",
+          "32014R0517",
+          "32024R3012",
           "32025R2546",
-          "32025R2546",
-          "32025R2358",
-          "32023R2631"
+          "32015R0757"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 0.8772153153380493,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3606,13 +4020,15 @@
         ],
         "retrieved_celex_ids": [
           "32025R2548",
-          "32023R1773",
+          "32023R0956",
           "32025R2083",
-          "32024R3012",
+          "32023R1773",
           "32023R0956"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.2371977127692964,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3624,13 +4040,15 @@
         ],
         "retrieved_celex_ids": [
           "32020R1818",
-          "32020R1818",
-          "32020R1818",
           "32023R2631",
-          "32014R0749"
+          "32020R1818",
+          "32022R2299",
+          "32020R1818"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.1569185019174837,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3641,14 +4059,16 @@
           "32021R2178"
         ],
         "retrieved_celex_ids": [
+          "32023R2631",
+          "32020R1818",
+          "32020R0852",
           "32021R2178",
-          "32021R2178",
-          "32024L1760",
-          "32024L1760",
-          "32020R0852"
+          "32021R2178"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 1.0,
+        "reciprocal_rank": 0.25,
+        "ndcg_at_k": 0.5012658353418871,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -3660,13 +4080,15 @@
         ],
         "retrieved_celex_ids": [
           "32024R3012",
-          "32024R3012",
           "32026R0285",
           "32024R3012",
+          "32026R0285",
           "32024R3012"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3678,13 +4100,15 @@
         ],
         "retrieved_celex_ids": [
           "32023R0839",
+          "32018R0841",
           "32023R0839",
-          "32026R0893",
-          "32018R0842",
-          "32018R0842"
+          "32023R0839",
+          "32023L0959"
         ],
         "hit_at_k": true,
-        "reciprocal_rank": 0.3333333333333333,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.38685280723454163,
+        "hard_negatives_in_top_k": 3,
         "top_k": 5
       },
       {
@@ -3696,12 +4120,14 @@
         "retrieved_celex_ids": [
           "32024R3236",
           "32024R3236",
-          "32024R3236",
           "32023R0435",
-          "32023R0435"
+          "32023R0955",
+          "32024R3236"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 2.0177825608059994,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3711,14 +4137,16 @@
           "32025R1914"
         ],
         "retrieved_celex_ids": [
-          "32023R0435",
-          "32018R1999",
-          "32025R1914",
+          "32013R1300",
           "32025L2360",
-          "32025R1914"
+          "32025R1914",
+          "32013R1293",
+          "32021R1119"
         ],
         "hit_at_k": true,
         "reciprocal_rank": 0.3333333333333333,
+        "ndcg_at_k": 0.5,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       },
       {
@@ -3730,13 +4158,15 @@
         ],
         "retrieved_celex_ids": [
           "32018R1999",
+          "32020R1208",
           "32014R0749",
           "32014R0749",
-          "32022R2299",
-          "32014R0749"
+          "32022R2299"
         ],
-        "hit_at_k": false,
-        "reciprocal_rank": 0.0,
+        "hit_at_k": true,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_k": 0.38685280723454163,
+        "hard_negatives_in_top_k": 1,
         "top_k": 5
       },
       {
@@ -3755,6 +4185,8 @@
         ],
         "hit_at_k": true,
         "reciprocal_rank": 1.0,
+        "ndcg_at_k": 1.8078394317246163,
+        "hard_negatives_in_top_k": 0,
         "top_k": 5
       }
     ]

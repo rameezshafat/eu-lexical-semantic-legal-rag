@@ -54,6 +54,7 @@ def main() -> None:
         model=settings.dense_model,
         embed_dim=settings.dense_embed_dim,
         batch_size=settings.dense_batch_size,
+        device=settings.dense_device,
     )
     sparse = SparseRetriever(k1=settings.bm25_k1, b=settings.bm25_b)
     dense.load(settings.index_dir)
@@ -63,7 +64,7 @@ def main() -> None:
 
     # Reference single-retriever baselines.
     rows.append(_evaluate(_SingleRetrieverWrapper(sparse, settings.top_k_fused), "BM25 only"))
-    rows.append(_evaluate(_SingleRetrieverWrapper(dense, settings.top_k_fused), "BGE-M3 only"))
+    rows.append(_evaluate(_SingleRetrieverWrapper(dense, settings.top_k_fused), "nomic-embed only"))
 
     # Hybrid at each weight ratio.
     for dw, sw in RATIOS:
@@ -93,7 +94,7 @@ def main() -> None:
 
     console.print(table)
     console.print("[dim]dense:sparse weight ratio shown per hybrid row. "
-                  "BGE-M3 only is the bar to beat.[/dim]")
+                  "nomic-embed only is the bar to beat.[/dim]")
 
 
 if __name__ == "__main__":
