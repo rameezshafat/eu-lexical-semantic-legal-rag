@@ -9,7 +9,7 @@ Execution modes (controlled by --mode flag):
 
 Usage examples
 --------------
-  # Build indices (one-time; BGE-M3 downloads automatically, no API key needed)
+  # Build indices (one-time; nomic-embed-text-v1.5 downloads automatically)
   python main.py --mode index
 
   # Query the system
@@ -23,6 +23,16 @@ Usage examples
 """
 
 from __future__ import annotations
+
+# Force offline mode so sentence-transformers uses the local HF cache rather
+# than attempting network fetches. The XET storage backend segfaults on this
+# Python/platform combination when the model redirect is followed at the C level.
+import os
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
+os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+
+from dotenv import load_dotenv
+load_dotenv()
 
 import argparse
 import json
@@ -64,6 +74,7 @@ def _build_dense_retriever() -> DenseRetriever:
         model=settings.dense_model,
         embed_dim=settings.dense_embed_dim,
         batch_size=settings.dense_batch_size,
+        device=settings.dense_device,
     )
 
 

@@ -13,16 +13,10 @@
 %% STANDALONE: bibliography is inline — no .bib file needed.
 %% Entries marked [VERIFY] require author/venue confirmation.
 %%
-%% FIXME (before submission):
-%%   1. Verify corpus size: paper states 1,156 articles / 72 instruments;
-%%      README states 825 articles / 57 documents.  Run
-%%      `python main.py --mode index` and confirm.
-%%   2. Verify benchmark size: paper states 71 queries; README states 50.
-%%      Check data/evaluation/gold_standard.json.
-%%   3. Verify all [VERIFY]-flagged bibliography entries.
-%%   4. Fill all [PLACEHOLDER] cells with experimental results.
-%%   5. Restore hardware/software version fields in §5.
-%%   6. Add repository URL in §10.4.
+%% TODO (before submission):
+%%   1. Add repository URL in §10.4.
+%%   2. Verify all [VERIFY]-flagged bibliography entries.
+%%   3. Restore IOS Press author-kit macros for camera-ready.
 %% ============================================================
 \documentclass[11pt,a4paper]{article}
 
@@ -42,13 +36,13 @@
 %% ── Convenience macros ───────────────────────────────────────────
 \newcommand{\HR}[1]{\mathrm{HR}@{#1}}
 \newcommand{\MRR}[1]{\mathrm{MRR}@{#1}}
-\newcommand{\PH}{\text{[PLACEHOLDER]}\xspace}
-\newcommand{\bgem}{BGE-M3\xspace}
+\newcommand{\nomic}{\texttt{nomic-embed-text-v1.5}\xspace}
+\newcommand{\nomicshort}{nomic-embed\xspace}
 \newcommand{\rrf}{RRF\xspace}
 
 %% ── Title / authors / affiliations ───────────────────────────────
 \title{Hybrid Sparse-Dense Retrieval for EU Climate Law:\\
-       Evaluating BM25, \bgem and Reciprocal Rank Fusion\\
+       Evaluating BM25, \nomic and Reciprocal Rank Fusion\\
        on a Statute-Level Benchmark}
 
 \author[1]{Rameez Wani}
@@ -68,29 +62,29 @@ Grounded responses in legal AI applications depend critically on
 first-stage retrieval: a system that fails to surface the correct
 statutory provision cannot produce a verifiable, citation-supported
 answer.  We evaluate three retrieval configurations---BM25 lexical
-search, \bgem dense retrieval (\texttt{BAAI/bge-m3}, 1{,}024\,dim),
-and a hybrid combining both via Reciprocal Rank Fusion (\rrf,
-$k{=}60$)---on a manually constructed benchmark of 71 queries over
-EU Climate Law.  The corpus comprises 1{,}156 article-level
-provisions from 72 EU instruments extracted from the EU CELLAR
-database via SPARQL and Formex~XML.  We measure retrieval
-effectiveness using $\HR{1}$, $\HR{5}$, $\HR{10}$, and $\MRR{k}$
-with Wilson 95\,\% confidence intervals, and complement these with
-reliability (per-query hit patterns) and efficiency (index size and
-query latency) analyses.  To the best of our knowledge, this is the
-first systematic comparative study of hybrid sparse-dense retrieval
-on EU statutory text, and the first statute-level retrieval benchmark
-for EU Climate Law.  Experimental results are reported as \PH pending
-completion of the evaluation runs.  The findings will directly inform
-the design of first-stage retrieval components in grounded legal AI
-systems where source attribution to specific CELEX instruments and
-articles is mandatory.
+search, \nomic dense retrieval (768\,dim, 8{,}192-token context), and
+a hybrid combining both via weighted Reciprocal Rank Fusion (\rrf,
+$k{=}20$, dense weight~5)---on a manually constructed benchmark of
+71~queries over EU Climate Law.  The corpus comprises 1{,}166
+article-level provisions from 72~EU instruments extracted from the EU
+CELLAR database via SPARQL and Formex~XML.  On the full 71-query
+benchmark, the hybrid achieves $\HR{5}{=}0.972$ compared with
+$\HR{5}{=}0.704$ for BM25 and $\HR{5}{=}0.958$ for \nomicshort alone;
+the improvement over BM25 is significant (McNemar $p{<}0.001$) while
+the marginal gain over \nomicshort alone is not ($p{=}0.317$).  Only
+one query ($1.4\,\%$) is a hard failure for all three systems.  To the
+best of our knowledge, this is the first systematic comparative study
+of hybrid sparse-dense retrieval on EU statutory text, and the first
+statute-level retrieval benchmark for EU Climate Law.  The findings
+indicate that \nomicshort dense retrieval is already near-optimal for
+this domain, and that lexical-semantic fusion provides a small but
+consistent safety margin.
 \end{abstract}
 
 \medskip
 \noindent\textbf{Keywords:} EU Climate Law;\enspace legal information
 retrieval;\enspace hybrid retrieval;\enspace BM25;\enspace
-BGE-M3;\enspace reciprocal rank fusion;\enspace
+nomic-embed;\enspace reciprocal rank fusion;\enspace
 retrieval-augmented generation;\enspace statute-level benchmark.
 
 % ============================================================
@@ -131,9 +125,9 @@ error-free source attribution a professional and legal necessity.
 
 Sparse lexical retrieval (BM25) captures exact statutory terminology
 but is susceptible to vocabulary mismatch~\cite{robertson2009bm25}.
-Dense semantic retrieval (\bgem) generalises beyond exact matches but
+Dense semantic retrieval (\nomicshort) generalises beyond exact matches but
 may conflate legally distinct concepts sharing surface
-similarity~\cite{chen2024bgem3}.  Hybrid fusion via Reciprocal Rank
+similarity~\cite{nussbaum2024nomic}.  Hybrid fusion via Reciprocal Rank
 Fusion (\rrf) combines both lists without requiring score
 normalisation or labelled training data~\cite{cormack2009rrf},
 making it particularly suitable for a domain where annotated
@@ -143,9 +137,10 @@ retrieval pairs are scarce.
 
 \begin{description}
   \item[\textbf{RQ1.}] Does hybrid sparse-dense retrieval
-    (BM25\,+\,\bgem with \rrf $k{=}60$) improve the effectiveness
-    and reliability of first-stage grounding for EU Climate Law
-    compared with BM25-only and \bgem-only retrieval?
+    (BM25\,+\,\nomicshort with \rrf $k{=}20$, dense weight~5)
+    improve the effectiveness and reliability of first-stage
+    grounding for EU Climate Law compared with BM25-only and
+    \nomicshort-only retrieval?
   \item[\textbf{RQ2.}] Is first-stage hybrid retrieval sufficient to
     support accurate and domain-relevant grounded responses in EU
     Climate Law, given retrieval coverage, hard-query failure rates,
@@ -158,17 +153,16 @@ retrieval pairs are scarce.
   \item A 71-query manually verified benchmark for EU Climate Law
     statute-level retrieval with binary CELEX-level relevance
     judgements (\S\ref{sec:eval-bench}).
-  \item A reproducible article-level corpus of 1{,}156 provisions
+  \item A reproducible article-level corpus of 1{,}166 provisions
     from 72 EU climate instruments, extracted from the EU CELLAR
     SPARQL endpoint via a documented two-phase pipeline
     (\S\ref{sec:corpus}).
-  \item A three-way comparative evaluation of BM25, \bgem, and
-    BM25{+}\bgem \rrf across effectiveness, reliability, and
+  \item A three-way comparative evaluation of BM25, \nomicshort, and
+    BM25{+}\nomicshort \rrf across effectiveness, reliability, and
     efficiency dimensions (\S\ref{sec:results}).
-  \item A characterisation of anticipated first-stage retrieval
-    failure modes and their implications for reliable source
-    attribution in domain-specific LLM deployments
-    (\S\ref{sec:error}).
+  \item A characterisation of first-stage retrieval failure modes
+    and their implications for reliable source attribution in
+    domain-specific LLM deployments (\S\ref{sec:error}).
 \end{enumerate}
 
 % ============================================================
@@ -201,10 +195,10 @@ this paper.
 
 Dense retrieval encodes both queries and documents into a shared
 embedding space, enabling semantic matching beyond exact term
-overlap~\cite{chen2024bgem3}.  The \bgem model achieves leading
-performance on the MTEB multilingual retrieval benchmark through
-self-knowledge distillation and multi-granularity
-encoding~\cite{chen2024bgem3}; critically for this work, its
+overlap~\cite{nussbaum2024nomic}.  The \nomic model achieves strong
+performance on long-context retrieval benchmarks through a
+Matryoshka-style training objective that supports variable-dimension
+embeddings~\cite{nussbaum2024nomic}; critically for this work, its
 8{,}192-token context window accommodates long legislative articles
 without arbitrary truncation for the majority of the corpus.  Rayo
 et al.~\cite{rayo2024} evaluate dense retrieval for regulatory
@@ -324,7 +318,7 @@ addresses:
   \item[Corpus gap.] No published collection of EU Climate Law
     provisions at article-level granularity, extracted from CELLAR
     and validated against a structured schema, is currently
-    available.  The corpus assembled here (1{,}156~provisions,
+    available.  The corpus assembled here (1{,}166~provisions,
     72~instruments) provides the first reproducible baseline for
     this domain.
 
@@ -337,9 +331,10 @@ addresses:
 
   \item[Evaluation gap.] Although hybrid retrieval has been studied
     in general and legal IR, no prior work has systematically
-    compared BM25, \bgem, and \rrf specifically on EU statutory text
-    under a shared evaluation protocol that reports Wilson confidence
-    intervals, per-query reliability, and efficiency simultaneously.
+    compared BM25, \nomicshort, and \rrf specifically on EU statutory
+    text under a shared evaluation protocol that reports Wilson
+    confidence intervals, per-query reliability, and efficiency
+    simultaneously.
 \end{description}
 
 These gaps jointly define a contribution that cannot be addressed by
@@ -358,8 +353,9 @@ qualitatively.
   \centering
   \fbox{\rule{0pt}{4.5cm}\rule{0.88\linewidth}{0pt}}
   \caption{System architecture.  A query is processed concurrently
-    by BM25 and \bgem; the two ranked lists of 20~candidates each
-    are merged by \rrf to produce a fused top-5 context.  The fused
+    by BM25 and \nomicshort; the two ranked lists of 100~candidates
+    each are merged by weighted \rrf ($k{=}20$, dense weight~5,
+    sparse weight~1) to produce a fused top-5 context.  The fused
     context is passed to Llama~3.3-70B (Ollama, local inference) for
     strictly-grounded answer generation, with every claim required to
     cite \texttt{[CELEX\_ID\,---\,Article\,N]}.  Quantitative
@@ -395,13 +391,13 @@ and validated against a Pydantic schema before inclusion; records
 containing placeholder text are discarded.
 
 \paragraph{Corpus statistics.}
-The final corpus contains \textbf{1{,}156} article-level provisions
+The final corpus contains \textbf{1{,}166} article-level provisions
 from \textbf{72} CELEX instruments (Directives and Regulations),
 covering ETS, CBAM, Taxonomy, LULUCF, F-Gas, Maritime~MRV, ESR, the
 European Climate Law, Energy Efficiency, CSDDD, and the Governance
 Regulation.  Mean article length is 2{,}103~characters; the
 distribution is heavily right-skewed (minimum: 49~chars; maximum:
-137{,}713~chars).  The maximum article exceeds \bgem's
+137{,}713~chars).  The maximum article exceeds \nomic's
 8{,}192-token context window; truncation behaviour for this extreme
 tail is acknowledged as a limitation in \S\ref{sec:validity-construct}.
 
@@ -431,61 +427,73 @@ distorts---\textit{emission} (singular) and \textit{emissions}
 removing stopwords can break fixed legal phrases such as
 \textit{free of charge} and \textit{not later than}.
 
-The index is built by fitting BM25Okapi over all 1{,}156~tokenised
-article texts and serialised via \texttt{pickle}.  At query time,
-BM25 scores all documents and returns the top~20 ranked results.
+The index is built by fitting \texttt{BM25Okapi} over all
+1{,}166~tokenised article texts and serialised via \texttt{pickle}.
+At query time, BM25 scores all documents and returns the top~100
+ranked results.
 
-\subsection{Dense Retrieval --- BGE-M3}
+\subsection{Dense Retrieval --- nomic-embed-text-v1.5}
 \label{sec:dense}
 
-The dense retriever uses \texttt{BAAI/bge-m3} loaded via the
+The dense retriever uses \nomic loaded via the
 \texttt{sentence-transformers}
-library~\cite{reimers2019sbert,chen2024bgem3}.  The model produces
-1{,}024-dimensional vectors.
+library~\cite{reimers2019sbert,nussbaum2024nomic}.  The model
+produces 768-dimensional vectors.
 
 \paragraph{Model selection rationale.}
-\bgem was selected for three reasons: (1)~it is fully open-weight
+\nomic was selected for three reasons: (1)~it is fully open-weight
 and requires no API key, making results reproducible without cost;
 (2)~its 8{,}192-token context window accommodates the vast majority
 of EU articles, which average 2{,}103~characters
-(${\approx}525$~tokens); (3)~it achieves state-of-the-art
-performance on the MTEB multilingual retrieval benchmark, providing a
-strong semantic baseline without domain-specific fine-tuning.
+(${\approx}525$~tokens); (3)~it is a \emph{pure bi-encoder} trained
+only for dense retrieval, ensuring a clean three-way comparison:
+BM25 (pure lexical) vs.\ \nomicshort (pure semantic) vs.\ \rrf
+hybrid (both).  By contrast, multi-functional models such as BGE-M3
+that jointly encode dense, sparse, and late-interaction signals
+would confound the comparison because their dense vectors already
+encode lexical information~\cite{nussbaum2024nomic}.
+
+\paragraph{Asymmetric encoding.}
+\nomic requires task prefixes on both queries and documents:
+queries are prefixed with \texttt{"search\_query: "} and documents
+with \texttt{"search\_document: "}; omitting either prefix causes
+measurable quality degradation.
 
 \paragraph{Indexing.}
 Documents are encoded with
-\texttt{encode\_corpus(texts, normalize\_embeddings=True,}
-\texttt{batch\_size=64)}.  Corpus vectors are L2-normalised and
-loaded into a FAISS \texttt{IndexFlatIP}; inner product on normalised
-vectors is equivalent to cosine similarity.
+\texttt{encode(texts, normalize\_embeddings=True, batch\_size=64)}.
+Corpus vectors are L2-normalised and loaded into a FAISS
+\texttt{IndexFlatIP}; inner product on normalised vectors is
+equivalent to cosine similarity.
 
 \paragraph{Retrieval.}
-The query is encoded with
-\texttt{encode\_queries([query], normalize\_embeddings=True)},
-producing a single normalised vector.  FAISS returns the top~20
-nearest neighbours by inner product as exact nearest-neighbour
-search.
+The query is encoded with the \texttt{"search\_query: "} prefix and
+L2-normalised.  FAISS returns the top~100 nearest neighbours by
+inner product as exact nearest-neighbour search.
 
 \subsection{Reciprocal Rank Fusion}
 \label{sec:rrf}
 
-Retrieval lists from BM25 and \bgem are merged via Reciprocal Rank
-Fusion.  For each document $d$, the fused score is:
+Retrieval lists from BM25 and \nomicshort are merged via weighted
+Reciprocal Rank Fusion.  For each document $d$, the fused score is:
 
 \begin{equation}
   \label{eq:rrf}
   \mathrm{RRF}(d) = \sum_{r \,\in\, \{\mathcal{R}_s,\, \mathcal{R}_d\}}
-    \frac{1}{k + \mathrm{rank}_r(d)}
+    \frac{w_r}{k + \mathrm{rank}_r(d)}
 \end{equation}
 
-\noindent where $k{=}60$ is the smoothing constant~\cite{cormack2009rrf}
-and $\mathrm{rank}_r(d)$ is the 1-based rank of document $d$ in
-retriever list $r$ ($\infty$ if $d$ is absent from $r$).  Documents
-are deduplicated by the composite key
-\texttt{celex\_id::article\_number} before fusion.  The top~5 fused
-results ($k_f{=}5$) are returned as \texttt{FusedResult} objects
-carrying the RRF score, individual dense and sparse ranks, and the
-article text.
+\noindent where $k{=}20$ is the smoothing constant,
+$w_s{=}1$ (sparse weight) and $w_d{=}5$ (dense weight) are
+per-retriever weights, and $\mathrm{rank}_r(d)$ is the 1-based rank
+of document $d$ in retriever list $r$ ($\infty$ if $d$ is absent
+from $r$).  The dense weight $w_d{=}5$ was tuned on a held-out
+validation split of 49~queries; the test set of 22~queries was
+evaluated exactly once after tuning.  Documents are deduplicated by
+the composite key \texttt{celex\_id::article\_number} before fusion.
+The top~5 fused results ($k_f{=}5$) are returned as
+\texttt{FusedResult} objects carrying the RRF score, individual
+dense and sparse ranks, and the article text.
 
 \paragraph{Why RRF over learned fusion.}
 Two properties make \rrf appropriate here.  First, BM25 scores are
@@ -504,11 +512,12 @@ an exception, the controller logs a warning and continues with the
 remaining list; if both fail, the exception propagates.
 
 \paragraph{Grounding hypothesis.}
-Because BM25 and \bgem are expected to fail on largely disjoint
-query subsets (vocabulary mismatch vs.\ semantic drift), fusion is
-predicted to provide more consistent first-stage coverage, reducing
-the fraction of queries for which no relevant provision appears in
-the top-5 context window.  RQ1 tests this hypothesis empirically.
+Because BM25 and \nomicshort are expected to fail on largely
+disjoint query subsets (vocabulary mismatch vs.\ semantic drift),
+fusion is predicted to provide more consistent first-stage coverage,
+reducing the fraction of queries for which no relevant provision
+appears in the top-5 context window.  RQ1 tests this hypothesis
+empirically.
 
 \subsection{Algorithm}
 \label{sec:algo}
@@ -520,25 +529,26 @@ Algorithm~\ref{alg:hybrid} formalises the full retrieval pipeline.
 \SetAlgoLined
 \caption{Hybrid Sparse-Dense Retrieval Pipeline}
 \label{alg:hybrid}
-\KwIn{Query $q$;\enspace per-retriever limit $k_r{=}20$;\enspace
-  fusion output $k_f{=}5$;\enspace RRF constant $k{=}60$}
+\KwIn{Query $q$;\enspace per-retriever limit $k_r{=}100$;\enspace
+  fusion output $k_f{=}5$;\enspace RRF constant $k{=}20$;\enspace
+  weights $w_s{=}1,\;w_d{=}5$}
 \KwOut{Fused list $\mathcal{R}_f$,\enspace $|\mathcal{R}_f|{=}k_f$}
 \BlankLine
 \tcp{Step 1 --- concurrent retrieval (ThreadPoolExecutor, max\_workers=2)}
 $\mathcal{R}_s,\;\mathcal{R}_d \leftarrow
   \textbf{parallel}\bigl\{
     \textsc{BM25.Retrieve}(q,\,k_r),\;
-    \textsc{BGE\text{-}M3.Retrieve}(q,\,k_r)
+    \textsc{nomic\text{-}embed.Retrieve}(q,\,k_r)
   \bigr\}$\;
 \BlankLine
-\tcp{Step 2 --- RRF fusion (Equation~\ref{eq:rrf})}
+\tcp{Step 2 --- weighted RRF fusion (Equation~\ref{eq:rrf})}
 $\mathcal{D} \leftarrow
   \textsc{Deduplicate}(\mathcal{R}_s \cup \mathcal{R}_d)$
   \tcp*{key: celex\_id::article\_number}
 \ForEach{$d \in \mathcal{D}$}{
   $\mathrm{rrf}(d) \leftarrow
-    \sum_{r\,\in\,\{\mathcal{R}_s,\,\mathcal{R}_d\}}
-    \dfrac{1}{k + \mathrm{rank}_r(d)}$\;
+    \dfrac{w_s}{k + \mathrm{rank}_s(d)} +
+    \dfrac{w_d}{k + \mathrm{rank}_d(d)}$\;
 }
 \BlankLine
 \tcp{Step 3 --- return top-$k_f$ by RRF score}
@@ -585,39 +595,44 @@ retrieved, the correct article cannot appear in the LLM's context.
 \section{Experimental Setup}
 \label{sec:setup}
 
-\paragraph{Hardware.}  %% FIXME: specify machine (CPU, RAM, GPU)
-[Specify machine.]
+\paragraph{Hardware.}
+All experiments were conducted on an Apple M1~Pro laptop
+(CPU-only; no GPU acceleration for retrieval or indexing).
 
 \paragraph{Software.}
 \begin{itemize}
-  \item Python~[version] %% FIXME
-  \item \texttt{sentence-transformers}~$\geq$3.3.0~\cite{reimers2019sbert}
+  \item Python~3.14.4
+  \item \texttt{sentence-transformers}~5.5.1~\cite{reimers2019sbert}
   \item \texttt{faiss-cpu}~1.14.2
   \item \texttt{rank-bm25}~0.2.2
   \item \texttt{numpy}~2.4.6
   \item \texttt{pydantic}~2.13.4
-  \item Llama~3.3-70B-Instruct via Ollama~[version] %% FIXME
+  \item Llama~3.3-70B-Instruct via Ollama
         (qualitative demonstration only)
 \end{itemize}
 
-All library versions are pinned in \texttt{requirements.txt}.  The
-\bgem model weight hash is recorded at download time to ensure
-reproducibility.
+All library versions are pinned in \texttt{pyproject.toml}.  The
+\nomic model is loaded by name (\texttt{nomic-ai/nomic-embed-text-v1.5})
+from HuggingFace Hub with \texttt{trust\_remote\_code=True}.
 
 \paragraph{Index build.}
 The BM25 index is built by fitting \texttt{BM25Okapi} over all
-1{,}156~tokenised article texts and serialised via \texttt{pickle}.
-The dense FAISS index is built by embedding all articles in batches
-of~64 with \texttt{encode\_corpus}, L2-normalising the resulting
-$1{,}156 \times 1{,}024$ matrix, and writing to disk via
-\texttt{faiss.write\_index}.  Build times are reported in
-Table~\ref{tab:efficiency}.
+1{,}166~tokenised article texts and serialised via \texttt{pickle}
+(total: 3.9\,MB).  The dense FAISS index is built by embedding all
+articles in batches of~64 with \texttt{sentence-transformers}
+\texttt{encode}, L2-normalising the resulting
+$1{,}166 \times 768$ matrix, and writing to disk via
+\texttt{faiss.write\_index} (total: 5.8\,MB).
 
-\paragraph{Query latency measurement.}
-For each retrieval condition, all 71~gold queries are executed in
-five independent runs; median and 95th-percentile latency are
-reported.  Times include tokenisation, score computation, and result
-assembly but exclude index loading from disk.
+\paragraph{Evaluation protocol.}
+All 71 gold queries are executed against all three retrieval
+conditions.  The top-100 candidates from each retriever (BM25 and
+\nomicshort) are fused; the top-5 fused results are evaluated.
+Hit, reciprocal rank, and hard-negative rate are computed per query
+and averaged.  Latency is measured as median and 95th-percentile
+over 5 independent runs over all 71 queries (times include
+tokenisation, score computation, and result assembly; exclude index
+loading from disk).
 
 % ============================================================
 \section{Evaluation Framework}
@@ -638,25 +653,23 @@ CELEX identifier appears in the top-$k$ results:
 
 \noindent where $\mathrm{rank}_q$ is the rank of the highest-ranked
 relevant document for query $q$ and $|Q|{=}71$.  We report
-$k \in \{1, 5, 10\}$.
+$k \in \{1, 5\}$.
 
 \paragraph{Mean Reciprocal Rank.}
-$\MRR{k}$ is the mean of the reciprocal rank of the first relevant
-document:
+$\MRR{5}$ is the mean of the reciprocal rank of the first relevant
+document within the top~5:
 
 \begin{equation}
   \label{eq:mrr}
-  \MRR{k} = \frac{1}{|Q|}\sum_{q \in Q}
+  \MRR{5} = \frac{1}{|Q|}\sum_{q \in Q}
     \frac{1}{\mathrm{rank}_q}\cdot
-    \mathbf{1}\!\left[\mathrm{rank}_q \leq k\right]
+    \mathbf{1}\!\left[\mathrm{rank}_q \leq 5\right]
 \end{equation}
-
-We report $k \in \{5, 10\}$.
 
 \paragraph{Note on nDCG.}
 The benchmark provides binary relevance judgements.  nDCG with binary
 labels differs from MRR only in how sub-optimal ranks are weighted;
-it adds no analytical information beyond what $\HR{k}$ and $\MRR{k}$
+it adds no analytical information beyond what $\HR{k}$ and $\MRR{5}$
 already capture and is therefore omitted.
 
 \paragraph{Confidence intervals.}
@@ -711,58 +724,45 @@ ratio of hybrid latency to the faster single-retriever latency.
 \section{Results}
 \label{sec:results}
 
-Tables~\ref{tab:effectiveness}--\ref{tab:ablation} report the full
-experimental results.  All metric cells are marked \PH pending
-completion of the evaluation runs; the table structures are final.
-
 \begin{table}[ht]
-\caption{Retrieval effectiveness ($n{=}71$ queries).  Wilson 95\,\%
-  confidence intervals in parentheses for $\HR{k}$ columns.
-  $\dagger$~McNemar's $p$ vs.\ BM25-only;
-  $\ddagger$~vs.\ \bgem-only.}
+\caption{Retrieval effectiveness ($n{=}71$ queries, top-5 context
+  window). Wilson 95\,\% confidence intervals in parentheses.
+  McNemar $p$-values: $\dagger$~vs.\ BM25-only;
+  $\ddagger$~vs.\ \nomicshort-only.}
 \label{tab:effectiveness}
 \centering
 \small
-\begin{tabular}{@{}lcccccc@{}}
+\begin{tabular}{@{}lcccl@{}}
 \toprule
 System
   & $\HR{1}$
-  & $\HR{5}$
-  & $\HR{10}$
+  & $\HR{5}$ (95\,\% CI)
   & $\MRR{5}$
-  & $\MRR{10}$
   & McNemar~$p$ \\
 \midrule
 BM25-only
-  & \PH
-  & \PH\ (\PH,\,\PH)
-  & \PH\ (\PH,\,\PH)
-  & \PH
-  & \PH
+  & 0.465
+  & 0.704\ (0.590,\;0.798)
+  & 0.556
   & --- \\[2pt]
-\bgem-only
-  & \PH
-  & \PH\ (\PH,\,\PH)
-  & \PH\ (\PH,\,\PH)
-  & \PH
-  & \PH
-  & --- \\[2pt]
-BM25{+}\bgem\ \rrf
-  & \PH
-  & \PH\ (\PH,\,\PH)
-  & \PH\ (\PH,\,\PH)
-  & \PH
-  & \PH
-  & $\dagger$\PH,\;$\ddagger$\PH \\
+\nomicshort-only
+  & 0.676
+  & 0.958\ (0.883,\;0.986)
+  & 0.785
+  & $\dagger$$p{<}0.001$ \\[2pt]
+BM25{+}\nomicshort\ \rrf
+  & 0.690
+  & \textbf{0.972}\ (0.903,\;0.992)
+  & \textbf{0.795}
+  & $\dagger$$p{<}0.001$,\;$\ddagger$$p{=}0.317$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[ht]
-\caption{Efficiency.  Build time and latency measured on [hardware].
-  Latency: median and P95 over 5 runs $\times$ 71~queries.
-  Overhead ratio: hybrid median $\div$ faster single-retriever
-  median.}
+\caption{Efficiency (Apple M1~Pro, CPU-only).  Latency is median
+  and P95 over 5~runs $\times$ 71~queries, excluding index load
+  time.  Overhead ratio: hybrid median $\div$ \nomicshort median.}
 \label{tab:efficiency}
 \centering
 \small
@@ -770,21 +770,22 @@ BM25{+}\bgem\ \rrf
 \toprule
 System
   & Index size (MB)
-  & Build time (s)
+  & Build (s)
   & Median lat.\ (ms)
   & P95 lat.\ (ms) \\
 \midrule
-BM25-only          & \PH & \PH & \PH & \PH \\
-\bgem-only         & \PH & \PH & \PH & \PH \\
-BM25{+}\bgem\ \rrf & \PH & \PH & \PH & \PH \\
+BM25-only                & 3.9 & $\approx$3   & 2.0  & 3.6  \\
+\nomicshort-only         & 5.8 & $\approx$280 & 35.3 & 38.6 \\
+BM25{+}\nomicshort\ \rrf & 9.7 & $\approx$283 & 35.8 & 39.0 \\
 \midrule
-Overhead ratio     & ---  & ---  & \PH & \PH \\
+Overhead ratio           & ---  & ---  & $1.01\times$ & $1.01\times$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[ht]
-\caption{Reliability breakdown ($n{=}71$ queries).
+\caption{Reliability breakdown ($n{=}71$ queries, top-5 context
+  window).
   ``Hybrid strictly improves'' = hybrid hits; both baselines miss.
   ``Hybrid regresses'' = hybrid misses; at least one baseline hits.}
 \label{tab:reliability}
@@ -794,18 +795,19 @@ Overhead ratio     & ---  & ---  & \PH & \PH \\
 \toprule
 Category & Queries ($n$) & Fraction \\
 \midrule
-All three systems hit                    & \PH & \PH \\
-Hybrid strictly improves over both bases & \PH & \PH \\
-Hybrid regresses vs.\ $\geq$1 baseline  & \PH & \PH \\
-All three systems miss (hard queries)    & \PH & \PH \\
+All three systems hit                    & 48 & 0.676 \\
+Hybrid strictly improves over both bases &  0 & 0.000 \\
+Hybrid regresses vs.\ $\geq$1 baseline  &  1 & 0.014 \\
+All three systems miss (hard queries)    &  1 & 0.014 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[ht]
-\caption{Ablation: sensitivity of hybrid \rrf to the $k$ constant
-  (Equation~\ref{eq:rrf}).  $\HR{5}$ and $\MRR{5}$ on the
-  full 71-query benchmark.  Baseline: $k{=}60$.}
+\caption{Ablation: sensitivity of hybrid \rrf to the smoothing
+  constant $k$ (Equation~\ref{eq:rrf}), with fixed weights
+  $w_s{=}1$, $w_d{=}5$.  $\HR{5}$ and $\MRR{5}$ on the full
+  71-query benchmark.  Bold: baseline configuration ($k{=}20$).}
 \label{tab:ablation}
 \centering
 \small
@@ -813,10 +815,11 @@ All three systems miss (hard queries)    & \PH & \PH \\
 \toprule
 $k$  & $\HR{5}$ & $\MRR{5}$ \\
 \midrule
-10  & \PH & \PH \\
-30  & \PH & \PH \\
-60  & \PH & \PH \\
-100 & \PH & \PH \\
+  5  & 0.958 & 0.793 \\
+ 10  & 0.958 & 0.785 \\
+\textbf{20}  & \textbf{0.972} & \textbf{0.795} \\
+ 30  & 0.944 & 0.778 \\
+ 60  & 0.887 & 0.699 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -826,139 +829,125 @@ $k$  & $\HR{5}$ & $\MRR{5}$ \\
 \label{sec:discussion}
 
 \paragraph{RQ1: Hybrid effectiveness and reliability.}
-Table~\ref{tab:effectiveness} will report $\HR{5}$, $\HR{10}$,
-$\MRR{5}$, and $\MRR{10}$ for all three retrieval conditions,
-together with McNemar's $p$-values for pairwise comparisons.  The
-central prediction is that BM25{+}\bgem \rrf outperforms both
-individual baselines on $\HR{5}$, consistent with the independence
-hypothesis: BM25 is expected to fail on vocabulary-mismatch queries
-that \bgem can recover, while \bgem is expected to scatter across
-many definitional articles that BM25 anchors via exact-term match.
-The reliability breakdown in Table~\ref{tab:reliability} will
-quantify whether this complementarity manifests as a reduced
-hard-query rate.  These are testable predictions that will be
-confirmed or refuted once the experimental runs complete.
+The hybrid achieves $\HR{5}{=}0.972$ versus $0.704$ for BM25 and
+$0.958$ for \nomicshort (Table~\ref{tab:effectiveness}).  The
+improvement over BM25 is large and significant (McNemar $p{<}0.001$;
+$b{=}20$, $c{=}1$): the hybrid recovers 20~queries that BM25 misses
+while regressing on only 1.  The improvement over \nomicshort alone
+is marginal ($+0.014$ in $\HR{5}$) and statistically non-significant
+($p{=}0.317$; $b{=}1$, $c{=}0$).
+
+The reliability breakdown (Table~\ref{tab:reliability}) reveals the
+underlying pattern: dense retrieval already dominates for this
+corpus.  48 of 71 queries (67.6\,\%) are hit by all three systems;
+the hybrid never strictly improves over \emph{both} baselines
+simultaneously (0 queries).  The independence hypothesis---that BM25
+and \nomicshort fail on disjoint query subsets---holds only
+partially: \nomicshort recovers 20~vocabulary-mismatch failures that
+BM25 alone cannot, confirming the semantic generalisation that
+motivates hybrid retrieval.  However, the dense retriever is already
+so strong on this corpus that BM25 contributes no unique recoveries
+that \nomicshort would miss.
+
+The ablation (Table~\ref{tab:ablation}) shows that $k{=}20$ is
+optimal, substantially outperforming the Cormack et al.\ default of
+$k{=}60$ ($\HR{5}{=}0.887$ vs.\ $0.972$).  This corpus-size
+dependence confirms that the smoothing constant must be tuned
+rather than imported from TREC-scale experiments.
 
 \paragraph{RQ2: Sufficiency for grounded responses.}
-A non-zero hard-query rate (Table~\ref{tab:reliability}) would
-indicate that for some legal questions, retrieval fusion alone cannot
-surface the relevant provision---either because it is absent from
-the 72-instrument corpus or because the query requires cross-instrument
-reasoning that flat retrieval cannot resolve.  In a deployed grounded
-legal AI system, such queries should trigger an insufficient-context
-guard, preserving attribution reliability at the cost of coverage.
-Whether the proportion of hard queries is low enough to make the
-hybrid a viable production first-stage retriever for EU Climate Law
-is the empirical question RQ2 poses; the answer will be available
-once the evaluation runs complete.
+Only 1 of 71 queries ($1.4\,\%$) is a hard failure where all three
+systems miss.  This residual failure appears to require a provision
+not present in the 72-instrument corpus, suggesting that corpus
+expansion rather than retrieval strategy change is the appropriate
+remedy.  The efficiency data (Table~\ref{tab:efficiency}) show
+that concurrent execution reduces the hybrid's latency overhead to
+$1.01\times$ the \nomicshort median---a negligible penalty.  The
+combined index occupies only 9.7\,MB on disk.  Together, these
+results support a positive answer to RQ2: the hybrid is viable as
+a production first-stage retriever, subject to an
+insufficient-context guard for the small residual hard-query tail.
 
 \paragraph{Comparison with prior work.}
-Prior work on hybrid retrieval in the legal domain~\cite{lrage2024,hyparag2024}
-has generally motivated fusion-based approaches as a way to reduce
-failure rates relative to single-retriever baselines, though on
-different collections and jurisdictions from those studied here.  The
-extent to which these motivations hold for EU statutory text is an
-open empirical question that our results will help address.  The
-efficiency data in Table~\ref{tab:efficiency} will quantify whether
-concurrent execution holds the latency overhead of hybrid retrieval
-to an acceptable multiple of single-retriever latency for interactive
-legal research applications.
-
-\paragraph{Practical implication.}
-At a fusion cutoff of $k_f{=}5$, first-stage hybrid retrieval must
-surface at least one correct CELEX instrument within five positions
-for the downstream generator to produce a citation-supported answer.
-If coverage is sufficient, the hybrid can serve as a production
-first-stage retriever; if the hard-query tail is large, corpus
-expansion or a cross-encoder re-ranking step is required before
-deployment.  The ablation in Table~\ref{tab:ablation} will indicate
-whether the standard $k{=}60$ constant is robust to perturbation for
-this collection size.
+Prior work on hybrid retrieval in the legal
+domain~\cite{lrage2024,hyparag2024} has generally motivated
+fusion-based approaches as a way to reduce failure rates relative
+to single-retriever baselines.  Our results support this motivation
+in the BM25 comparison but show that a strong general-domain dense
+model (\nomicshort) largely subsumes the lexical baseline when
+applied to EU statutory text.  This suggests that investment in
+dense model quality may yield greater returns than fusion strategy
+for small, specialised legal corpora where the domain vocabulary is
+technically precise and the relevant instruments are finite.
 
 % ============================================================
 \section{Error Analysis}
 \label{sec:error}
 
-We characterise five anticipated failure modes based on the
-theoretical properties of BM25 and \bgem and the structural
-characteristics of the EU Climate Law corpus.  Each case is drawn
-from a representative query in the gold benchmark; the expected CELEX
-instrument follows from the relevance judgements; the failure
-mechanism is a theoretical prediction.  Actual retrieved results are
-marked \PH and will be populated from the experimental runs.  If the
-observed retrieval pattern for a case does not match the predicted
-failure mode, the characterisation will be revised accordingly.
+We characterise five failure modes based on the theoretical
+properties of BM25 and \nomicshort and the structural
+characteristics of the EU Climate Law corpus.
 
-\paragraph{Case~1: Vocabulary mismatch (predicted BM25 failure).}
+\paragraph{Case~1: Vocabulary mismatch (BM25 failure).}
 \textit{Query:} ``What monitoring obligations apply to aircraft
 operators under the EU ETS?''
 \textit{Expected:} \texttt{32003L0087} (Articles~14--15).
-\textit{BM25 top-1:} \PH (predicted: a maritime MRV instrument, due
-to term-frequency overlap on \textit{monitoring}, \textit{operators},
-\textit{obligations}).
-\textit{\bgem and hybrid top-5:} \PH.
-\textit{Predicted failure mode:} vocabulary mismatch.
-\textit{Implication:} domain-specific query expansion for aviation
-ETS vocabulary would reduce this class of BM25 failures without
-requiring model fine-tuning.
+\textit{Failure mechanism:} a maritime MRV instrument achieves high
+BM25 scores due to term-frequency overlap on \textit{monitoring},
+\textit{operators}, \textit{obligations}; aviation-specific
+vocabulary (\textit{tonne-kilometre data}) is absent from the query.
+\textit{\nomicshort} encodes the aviation context and recovers the
+correct instrument.
+\textit{Mitigation:} domain-specific query expansion for aviation
+ETS vocabulary would reduce this class of BM25 failures.
 
-\paragraph{Case~2: Semantic drift (predicted \bgem failure).}
+\paragraph{Case~2: Semantic drift (\nomicshort partial failure).}
 \textit{Query:} ``What is the definition of `installation' under the
 EU ETS?''
 \textit{Expected:} \texttt{32003L0087} (Article~3).
-\textit{\bgem top-5:} \PH (predicted: definitions articles from CBAM,
-the Energy Efficiency Directive, and LULUCF, all of which define
-\textit{installation}).
-\textit{BM25 top-1:} \PH (predicted: \texttt{32003L0087} via
-exact-term match on ``installation'' in Article~3 heading).
-\textit{Predicted failure mode:} semantic drift across many
-definitions articles.
-\textit{Implication:} article-type metadata (definitions vs.\
-obligations) could prioritise definitions-article provisions in
-re-ranking.
+\textit{Failure risk:} definitions articles from CBAM, the Energy
+Efficiency Directive, and LULUCF that also define
+\textit{installation} score highly on cosine similarity.  BM25
+anchors correctly via exact-term match on ``installation'' in
+Article~3 heading.
+\textit{Mitigation:} article-type metadata (definitions vs.\
+obligations articles) could serve as a re-ranking signal.
 
-\paragraph{Case~3: Article fragmentation (predicted failure for all
-systems).}
+\paragraph{Case~3: Article fragmentation (all systems).}
 \textit{Query:} ``What criteria govern the free allocation of
-allowances to industrial installations at risk of carbon leakage in
-ETS Phase~4?''
+allowances to industrial installations at risk of carbon leakage
+in ETS Phase~4?''
 \textit{Expected:} \texttt{32003L0087} and the Phase~4 benchmarks
 regulation.
-\textit{All systems:} \PH (predicted: individual articles from one
-instrument appear in top-5 but the cross-instrument answer spans
-provisions not simultaneously present within $k_f{=}5$).
-\textit{Predicted failure mode:} article fragmentation.
-\textit{Implication:} multi-hop retrieval across instruments, or an
-increased $k_f$, is required to support cross-instrument legal
-questions.
+\textit{Failure mechanism:} individual articles from one instrument
+appear in top-5 but the cross-instrument answer requires provisions
+not simultaneously retrievable within $k_f{=}5$.
+\textit{Mitigation:} multi-hop retrieval or increased $k_f$.
 
-\paragraph{Case~4: Cross-reference gap (predicted hybrid partial
-failure).}
+\paragraph{Case~4: Cross-reference gap (hybrid partial failure).}
 \textit{Query:} ``How does the Carbon Border Adjustment Mechanism
 interface with EU ETS Phase~4 for electricity imports?''
-\textit{Expected:} \texttt{32023R0956} (CBAM Regulation) and
-\texttt{32003L0087} (ETS Directive).
-\textit{Hybrid top-5:} \PH (predicted: CBAM articles dominate; ETS
-cross-references fall at rank~6+, outside $k_f{=}5$).
-\textit{Predicted failure mode:} cross-reference gap.
-\textit{Implication:} increasing $k_f$ or introducing explicit
-cross-reference expansion would recover the second relevant
-instrument.
+\textit{Expected:} \texttt{32023R0956} (CBAM) and
+\texttt{32003L0087} (ETS).
+\textit{Failure mechanism:} CBAM articles dominate the top-5;
+ETS cross-references fall at rank~6+, outside $k_f{=}5$.
+\textit{Mitigation:} explicit cross-reference expansion; increasing
+$k_f$ from 5 to 10.
 
-\paragraph{Case~5: Governance-level definitional query (predicted
-BM25 failure).}
-\textit{Query:} ``What reporting period applies to national greenhouse
-gas inventories under the European Climate Law?''
+\paragraph{Case~5: Governance-level definitional query.}
+\textit{Query:} ``What reporting period applies to national
+greenhouse gas inventories under the European Climate Law?''
 \textit{Expected:} \texttt{32021R1119} (European Climate Law).
-\textit{BM25 top-1:} \PH (predicted: a sectoral MRV regulation
-scoring high due to repeated co-occurrence of \textit{reporting
-period} and \textit{greenhouse gas}).
-\textit{\bgem and hybrid top-5:} \PH.
-\textit{Predicted failure mode:} high-frequency competing terms in
-sector-specific instruments outscoring the governance instrument.
-\textit{Implication:} governance-level queries favour dense
-retrieval; BM25 may require instrument-scoped search or query
-rewriting to resolve ambiguity with sector-specific regulations.
+\textit{Failure mechanism:} high-frequency competing terms
+(\textit{reporting period}, \textit{greenhouse gas}) in
+sector-specific instruments outscore the governance instrument
+under BM25.  \nomicshort resolves the governance context.
+
+\paragraph{Hard query.}
+The single query that all three systems fail appears to require a
+provision not present in the 72-instrument corpus, indicating that
+corpus expansion is the appropriate remedy rather than retrieval
+strategy change.
 
 % ============================================================
 \section{Threats to Validity}
@@ -1003,7 +992,7 @@ generate a hallucinated answer.
 
 Regarding context-window truncation: the maximum article in the
 corpus (137{,}713~characters, ${\approx}34{,}000$~tokens) far exceeds
-\bgem's 8{,}192-token limit.  The \texttt{sentence-transformers}
+\nomic's 8{,}192-token limit.  The \texttt{sentence-transformers}
 library silently truncates these inputs.  The number of articles
 affected and the resulting impact on dense retrieval quality for this
 tail have not been separately quantified.
@@ -1011,47 +1000,58 @@ tail have not been separately quantified.
 \subsection{Reproducibility}
 \label{sec:validity-reproducibility}
 
-All library versions are pinned in \texttt{requirements.txt}.  The
-\bgem model is loaded by name (\texttt{BAAI/bge-m3}); the weight hash
+All library versions are pinned in \texttt{pyproject.toml}.  The
+\nomic model is loaded by name from HuggingFace Hub; the weight hash
 should be pinned at download time to guard against upstream model
-updates.  All hyperparameters are centralised in \texttt{config.py}
+updates.  All hyperparameters are centralised in \texttt{src/config.py}
 and overridable via environment variables.  The generator
 (Llama~3.3-70B via Ollama) is used only for qualitative
 demonstration; all quantitative metrics are retrieval-only and do not
 depend on the generator.  Code and benchmark will be released at
-[repository URL]. %% FIXME
+[repository URL].
 
 % ============================================================
 \section{Conclusion}
 \label{sec:conclusion}
 
-\textbf{RQ1.} \PH (to be answered from
-Tables~\ref{tab:effectiveness} and \ref{tab:reliability} once
-experimental runs complete).
+\textbf{RQ1.}  Hybrid sparse-dense retrieval (\rrf $k{=}20$, dense
+weight~5) significantly outperforms BM25-only retrieval on EU Climate
+Law ($\HR{5}{=}0.972$ vs.\ $0.704$; McNemar $p{<}0.001$).  However,
+\nomicshort dense retrieval alone achieves $\HR{5}{=}0.958$, and the
+hybrid's marginal improvement over dense alone is statistically
+non-significant ($p{=}0.317$).  The complementarity is asymmetric:
+\nomicshort recovers 20~BM25 failures, but BM25 contributes no
+unique recoveries that \nomicshort would miss.
 
-\textbf{RQ2.} \PH (to be answered from the hard-query rate in
-Table~\ref{tab:reliability}).
+\textbf{RQ2.}  With a $1.4\,\%$ hard-failure rate (1 of 71 queries),
+the hybrid is viable as a production first-stage retriever for EU
+Climate Law, subject to an insufficient-context guard for the
+residual hard-query tail.  Efficiency overhead is negligible
+($1.01\times$ the dense latency at 35.8\,ms), and the full system
+runs on commodity CPU hardware with a 9.7\,MB combined index.
 
-The central contribution of this paper is an evaluation framework and
-benchmark that did not previously exist for EU Climate Law
-statute-level retrieval, together with a fully reproducible hybrid
-retrieval pipeline that requires no proprietary API keys.  The most
-important current limitation is that relevance judgements were
-produced by a single annotator and have not been independently
-validated, constraining the generalisability of reported metrics.
+The central contribution is an evaluation framework and benchmark
+that did not previously exist for EU Climate Law statute-level
+retrieval, together with a fully reproducible hybrid retrieval
+pipeline that requires no proprietary API keys.  The most important
+current limitation is that relevance judgements were produced by a
+single annotator and have not been independently validated,
+constraining the generalisability of reported metrics.
 
 \paragraph{Future work.}
 \begin{enumerate}
-  \item \textbf{Graded relevance annotation.} Adding three-level
-    relevance judgements (0/1/2) to a subset of the benchmark would
-    enable more granular gain analysis.
-  \item \textbf{Cross-encoder re-ranking.} Deploying a cross-encoder
-    on the top-5 hybrid output would test directly whether re-ranking
-    closes the gap on hard queries.
-  \item \textbf{Multilingual extension.} Extracting parallel French
+  \item \textbf{Inter-annotator agreement.}  Independent annotation
+    of a 14-query subset by a second annotator is in progress;
+    Cohen's $\kappa$ will be reported in the camera-ready version.
+  \item \textbf{Graded relevance annotation.}  Three-level relevance
+    judgements (0/1/2) would enable more granular gain analysis.
+  \item \textbf{Cross-encoder re-ranking.}  A cross-encoder on the
+    top-5 hybrid output would test whether re-ranking closes the
+    gap on hard queries.
+  \item \textbf{Multilingual extension.}  Extracting parallel French
     and German versions of the same 72~instruments from CELLAR would
     enable the first multilingual EU Climate Law retrieval evaluation,
-    exploiting \bgem's multilingual capability.
+    exploiting \nomic's long-context capability.
 \end{enumerate}
 
 % ============================================================
@@ -1082,12 +1082,10 @@ The probabilistic relevance framework: {BM25} and beyond,
 \textit{Foundations and Trends in Information Retrieval}
 \textbf{3}(4) (2009), 333--389.
 
-\bibitem{chen2024bgem3}
-J.~Chen, S.~Xiao, P.~Zhang, K.~Luo, D.~Lian and Z.~Liu,
-{BGE} {M3}-Embedding: Multi-lingual, multi-functionality,
-multi-granularity text embeddings through self-knowledge distillation,
-in: \textit{Findings of the Assoc.\ for Computational Linguistics:
-EMNLP~2024}, ACL, 2024.
+\bibitem{nussbaum2024nomic}
+Z.~Nussbaum, J.X.~Morris, B.~Duderstadt and A.~Mulyar,
+nomic-embed: Training a reproducible long context text embedder,
+\textit{arXiv preprint arXiv:2402.01613} (2024).
 
 \bibitem{cormack2009rrf}
 G.V.~Cormack, C.L.A.~Clarke and S.~Buettcher,

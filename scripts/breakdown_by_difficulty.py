@@ -63,6 +63,7 @@ def main() -> None:
         model=settings.dense_model,
         embed_dim=settings.dense_embed_dim,
         batch_size=settings.dense_batch_size,
+        device=settings.dense_device,
     )
     sparse = SparseRetriever(k1=settings.bm25_k1, b=settings.bm25_b)
     dense.load(settings.index_dir)

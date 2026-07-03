@@ -1,0 +1,239 @@
+{
+  "queries": [
+    {
+      "query_id": "q006",
+      "query": "What do businesses have to report about the refrigerant-type gases that warm the planet?",
+      "relevant_celex_ids": [
+        "32014R0517"
+      ],
+      "difficulty": "hard",
+      "notes": "F-Gas Regulation 2014/517. 'refrigerant-type gases that warm the planet'=fluorinated greenhouse gases.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q009",
+      "query": "Do big firms have to check that their suppliers aren't wrecking the environment?",
+      "relevant_celex_ids": [
+        "32024L1760"
+      ],
+      "difficulty": "hard",
+      "notes": "CSDDD 2024/1760. Colloquial; 'wrecking the environment'=adverse environmental impacts in value chains.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q011",
+      "query": "What's the minimum energy standard a building has to meet under EU rules?",
+      "relevant_celex_ids": [
+        "32018L2002",
+        "32023L1791"
+      ],
+      "difficulty": "standard",
+      "notes": "EED amendment 2018/2002 + Energy Efficiency Directive recast 2023/1791.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q014",
+      "query": "How do I get approved as the person allowed to declare carbon for goods I import?",
+      "relevant_celex_ids": [
+        "32025R0486",
+        "32023R0956"
+      ],
+      "difficulty": "standard",
+      "notes": "CBAM declarant authorisation implementing reg 2025/486 + CBAM 2023/956.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q023",
+      "query": "What do shipping companies now owe under the carbon market for their vessels' emissions?",
+      "relevant_celex_ids": [
+        "32023L0959",
+        "32015R0757"
+      ],
+      "difficulty": "standard",
+      "notes": "ETS revision 2023/959 extending to shipping + MRV 2015/757.",
+      "hard_negative_celex_ids": [
+        "32008L0101"
+      ]
+    },
+    {
+      "query_id": "q024",
+      "query": "When a public authority buys vehicles, how many have to be low- or zero-emission?",
+      "relevant_celex_ids": [
+        "32019L1161"
+      ],
+      "difficulty": "standard",
+      "notes": "Clean Vehicles Directive 2019/1161.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q026",
+      "query": "What's the rule that says you should weigh up energy savings first when making policy or investment calls?",
+      "relevant_celex_ids": [
+        "32023L1791"
+      ],
+      "difficulty": "standard",
+      "notes": "Energy Efficiency Directive recast 2023/1791, energy efficiency first principle.",
+      "hard_negative_celex_ids": [
+        "32018L2002"
+      ]
+    },
+    {
+      "query_id": "q029",
+      "query": "Who can get help from the EU fund for regions hit hardest by moving off fossil fuels?",
+      "relevant_celex_ids": [
+        "32021R1056"
+      ],
+      "difficulty": "standard",
+      "notes": "Just Transition Fund Regulation 2021/1056.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q031",
+      "query": "If I run a carbon farming scheme, what plans do I have to hand to the certifier?",
+      "relevant_celex_ids": [
+        "32024R3012",
+        "32025R2358"
+      ],
+      "difficulty": "standard",
+      "notes": "CRCF 2024/3012 + implementing reg 2025/2358 on monitoring plan structure.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q032",
+      "query": "What do countries have to do to bring damaged land habitats back to health under the new EU nature law?",
+      "relevant_celex_ids": [
+        "32024R1991"
+      ],
+      "difficulty": "standard",
+      "notes": "Nature Restoration Regulation 2024/1991, terrestrial habitats.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q033",
+      "query": "What share of road fuel was each country meant to make up with biofuel?",
+      "relevant_celex_ids": [
+        "32003L0030"
+      ],
+      "difficulty": "standard",
+      "notes": "Biofuels Directive 2003/30. Past tense reflects the older directive.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q035",
+      "query": "What's the EU's flagship funding programme for the environment trying to achieve?",
+      "relevant_celex_ids": [
+        "32021R0783",
+        "32013R1293"
+      ],
+      "difficulty": "standard",
+      "notes": "LIFE Programme 2021/783 (2021-27) + predecessor 2013/1293.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q040",
+      "query": "Can a country carry forward, stockpile or trade away its yearly emissions budget?",
+      "relevant_celex_ids": [
+        "32018R0842"
+      ],
+      "difficulty": "hard",
+      "notes": "Effort Sharing Reg 2018/842 flexibilities. 'carry forward/stockpile/trade away'=borrow/bank/transfer.",
+      "hard_negative_celex_ids": [
+        "32018R0841"
+      ]
+    },
+    {
+      "query_id": "q042",
+      "query": "What minimum rules apply to stock-market indices that claim to line up with the Paris Agreement?",
+      "relevant_celex_ids": [
+        "32020R1818"
+      ],
+      "difficulty": "standard",
+      "notes": "Delegated Reg 2020/1818, Paris-aligned and Climate Transition Benchmarks.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q043",
+      "query": "What's expected of a company that puts together a climate plan under the new corporate due-diligence rules?",
+      "relevant_celex_ids": [
+        "32024L1760"
+      ],
+      "difficulty": "standard",
+      "notes": "CSDDD 2024/1760, climate transition plans.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q053",
+      "query": "How are old Kyoto-era carbon credits like CERs moved around inside the EU registry?",
+      "relevant_celex_ids": [
+        "32015R1844"
+      ],
+      "difficulty": "standard",
+      "notes": "Implementing Reg 2015/1844, transfer of CERs and ERUs.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q054",
+      "query": "What's the scheme that pairs EU grants with EIB loans for green public projects?",
+      "relevant_celex_ids": [
+        "32021R1229"
+      ],
+      "difficulty": "standard",
+      "notes": "Public Sector Loan Facility Regulation 2021/1229.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q058",
+      "query": "What steps does the EU markets watchdog take when it looks into green-bond rule-breaking?",
+      "relevant_celex_ids": [
+        "32025R0754",
+        "32023R2631"
+      ],
+      "difficulty": "hard",
+      "notes": "EuGB enforcement implementing reg 2025/754 + EuGB 2023/2631. 'EU markets watchdog'=ESMA.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q059",
+      "query": "How are drought-stricken and climate-damaged areas pinned down for carbon farming?",
+      "relevant_celex_ids": [
+        "32025R2043",
+        "32024R3012"
+      ],
+      "difficulty": "hard",
+      "notes": "CRCF implementing reg 2025/2043 (aridity/climate-impact definitions) + CRCF 2024/3012.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q060",
+      "query": "Is there a small-shipment exemption from the EU's carbon border rules?",
+      "relevant_celex_ids": [
+        "32025R2083",
+        "32023R0956"
+      ],
+      "difficulty": "hard",
+      "notes": "CBAM amendment 2025/2083 (de minimis threshold) + CBAM 2023/956. 'small-shipment exemption'=de minimis.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q064",
+      "query": "Which companies get shut out of Paris-aligned investment indices because of their fossil fuel ties?",
+      "relevant_celex_ids": [
+        "32025R1775",
+        "32020R1818"
+      ],
+      "difficulty": "standard",
+      "notes": "Climate benchmarks amendment 2025/1775 + Paris-aligned Benchmarks 2020/1818.",
+      "hard_negative_celex_ids": []
+    },
+    {
+      "query_id": "q069",
+      "query": "What wiggle room is there at the mid-point review to shift regional funds toward climate resilience?",
+      "relevant_celex_ids": [
+        "32025R1914"
+      ],
+      "difficulty": "standard",
+      "notes": "ERDF amendment 2025/1914, mid-term review flexibility.",
+      "hard_negative_celex_ids": []
+    }
+  ]
+}
