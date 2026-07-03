@@ -1,0 +1,69 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
+\contentsline {paragraph}{Research Questions.}{2}{section*.2}%
+\contentsline {paragraph}{Contributions.}{2}{section*.3}%
+\contentsline {section}{\numberline {2}Related Work}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Lexical Retrieval in Legal IR}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Dense Retrieval and Legal Embeddings}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Sparse Learned Representations}{3}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Hybrid Retrieval and Rank Fusion}{3}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Legal RAG Systems}{4}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Retrieval Reliability and Source Attribution}{4}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Evaluation Frameworks for Legal Retrieval}{4}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Research Gap and Contributions}{4}{section.3}%
+\contentsline {section}{\numberline {4}Methodology}{5}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Corpus Construction}{5}{subsection.4.1}%
+\contentsline {paragraph}{Phase~1 --- Batch SPARQL.}{5}{section*.4}%
+\contentsline {paragraph}{Phase~2 --- Per-document manifestation retrieval.}{5}{section*.5}%
+\contentsline {paragraph}{Parsing.}{6}{section*.6}%
+\contentsline {paragraph}{Corpus statistics.}{6}{section*.7}%
+\contentsline {paragraph}{Why article-level chunking.}{6}{section*.8}%
+\contentsline {subsection}{\numberline {4.2}Sparse Retrieval --- BM25}{6}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Dense Retrieval --- BGE-M3}{6}{subsection.4.3}%
+\contentsline {paragraph}{Model selection rationale.}{6}{section*.9}%
+\contentsline {paragraph}{Indexing.}{6}{section*.10}%
+\contentsline {paragraph}{Retrieval.}{6}{section*.11}%
+\contentsline {paragraph}{Grounding implication.}{7}{section*.12}%
+\contentsline {subsection}{\numberline {4.4}Reciprocal Rank Fusion}{7}{subsection.4.4}%
+\contentsline {paragraph}{Why RRF over learned fusion.}{7}{section*.13}%
+\contentsline {paragraph}{Concurrent execution.}{7}{section*.14}%
+\contentsline {paragraph}{Grounding hypothesis.}{7}{section*.15}%
+\contentsline {subsection}{\numberline {4.5}Algorithm}{7}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Evaluation Benchmark Construction}{8}{subsection.4.6}%
+\contentsline {paragraph}{Relevance judgements.}{8}{section*.16}%
+\contentsline {paragraph}{Corrigendum normalisation.}{8}{section*.17}%
+\contentsline {paragraph}{Statistical note.}{8}{section*.18}%
+\contentsline {paragraph}{Why document-level retrieval.}{8}{section*.19}%
+\contentsline {section}{\numberline {5}Experimental Setup}{8}{section.5}%
+\contentsline {paragraph}{Hardware.}{8}{section*.20}%
+\contentsline {paragraph}{Software.}{8}{section*.21}%
+\contentsline {paragraph}{Index build.}{8}{section*.22}%
+\contentsline {paragraph}{Query latency measurement.}{9}{section*.23}%
+\contentsline {section}{\numberline {6}Evaluation Framework}{9}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Dimension~1: Effectiveness}{9}{subsection.6.1}%
+\contentsline {paragraph}{Hit Rate at $k$.}{9}{section*.24}%
+\contentsline {paragraph}{Mean Reciprocal Rank.}{9}{section*.25}%
+\contentsline {paragraph}{Note on nDCG.}{9}{section*.26}%
+\contentsline {paragraph}{Confidence intervals.}{9}{section*.27}%
+\contentsline {paragraph}{Statistical significance.}{9}{section*.28}%
+\contentsline {subsection}{\numberline {6.2}Dimension~2: Reliability}{9}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Dimension~3: Efficiency}{10}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Results}{10}{section.7}%
+\contentsline {section}{\numberline {8}Discussion}{10}{section.8}%
+\contentsline {paragraph}{RQ1: Hybrid effectiveness and reliability.}{10}{section*.29}%
+\contentsline {paragraph}{RQ2: Sufficiency for grounded responses.}{10}{section*.30}%
+\contentsline {paragraph}{Comparison with prior work.}{11}{section*.31}%
+\contentsline {paragraph}{Practical implication.}{11}{section*.32}%
+\contentsline {section}{\numberline {9}Error Analysis}{11}{section.9}%
+\contentsline {paragraph}{Case~1: Vocabulary mismatch (BM25 failure).}{11}{section*.33}%
+\contentsline {paragraph}{Case~2: Semantic drift (BGE-M3\xspace failure).}{11}{section*.34}%
+\contentsline {paragraph}{Case~3: Article fragmentation (all systems fail).}{12}{section*.35}%
+\contentsline {paragraph}{Case~4: Cross-reference gap (hybrid partial failure).}{12}{section*.36}%
+\contentsline {paragraph}{Case~5: Definitional query across governance instruments.}{12}{section*.37}%
+\contentsline {section}{\numberline {10}Threats to Validity}{12}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Internal Validity}{12}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}External Validity}{12}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Construct Validity}{13}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Reproducibility}{13}{subsection.10.4}%
+\contentsline {section}{\numberline {11}Conclusion}{13}{section.11}%
+\contentsline {paragraph}{Future work.}{13}{section*.38}%
+\contentsline {section}{\numberline {12}Generative AI Disclosure}{13}{section.12}%
