@@ -1,0 +1,16 @@
+"carbon border adjustment" / CBAM	32023R0956 + implementing regs
+"emissions trading" / ETS	32003L0087, 32023L0959
+"effort sharing"	32018R0842, 32023R0857
+taxonomy	32020R0852, 2021/2139, 2021/2178
+LULUCF / "land use"	32018R0841, 32023R0839
+"nature restoration"	32024R1991
+"social climate fund"	32023R0955
+"green bond"	32023R2631
+"energy efficiency directive"	32023L1791
+"fluorinated gases"	32014R0517
+"carbon removal"/CRCF	32024R3012
+MRV shipping / "maritime emissions"
+Governance reporting ("national energy and climate plan"/NECP) 
+soil monitoring
+Just Transition Fund.
+LIFE programme

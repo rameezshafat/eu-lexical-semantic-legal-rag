@@ -1,6 +1,6 @@
 {
   "split": "test",
-  "n_queries": 22,
+  "n_queries": 53,
   "rrf_config": {
     "k": 20,
     "dense_weight": 5.0,
@@ -8,10 +8,10 @@
   },
   "results": {
     "bm25": {
-      "hit_rate": 0.7272727272727273,
-      "mrr": 0.6136363636363636,
-      "ndcg": 0.5371398326189294,
-      "hn_rate": 0.13333333333333333,
+      "hit_rate": 0.6981132075471698,
+      "mrr": 0.5279874213836478,
+      "ndcg": 0.4935253009654136,
+      "hn_rate": 0.2,
       "per_query": [
         {
           "query_id": "q006",
@@ -166,14 +166,231 @@
           "reciprocal_rank": 0.0,
           "ndcg_at_k": 0.0,
           "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q072",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.5,
+          "ndcg_at_k": 0.38685280723454163,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q073",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q074",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q075",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q076",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.6131471927654584,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q077",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q078",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.9197207891481876,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q079",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.2,
+          "ndcg_at_k": 0.23719771276929622,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q080",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q081",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.3333333333333333,
+          "ndcg_at_k": 0.5,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q082",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.3333333333333333,
+          "ndcg_at_k": 0.3065735963827292,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q083",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q084",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.8503449055347546,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q085",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.5,
+          "ndcg_at_k": 0.6309297535714575,
+          "hard_negatives_in_top_k": 2
+        },
+        {
+          "query_id": "q086",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.6131471927654584,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q087",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q088",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q089",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q090",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q091",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q092",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.25,
+          "ndcg_at_k": 0.2640681225725909,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q093",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q094",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.3333333333333333,
+          "ndcg_at_k": 0.5,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q095",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q096",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q097",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q098",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q099",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.5,
+          "ndcg_at_k": 0.6309297535714575,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q100",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.3333333333333333,
+          "ndcg_at_k": 0.5,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q101",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.2,
+          "ndcg_at_k": 0.38685280723454163,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q102",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
         }
       ]
     },
     "dense": {
-      "hit_rate": 0.9090909090909091,
-      "mrr": 0.7765151515151515,
-      "ndcg": 0.7455021768155102,
-      "hn_rate": 0.3333333333333333,
+      "hit_rate": 0.9245283018867925,
+      "mrr": 0.7424528301886792,
+      "ndcg": 0.7093503015649455,
+      "hn_rate": 0.25,
       "per_query": [
         {
           "query_id": "q006",
@@ -328,14 +545,231 @@
           "reciprocal_rank": 1.0,
           "ndcg_at_k": 1.0,
           "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q072",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.3333333333333333,
+          "ndcg_at_k": 0.3065735963827292,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q073",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.5,
+          "ndcg_at_k": 0.6309297535714575,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q074",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q075",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.8772153153380493,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q076",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.8772153153380493,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q077",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.3333333333333333,
+          "ndcg_at_k": 0.3065735963827292,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q078",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.5,
+          "ndcg_at_k": 0.38685280723454163,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q079",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.6131471927654584,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q080",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q081",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q082",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.25,
+          "ndcg_at_k": 0.2640681225725909,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q083",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q084",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q085",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q086",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.6131471927654584,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q087",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.2,
+          "ndcg_at_k": 0.38685280723454163,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q088",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.6131471927654584,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q089",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.8772153153380493,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q090",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.2,
+          "ndcg_at_k": 0.38685280723454163,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q091",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.5,
+          "ndcg_at_k": 0.38685280723454163,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q092",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.8503449055347546,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q093",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.25,
+          "ndcg_at_k": 0.43067655807339306,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q094",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q095",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q096",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q097",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q098",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q099",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q100",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q101",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q102",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.2,
+          "ndcg_at_k": 0.38685280723454163,
+          "hard_negatives_in_top_k": 0
         }
       ]
     },
     "hybrid": {
-      "hit_rate": 0.9090909090909091,
-      "mrr": 0.7606060606060606,
-      "ndcg": 0.719436157771373,
-      "hn_rate": 0.26666666666666666,
+      "hit_rate": 0.9056603773584906,
+      "mrr": 0.7729559748427673,
+      "ndcg": 0.7207568879076712,
+      "hn_rate": 0.25,
       "per_query": [
         {
           "query_id": "q006",
@@ -489,6 +923,223 @@
           "hit_at_k": true,
           "reciprocal_rank": 0.3333333333333333,
           "ndcg_at_k": 0.5,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q072",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.6131471927654584,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q073",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q074",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q075",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.9197207891481876,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q076",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.9197207891481876,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q077",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.25,
+          "ndcg_at_k": 0.2640681225725909,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q078",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.8772153153380493,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q079",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.6131471927654584,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q080",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q081",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q082",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.2,
+          "ndcg_at_k": 0.23719771276929622,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q083",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q084",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.8772153153380493,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q085",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 1
+        },
+        {
+          "query_id": "q086",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.6131471927654584,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q087",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.25,
+          "ndcg_at_k": 0.43067655807339306,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q088",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.6131471927654584,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q089",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.8503449055347546,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q090",
+          "hit_at_k": false,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q091",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.3333333333333333,
+          "ndcg_at_k": 0.3065735963827292,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q092",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 0.8503449055347546,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q093",
+          "hit_at_k": true,
+          "reciprocal_rank": 0.2,
+          "ndcg_at_k": 0.38685280723454163,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q094",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q095",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q096",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q097",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q098",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q099",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q100",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q101",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "hard_negatives_in_top_k": 0
+        },
+        {
+          "query_id": "q102",
+          "hit_at_k": true,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
           "hard_negatives_in_top_k": 0
         }
       ]
