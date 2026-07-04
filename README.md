@@ -123,36 +123,38 @@ Test set is never touched. Best found: `dense_weight=5.0, k=20, top_k_retrieval=
 python scripts/eval_test.py
 ```
 
-**Held-out test results** (22 queries, stratified 70/30 split by difficulty, seed=42):
+**Held-out test results** (53 queries: original 22-query split, seed=42, later
+expanded with 31 queries derived from European Parliament written questions —
+E-number provenance recorded per query):
 
 ```
-System                   HR@5      MRR@5     NDCG@5    HN_Rate@5 ↓
---------------------------------------------------------------------
-BM25 (sparse-only)       0.7273    0.6136    1.0959    0.1333
-nomic-embed (dense-only) 0.9091    0.7765    1.3981    0.3333
-Hybrid RRF (ours)        0.9091    0.7606    1.4015    0.2667
+System                   HR@5      MRR@5     NDCG@5
+------------------------------------------------------
+BM25 (sparse-only)       0.6981    0.5280    0.4935
+nomic-embed (dense-only) 0.9245    0.7425    0.7094
+Hybrid RRF (ours)        0.9057    0.7730    0.7208
 ```
 
-Hybrid matches dense-only on HR@5, improves on NDCG@5 (+0.24%), and reduces
-HN_Rate@5 by 20% — confirming BM25 suppresses hard-negative retrieval when
-weighted correctly. Parameters were selected on the validation set; these
-numbers are reported on the held-out test set for the first time.
+Both dense-only and hybrid significantly outperform BM25 (Wilcoxon signed-rank
+on per-query MRR: p=0.0005 and p=0.0036 respectively). Hybrid and dense-only
+are statistically indistinguishable (p=0.61, negligible effect size): hybrid is
+slightly ahead on MRR/NDCG and slightly behind on HR@5, all within noise.
+Fusion parameters were selected on the validation set only. HN_Rate is omitted
+here pending completion of hard-negative annotation on the expanded test set
+(currently only 4 of 53 test queries are annotated).
 
-### Step 4 — Full-corpus reference (all 71 queries)
+### Step 4 — Full-corpus smoke test (all 102 queries)
 
 ```bash
 python main.py --mode baselines
 ```
 
-```
-System                   HR@5      MRR@5     NDCG@5    HN_Rate@5
-------------------------------------------------------------------
-BM25 (sparse-only)       0.7042    0.5556    0.9130    0.0600
-nomic-embed (dense-only) 0.9577    0.7854    1.3599    0.1200
-Hybrid RRF (ours)        0.9718    0.7946    1.3844    0.1200
-```
+Runs all queries (validation + test combined) as a pipeline smoke test. Full
+per-query results saved to `data/indices/baseline_report.json`.
 
-Full per-query results saved to `data/indices/baseline_report.json`.
+> Do not cite these numbers: the full set includes the 49 validation queries
+> the fusion hyperparameters were tuned on, so results are optimistically
+> biased. The held-out test table above is the reportable one.
 
 ### Step 3 — Run a query with generation (requires Ollama running with llama3.3:70b)
 
@@ -178,25 +180,32 @@ No API keys required. All tests are fully offline.
 ```bash
 pip install pytest==9.0.3
 python -m pytest tests/ -v
-# Expected: 67 passed
+# Expected: 71 passed
 ```
 
 ---
 
 ## Evaluation Methodology
 
-**Gold standard:** 71 manually curated queries in `data/evaluation/gold_standard.json`.
-Each query maps to one or more relevant CELEX document IDs. 20 of 71 queries also
-carry annotated hard-negative CELEX IDs (documents that share surface vocabulary but
-are legally incorrect answers).
+**Gold standard:** 102 queries in `data/evaluation/gold_standard.json`, split into
+49 validation queries (`gold_standard_val.json`, used for hyperparameter tuning)
+and 53 held-out test queries (`gold_standard_test.json`). The 31 most recent test
+queries are derived from real European Parliament written questions (parliamentary
+E-numbers recorded in each query's notes field), paraphrased into natural user
+language to avoid query–corpus vocabulary leakage. 72 of 102 queries carry
+annotated hard-negative CELEX IDs (documents that share surface vocabulary but
+are legally incorrect answers); syncing these annotations to the test split is
+in progress.
 
 **Metrics:**
 - `HR@5` — fraction of queries where at least one relevant document appears in top-5
 - `MRR@5` — mean reciprocal rank of the first relevant result
 - `NDCG@5` — normalised discounted cumulative gain; rewards finding *all* relevant
-  documents at high ranks (38 of 71 queries have 2+ relevant instruments)
+  documents at high ranks (many queries map to 2+ relevant instruments). Each
+  relevant document is credited once, at its first occurrence — the retrieved list
+  is article-level, so one CELEX document can occupy several top-k slots
 - `HN_Rate@5` — mean fraction of top-5 slots occupied by hard-negative documents
-  (lower is better; computed only over the 20 annotated queries)
+  (lower is better; computed only over queries with hard-negative annotations)
 
 **Matching:** CELEX-level (document, not article). Corrigenda suffixes stripped
 before comparison (e.g. `32003L0087R(02)` matches gold `32003L0087`). Sub-chunks

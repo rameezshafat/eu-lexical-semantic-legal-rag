@@ -17,6 +17,60 @@ the paper. Roughly in order of how much it worries me.
 
 ---
 
+## SECOND UPDATE (4 July) - the "fusion is dead" conclusion below didn't survive a bigger test set
+
+Since the last update a lot changed: we switched the dense model to nomic-embed
+(8k context), added hierarchical chunking, split the queries into a 49-query
+validation set (used for tuning the RRF weights, now 5:1 dense:sparse, k=20) and
+a held-out test set, found and fixed a real bug in our NDCG (duplicate articles
+from the same document were being credited multiple times, which is why some
+NDCG values were over 1.0 - anything citing those numbers is wrong), and
+expanded the test set from 22 to 53 queries. The 31 new queries were derived
+from actual European Parliament written questions (E-numbers in the notes field
+of each query as an audit trail), paraphrased into plain language, with corpus
+membership checked for every mapping.
+
+Results on the 53-query test set:
+
+```
+BM25           HR@5 0.6981   MRR@5 0.5280   NDCG@5 0.4935
+nomic (dense)  HR@5 0.9245   MRR@5 0.7425   NDCG@5 0.7094
+Hybrid 5:1     HR@5 0.9057   MRR@5 0.7730   NDCG@5 0.7208
+```
+
+Two things happened that matter:
+
+1. We finally have significant results. Hybrid beats BM25 (Wilcoxon p=0.0005,
+   d=0.579) and dense beats BM25 (p=0.0036, d=0.433). At n=22 nothing was
+   significant. The benchmark expansion did exactly what it was supposed to.
+
+2. The hybrid-vs-dense direction FLIPPED. At n=22 dense led hybrid on MRR; at
+   n=53 hybrid leads dense (0.7730 vs 0.7425). Still not significant either way
+   (p=0.61, d=0.12, negligible). Which means my earlier conclusion below -
+   "naive fusion actively hurts, there is no ratio where adding BM25 helps" -
+   was small-sample noise, and I wrote it too confidently. Lesson learned the
+   honest way.
+
+So the actual paper claim is now: weighted hybrid fusion and dense-only are
+statistically indistinguishable on this benchmark; both significantly
+outperform BM25. Fusion doesn't rescue retrieval but it doesn't cost anything
+either. That's weaker than "hybrid wins" but it's true, and the direction-flip
+story is worth a paragraph in the paper as a warning about reading directional
+differences at small n.
+
+Still open before these numbers are final: ~11 test queries carry VERIFY/FLAG
+notes for the second annotator, the hard-negative annotations in the master
+file (72 of 102 queries) haven't been synced into the test split (only 4 test
+queries have them, so ignore HN_Rate for now), and bootstrap_ci.py computes
+HN_Rate with a different denominator than eval_test.py (it averages in
+unannotated queries as zeros - eval_test's number is the right one). After the
+annotator pass: freeze the test set, re-run once, those are the paper numbers.
+
+Everything below this line is the older history - kept because it shows how the
+conclusions evolved, but where it contradicts the above, the above wins.
+
+---
+
 ## UPDATE - I went ahead and rewrote the queries, and it changes the story
 
 After writing the notes below I actually did the thing I was worried about: I
