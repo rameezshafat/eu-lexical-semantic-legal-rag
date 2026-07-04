@@ -41,9 +41,16 @@ class Settings(BaseSettings):
     # Hyperparameters selected via grid search on the 49-query validation set
     # (stratified 70/30 split by difficulty, seed=42). Test set was not
     # consulted during tuning. Best on validation: HR@5=1.00, MRR@5=0.81.
-    # On held-out test (22 queries): HR@5=0.9091, NDCG@5=1.4015,
-    # HN_Rate@5=0.2667 — matching dense-only on HR and reducing hard-negative
-    # retrieval by 20% vs dense-only (0.3333).
+    # On held-out test (22 queries): HR@5=0.9091, HN_Rate@5=0.2667 — matching
+    # dense-only on HR and reducing hard-negative retrieval by 20% vs
+    # dense-only (0.3333).
+    # NOTE: NDCG values previously stored in test_report.json /
+    # confidence_intervals.json exceeded 1.0 (impossible for true NDCG). Cause:
+    # the retrieved list is article-level, so one CELEX document can fill
+    # several top-k slots, and each duplicate was credited in DCG while IDCG
+    # counted it once. Fixed in evaluator._ndcg (first occurrence only);
+    # re-run scripts/eval_test.py, bootstrap_ci.py and significance_test.py
+    # to regenerate those artifacts before citing NDCG anywhere.
     rrf_k: int = 20
     top_k_retrieval: int = 100
     top_k_fused: int = 5

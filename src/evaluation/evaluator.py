@@ -361,14 +361,25 @@ def _base_celex(celex: str) -> str:
 
 def _ndcg(relevant_set: set[str], retrieved: list[str], k: int) -> float:
     """
-    Binary NDCG@k.
+    Binary NDCG@k at document (CELEX) level.
 
     DCG@k  = Σ_{i=1}^{k}  rel_i / log2(i + 1)
     NDCG@k = DCG@k / IDCG@k   where IDCG places all relevant docs first.
     Returns 0.0 when there are no relevant documents or none are retrieved.
+
+    Each relevant document is credited ONCE, at its first (highest-ranked)
+    occurrence. The retrieved list is article-level, so the same CELEX
+    document frequently appears several times in the top-k (different
+    articles of the same instrument); crediting every occurrence would
+    inflate DCG above IDCG and push NDCG over 1.0.
     """
-    gains = [1.0 if _base_celex(c) in relevant_set else 0.0 for c in retrieved[:k]]
-    dcg   = sum(g / math.log2(i + 2) for i, g in enumerate(gains))
+    seen: set[str] = set()
+    dcg = 0.0
+    for i, c in enumerate(retrieved[:k]):
+        base = _base_celex(c)
+        if base in relevant_set and base not in seen:
+            dcg += 1.0 / math.log2(i + 2)
+            seen.add(base)
 
     n_rel = min(len(relevant_set), k)
     idcg  = sum(1.0 / math.log2(j + 2) for j in range(n_rel))

@@ -185,6 +185,69 @@ class TestNDCG(unittest.TestCase):
         result = _ndcg({"32003L0087"}, [], k=5)
         self.assertAlmostEqual(result, 0.0)
 
+    def test_ndcg_never_exceeds_one(self):
+        """
+        Regression: NDCG must be bounded to [0, 1] by construction.
+
+        The original bug: the retrieved list is article-level, so the same
+        CELEX document can occupy several top-k slots (different articles of
+        one instrument). Crediting every occurrence inflated DCG above IDCG,
+        producing values up to 2.56 in test_report.json. The sweep therefore
+        uses product (repeats allowed), not permutations — duplicate documents
+        in the retrieved list are exactly the case that broke.
+        """
+        import itertools
+
+        docs = [f"D{i}" for i in range(4)]
+        for n_rel in range(1, 4):
+            relevant = set(docs[:n_rel])
+            for n_retr in range(0, 5):
+                # product allows repeated docs — the duplicate case is the bug.
+                for combo in itertools.product(docs, repeat=n_retr):
+                    for k in (1, 3, 5):
+                        val = _ndcg(relevant, list(combo), k=k)
+                        self.assertGreaterEqual(val, 0.0)
+                        self.assertLessEqual(
+                            val, 1.0 + 1e-9,
+                            msg=f"NDCG>1 for rel={relevant}, retr={combo}, k={k}",
+                        )
+
+    def test_ndcg_duplicate_relevant_doc_counted_once(self):
+        """
+        Regression pin for the exact inflated values found in test_report.json:
+        one relevant doc appearing at ranks 1-3 used to score
+        1/log2(2)+1/log2(3)+1/log2(4) = 2.1309 (and 2.5616 with four copies).
+        Duplicates of an already-credited document must add nothing, so the
+        correct score is exactly 1.0 (relevant doc found at rank 1).
+        """
+        self.assertAlmostEqual(
+            _ndcg({"32003L0087"}, ["32003L0087"] * 3 + ["32020R0852", "32023R0956"], k=5),
+            1.0, places=9,
+        )
+        self.assertAlmostEqual(
+            _ndcg({"32003L0087"}, ["32003L0087"] * 4 + ["32020R0852"], k=5),
+            1.0, places=9,
+        )
+
+    def test_ndcg_duplicate_at_lower_rank_uses_first_occurrence(self):
+        """A relevant doc at ranks 2 and 4 scores as if found once at rank 2."""
+        expected = (1.0 / math.log2(3)) / (1.0 / math.log2(2))
+        result = _ndcg(
+            {"32003L0087"},
+            ["32020R0852", "32003L0087", "32023R0956", "32003L0087", "32018R0842"],
+            k=5,
+        )
+        self.assertAlmostEqual(result, expected, places=9)
+
+    def test_ndcg_three_relevant_at_top_is_exactly_one(self):
+        """Three distinct relevant docs at ranks 1-3 is a perfect ranking."""
+        result = _ndcg(
+            {"32003L0087", "32020R0852", "32023R0956"},
+            ["32003L0087", "32020R0852", "32023R0956", "32018R0842", "32014R0517"],
+            k=5,
+        )
+        self.assertAlmostEqual(result, 1.0, places=9)
+
 
 class TestHardNegativeCount(unittest.TestCase):
 
