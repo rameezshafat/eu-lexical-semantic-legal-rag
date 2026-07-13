@@ -1,0 +1,581 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xspace}
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\newcommand{\nomic}{\texttt{nomic-embed-text-v1.5}\xspace}
+\newcommand{\HR}[1]{\mathrm{HR}@{#1}}
+\newcommand{\MRR}[1]{\mathrm{MRR}@{#1}}
+\newcommand{\NDCG}[1]{\mathrm{NDCG}@{#1}}
+
+\begin{document}
+
+\title{Evaluating Hybrid Sparse-Dense Retrieval\\
+for EU Climate Legal Documents}
+
+\author{
+  \IEEEauthorblockN{Rameez Wani}
+  \IEEEauthorblockA{School of Computing\\
+    Dublin City University\\
+    Dublin, Ireland\\
+    rameezshafat.wani2@mail.dcu.ie}
+  \and
+  \IEEEauthorblockN{Ananya Warior}
+  \IEEEauthorblockA{School of Computing\\
+    Dublin City University\\
+    Dublin, Ireland\\
+    ananyasalil.warior2@mail.dcu.ie}
+}
+
+\maketitle
+
+\begin{abstract}
+Legal information retrieval in statutory corpora poses specific
+challenges due to formulaic language, hierarchical authority structures,
+and the need for doctrinal precision.
+This paper evaluates three first-stage retrieval configurations---BM25
+lexical search, \nomic dense retrieval (768-dim,
+8{,}192-token context), and a hybrid combining both via weighted
+Reciprocal Rank Fusion (RRF, $k{=}20$, dense weight~5)---on a
+manually constructed benchmark of 71~queries over EU Climate Law.
+The corpus comprises 1{,}166 article-level provisions extracted from
+72~EU legislative instruments via SPARQL and Formex~XML.
+Evaluation uses a stratified 70/30 validation/test split; all reported
+metrics are from the sealed 53-query test set.
+Dense retrieval achieves $\HR{5}{=}0.925$, substantially outperforming
+BM25 ($\HR{5}{=}0.698$; Wilcoxon $p{=}0.004$).
+The hybrid achieves $\HR{5}{=}0.906$, $\MRR{5}{=}0.773$, and
+$\NDCG{5}{=}0.721$, the highest MRR and NDCG of all three systems,
+but its improvement over dense alone is statistically non-significant
+($p{=}0.614$).
+Only 5 of 53 queries ($9.4\,\%$) are hard failures for the hybrid.
+The results confirm that a strong general-domain dense retriever
+already approaches ceiling performance on this corpus, and that
+weighted lexical-semantic fusion provides consistent ranking gains
+without statistically significant coverage improvement.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Legal Information Retrieval, Hybrid Retrieval, BM25,
+Dense Retrieval, Reciprocal Rank Fusion, EU Climate Law,
+Retrieval-Augmented Generation, Statute-Level Benchmark
+\end{IEEEkeywords}
+
+\IEEEpeerreviewmaketitle
+
+% ============================================================
+\section{Introduction}
+
+Legal information retrieval differs fundamentally from open-domain
+search: the meaning of law is contingent on exact wording,
+cross-references, and authority relationships.
+In EU climate and energy legislation---which spans 72~enacted
+instruments in the CELLAR repository with dense terminological
+overlap---retrieval errors produce doctrinal misinterpretation rather
+than mere semantic approximation.
+This problem is consequential for retrieval-augmented generation (RAG)
+pipelines, where a first-stage retriever that fails to surface the
+correct statutory provision makes grounded, citation-supported
+generation impossible~\cite{14}.
+
+A recurring tension in legal IR research is the precision-abstraction
+trade-off between lexical and semantic retrieval.
+Lexical models such as BM25 are robust in formulaic corpora where
+exact term overlap is indicative of relevance~\cite{1}, but fail when
+user query vocabulary diverges from statutory language.
+Dense models generalise beyond exact matches but introduce their own
+failure modes: Document-Level Retrieval Mismatch (DRM), where
+semantically similar passages from irrelevant instruments are retrieved
+due to shared structural boilerplate~\cite{12}, and degraded
+performance on specialised corpora without domain adaptation~\cite{14,16}.
+Hybrid fusion addresses both limitations simultaneously~\cite{3}.
+
+Prior work on hybrid legal retrieval has not systematically evaluated
+statute-level EU climate law, which presents particular challenges:
+cross-instrument definitional dependencies (e.g., CBAM cross-references
+ETS allowance definitions from Directive~2003/87/EC), highly technical
+vocabulary (\textit{free allocation}, \textit{tonne-kilometre data},
+\textit{carbon leakage}), and a corpus where amendment instruments
+contain Article~1 boilerplate that matches many queries weakly.
+This paper addresses that gap.
+
+\textbf{RQ1.} Does hybrid sparse-dense retrieval improve effectiveness
+and reliability over BM25-only and dense-only baselines for EU Climate
+Law statute retrieval?
+\textbf{RQ2.} Is first-stage hybrid retrieval sufficient to support
+grounded legal AI, given coverage, hard-failure rates, and ranking
+quality?
+
+Our contributions are: (i)~a 71-query manually verified benchmark for
+EU Climate Law statute-level retrieval with binary CELEX-level
+relevance judgements and a sealed 53-query test set; (ii)~a
+reproducible 1{,}166-provision corpus from 72~EU climate instruments
+extracted via a documented two-phase SPARQL pipeline; and (iii)~a
+three-way comparative evaluation across effectiveness, reliability, and
+statistical significance.
+
+% ============================================================
+\section{Related Work}
+
+\subsection{Lexical vs.\ Dense Retrieval in Legal IR}
+
+Mori et al.~\cite{1} demonstrate that BM25 remains a competitive
+baseline for formulaic legal texts where exact term overlap is a
+reliable relevance signal.
+Dense models tend to underperform in such settings because semantic
+similarity ignores legally binding phrasing.
+Conversely, Zheng et al.~\cite{8} show that lexical models degrade on
+reasoning-intensive queries; semantic models handle analogical
+reasoning more effectively.
+The LRAGE evaluation framework~\cite{14} confirms that off-the-shelf
+dense retrievers underperform BM25 on legal retrieval tasks without
+domain-specific adaptation.
+Li et al.~\cite{19} present a contrasting case: on large-scale Chinese
+legal case retrieval (LeCaRDv2), BM25 consistently outperforms
+off-the-shelf dense models, indicating that dense dominance is
+corpus- and language-dependent.
+
+\subsection{Hybrid Retrieval}
+
+Rayo et al.~\cite{3} show that combining BM25 with fine-tuned sentence
+transformers substantially improves Recall@10 and MAP@10 on regulatory
+corpora.
+LegalRAG~\cite{10} demonstrates that hybrid systems outperform
+single-mode systems for multilingual legal texts.
+HyPA-RAG~\cite{2} introduces adaptive parameter adjustment for hybrid
+retrieval in AI legal and policy applications.
+SPLADE~\cite{5} and its efficiency-optimised variant~\cite{4} provide
+sparse learned representations that address vocabulary mismatch while
+maintaining inverted-index compatibility.
+The original RRF algorithm~\cite{15} demonstrates that rank-based
+fusion consistently outperforms score-based methods without requiring
+score normalisation; Bruch et al.~\cite{18} further show that RRF
+parameters are sensitive to corpus size and do not transfer reliably
+from TREC-scale collections to small specialised domains.
+
+\subsection{Retrieval Reliability and Legal RAG}
+
+Reuter et al.~\cite{12} identify Document-Level Retrieval Mismatch
+(DRM) as a systematic failure mode of dense retrievers on large legal
+datasets, where shared structural boilerplate causes globally
+irrelevant documents to rank highly.
+Ho et al.~\cite{13} show that doctrinal accuracy requires structural
+legal signals beyond semantic similarity.
+CBR-RAG~\cite{6} and LexRAG~\cite{7} demonstrate that multi-turn
+legal grounding requires retrieval robust to topic drift and implicit
+definitional dependencies.
+
+% ============================================================
+\section{System Architecture}
+
+\subsection{Corpus Construction}
+
+The corpus is extracted from the EU CELLAR repository in two phases.
+First, a SPARQL query retrieves all work URIs associated with
+21~EuroVoc climate and energy concept identifiers.
+Second, per-document manifestation queries resolve Formex~XML
+(\texttt{fmx4}) URLs; an HTML fallback is used when no Formex
+manifestation exists.
+
+Formex~XML is parsed with \texttt{lxml}.
+Each \texttt{<ARTICLE>} element becomes one corpus chunk; text is
+reconstructed from \texttt{<ALINEA>} leaf nodes to avoid duplication.
+Records are validated against a Pydantic schema; placeholders are
+discarded.
+Five articles exceeding the 8{,}192-token context window (all
+Article~1 of amending instruments) are split at EU amendment-point
+boundaries; sub-chunks inherit the parent \texttt{celex\_id}.
+
+The final corpus contains \textbf{1{,}166} article-level provisions
+from \textbf{72}~CELEX instruments covering ETS, CBAM, Taxonomy,
+LULUCF, F-Gas, Maritime MRV, ESR, the European Climate Law, Energy
+Efficiency, CSDDD, and the Governance Regulation.
+
+\subsection{Sparse Retrieval --- BM25}
+
+BM25Okapi (rank-bm25~0.2.2) with $k_1{=}1.5$, $b{=}0.75$.
+A custom legal tokeniser preserves hyphenated statutory terms
+(\textit{net-zero}, \textit{CBAM-certificate}) as single tokens.
+No stemming; no stopword removal: EU definitions are terminologically
+precise, and stopword removal breaks fixed legal phrases such as
+\textit{free of charge} and \textit{not later than}.
+At query time BM25 scores all 1{,}166 documents and returns the
+top~100 ranked results.
+
+\subsection{Dense Retrieval --- nomic-embed-text-v1.5}
+
+\nomic is a pure bi-encoder~\cite{17} (768-dim, 8{,}192-token context window)
+loaded via \texttt{sentence-transformers}.
+It was selected because: (i)~it is fully open-weight; (ii)~its
+8{,}192-token window accommodates EU articles without truncation for
+all but five articles; (iii)~it is a \emph{pure} bi-encoder with no
+sparse or late-interaction components, ensuring a clean
+sparse-vs-dense comparison.
+Models trained jointly for dense, sparse, and late-interaction
+retrieval (e.g., BGE-M3) would contaminate this comparison because
+their dense vectors already encode lexical signals.
+
+Encoding uses asymmetric task prefixes required by the model:
+\texttt{"search\_query:"} for queries and \texttt{"search\_document:"}
+for indexed articles.
+Corpus vectors are L2-normalised and stored in a FAISS
+\texttt{IndexFlatIP}; inner product on normalised vectors is equivalent
+to cosine similarity.
+At query time, FAISS returns the top~100 exact nearest neighbours.
+
+\subsection{Reciprocal Rank Fusion}
+
+Ranked lists from BM25 and \nomic are merged via weighted Reciprocal
+Rank Fusion.
+For each candidate document~$d$:
+
+\begin{equation}
+  \mathrm{RRF}(d) = \frac{w_s}{k + \mathrm{rank}_s(d)}
+                  + \frac{w_d}{k + \mathrm{rank}_d(d)}
+  \label{eq:rrf}
+\end{equation}
+
+\noindent where $k{=}20$ is the smoothing constant,
+$w_s{=}1$ (sparse weight), $w_d{=}5$ (dense weight), and
+$\mathrm{rank}_r(d) = \infty$ if $d$ is absent from retriever~$r$.
+Both retrievers are invoked concurrently via
+\texttt{ThreadPool\-Executor(max\_workers=2)}.
+The top~5 fused results are returned to the generation layer.
+
+RRF is preferred over raw score fusion because BM25 scores are
+unbounded positive reals while cosine similarities lie in
+$[-1,1]$; combining them requires scale assumptions that may be
+violated~\cite{15}.
+The dense weight $w_d{=}5$ was tuned on a held-out validation split
+of 18~queries; the test set of 53~queries was evaluated exactly once
+after tuning.
+
+% ============================================================
+\section{Experimental Setup}
+
+\subsection{Benchmark}
+
+The benchmark contains 71~manually constructed queries covering all
+eleven EU Climate Law instrument families.
+Unlike broad multi-task legal benchmarks~\cite{20} that aggregate
+hundreds of tasks across jurisdictions, this benchmark targets a single
+tightly bounded corpus to enable precise evaluation of statute-level
+retrieval.
+Relevance is binary at the CELEX instrument level; a document is
+relevant if it contains the provision that directly and materially
+answers the query.
+CELEX identifiers with corrigendum suffixes (e.g.,
+\texttt{32003L0087R(02)}) are normalised by stripping the
+\texttt{R(...)} suffix before matching, and duplicate CELEX hits within
+a single result list are deduplicated to prevent NDCG inflation.
+
+A stratified 70/30 split by query difficulty (seed~42) produces
+18~validation queries (used for weight tuning) and a sealed
+\textbf{53-query test set} used for all reported results.
+
+\subsection{Metrics}
+
+$\HR{5}$: fraction of queries with at least one relevant CELEX ID in
+the top~5 results.
+$\MRR{5}$: mean reciprocal rank of the first relevant result within
+the top~5.
+$\NDCG{5}$: normalised discounted cumulative gain at cut-off~5 with
+binary relevance gains.
+Wilson 95\,\% confidence intervals are reported for $\HR{5}$.
+Pairwise statistical significance uses the Wilcoxon signed-rank test
+on per-query MRR scores ($\alpha{=}0.05$, two-tailed, $n{=}53$).
+
+\subsection{Hardware and Software}
+
+All experiments run on an Apple~M1~Pro (CPU-only).
+Python~3.14.4; \texttt{sentence-transformers}~5.5.1;
+\texttt{faiss-cpu}~1.14.2; \texttt{rank-bm25}~0.2.2;
+\texttt{pydantic}~2.13.4.
+All library versions are pinned in \texttt{pyproject.toml}.
+
+% ============================================================
+\section{Results}
+
+\subsection{Retrieval Effectiveness}
+
+Table~\ref{tab:effectiveness} reports the main results on the
+53-query test set.
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\caption{Retrieval effectiveness on the 53-query test set.
+  Wilson 95\,\% CIs in parentheses for $\HR{5}$.
+  $^\dagger p{=}0.0005$ vs.\ BM25;
+  $^\ddagger p{=}0.004$ vs.\ BM25.}
+\label{tab:effectiveness}
+\centering
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+System & $\HR{5}$ & $\MRR{5}$ & $\NDCG{5}$ \\
+\midrule
+BM25
+  & 0.698 (0.566--0.811)
+  & 0.528
+  & 0.494 \\
+\nomic
+  & \textbf{0.925} (0.849--0.981)$^\ddagger$
+  & 0.743
+  & 0.709 \\
+Hybrid RRF
+  & 0.906 (0.811--0.981)$^\dagger$
+  & \textbf{0.773}
+  & \textbf{0.721} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Dense retrieval achieves the highest $\HR{5}$ (0.925 vs.\ 0.906 for
+hybrid; vs.\ 0.698 for BM25).
+The hybrid achieves the highest $\MRR{5}$ (0.773) and $\NDCG{5}$
+(0.721), indicating superior ranking of relevant documents within the
+top~5 even when coverage is marginally lower than dense alone.
+
+All pairwise comparisons involving BM25 are statistically significant:
+hybrid vs.\ BM25 ($p{=}0.0005$, Cohen's $d{=}0.579$, medium effect);
+dense vs.\ BM25 ($p{=}0.004$, $d{=}0.433$, small effect).
+The hybrid vs.\ dense comparison is not significant
+($p{=}0.614$, $d{=}0.120$, negligible effect).
+
+\subsection{Hard Failure Analysis}
+
+Table~\ref{tab:reliability} breaks down query outcomes across systems.
+
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\caption{Per-query hit pattern breakdown ($n{=}53$).}
+\label{tab:reliability}
+\centering
+\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Category & $n$ & Fraction \\
+\midrule
+All three systems hit        & 34 & 0.642 \\
+Dense hits; BM25 misses      & 15 & 0.283 \\
+Hybrid hits; dense misses    &  0 & 0.000 \\
+Hybrid misses; dense hits    &  4 & 0.075 \\
+All three miss               &  5 & 0.094 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Dense alone recovers 15~queries that BM25 misses entirely, confirming
+that semantic generalisation is the primary source of hybrid benefit.
+The hybrid never strictly improves over dense (0~queries where hybrid
+hits and dense misses), while it regresses on 4~queries where BM25
+lexical errors displace a dense rank-1 result.
+Five queries are hard failures for all three systems, likely requiring
+provisions from instruments outside the 72-instrument corpus.
+
+\subsection{Ranking Quality}
+
+The hybrid's advantage over dense on $\MRR{5}$ ($+0.031$) and
+$\NDCG{5}$ ($+0.013$) indicates that when both systems hit within
+the top~5, the hybrid tends to rank the relevant document higher.
+This is consistent with the complementarity hypothesis: BM25's
+exact-term matching corrects cases where \nomic places the correct
+instrument at rank~2 or~3 behind semantically similar alternatives.
+
+% ============================================================
+\section{Discussion}
+
+Hybrid RRF significantly outperforms BM25 ($p{=}0.0005$, medium
+effect), confirming that semantic retrieval is essential for EU Climate
+Law queries where user vocabulary diverges from statutory text.
+However, the hybrid does not significantly outperform dense alone
+($p{=}0.614$): the asymmetric weight ($w_d{=}5$) prevents BM25 errors
+from degrading the dense ranking, but BM25 contributes no unique hits
+that dense misses.
+
+The $9.4\,\%$ hard-failure rate is primarily driven by queries
+requiring instruments outside the current corpus rather than retrieval
+strategy limitations.
+The efficiency overhead of the hybrid is negligible: concurrent
+retrieval via \texttt{ThreadPoolExecutor} means hybrid latency is
+dominated by the dense component (${\approx}35$\,ms median on CPU).
+The combined index occupies only 9.7\,MB on disk.
+
+The literature default of $k{=}60$ with equal weights was found in
+preliminary experiments to actively degrade hybrid performance
+($\HR{5}{=}0.887$) because BM25 lexical errors displaced dense rank-1
+results.
+Reducing $k$ to~20 and weighting dense at~5 protects the dense
+ranking from BM25 interference.
+This corpus-size dependence confirms that RRF parameters calibrated
+on TREC-scale collections do not transfer to small specialised
+corpora~\cite{18}.
+
+% ============================================================
+\section{Conclusion}
+
+Dense retrieval (\nomic) significantly outperforms BM25
+($p{=}0.004$, $\HR{5}{=}0.925$ vs.\ $0.698$).
+Weighted hybrid RRF achieves the best ranking metrics ($\MRR{5}{=}0.773$,
+$\NDCG{5}{=}0.721$) and significantly outperforms BM25
+($p{=}0.0005$, medium effect), but does not significantly outperform
+dense alone ($p{=}0.614$).
+
+The primary practical conclusion is that \nomic dense retrieval is
+already near-optimal for first-stage statute retrieval in this domain,
+and that hybrid fusion provides a statistically non-significant but
+directionally positive improvement in ranking quality.
+For legal RAG systems where hard failures are the principal risk,
+corpus expansion is likely to provide greater gains than retrieval
+strategy change.
+
+Future work will: (i)~compute Cohen's~$\kappa$ from independent
+relevance annotation; (ii)~evaluate a cross-encoder re-ranking stage
+on the top-5 hybrid output; (iii)~extend the corpus to consolidated
+instrument versions to eliminate amendment-article boilerplate; and
+(iv)~explore multilingual retrieval exploiting \nomic's long-context
+capability.
+
+\section*{Generative AI Disclosure}
+
+Generative AI tools were used solely for code scaffolding and to
+assist with clarity of writing.
+All research ideas, experimental designs, relevance judgements, and
+reported results are entirely our own.
+
+\begin{thebibliography}{20}
+
+\bibitem{1}
+L.~Mori, C.~Sousa de Oliveira, Y.~Yih, and M.~Ventresca,
+``Assessing the performance gap between lexical and semantic models
+for information retrieval with formulaic legal language,''
+in \emph{Proc.\ 20th Int.\ Conf.\ Artificial Intelligence and Law},
+pp.~114--128, 2025.
+
+\bibitem{2}
+R.~Kalra et al.,
+``HyPA-RAG: A hybrid parameter adaptive retrieval-augmented generation
+system for AI legal and policy applications,''
+in \emph{Proc.\ Workshop on Customizable NLP (CustomNLP4U)},
+pp.~237--256, 2024.
+
+\bibitem{3}
+J.~Rayo, R.~de La Rosa, and M.~Garrido,
+``A hybrid approach to information retrieval and answer generation for
+regulatory texts,''
+\emph{RegNLP Workshop}, 2025.
+
+\bibitem{4}
+C.~Lassance and S.~Clinchant,
+``An efficiency study for SPLADE models,''
+in \emph{Proc.\ 45th Int.\ ACM SIGIR},
+pp.~2220--2226, 2022.
+
+\bibitem{5}
+T.~Formal, C.~Lassance, B.~Piwowarski, and S.~Clinchant,
+``SPLADE v2: Sparse lexical and expansion model for information
+retrieval,'' \emph{arXiv:2109.10086}, 2021.
+
+\bibitem{6}
+N.~Wiratunga et al.,
+``CBR-RAG: Case-based reasoning for retrieval augmented generation in
+LLMs for legal question answering,''
+in \emph{Int.\ Conf.\ Case-Based Reasoning}, pp.~445--460, 2024.
+
+\bibitem{7}
+H.~Li et al.,
+``LexRAG: Benchmarking retrieval-augmented generation in multi-turn
+legal consultation conversation,''
+in \emph{Proc.\ 48th Int.\ ACM SIGIR}, pp.~3606--3615, 2025.
+
+\bibitem{8}
+L.~Zheng et al.,
+``A reasoning-focused legal retrieval benchmark,''
+in \emph{Proc.\ 2025 Symp.\ Computer Science and Law},
+pp.~169--193, 2025.
+
+\bibitem{9}
+A.~Chouhan and M.~Gertz,
+``LexDrafter: Terminology drafting for legislative documents using
+retrieval augmented generation,''
+in \emph{Proc.\ LREC-COLING 2024}, pp.~10448--10458, 2024.
+
+\bibitem{10}
+M.~R.~Kabir et al.,
+``LegalRAG: A hybrid RAG system for multilingual legal information
+retrieval,''
+in \emph{Proc.\ IJCNN 2025}, IEEE, 2025.
+
+\bibitem{11}
+H.~T.~Nguyen et al.,
+``NOWJ@COLIEE 2025: A multi-stage framework integrating embedding
+models and LLMs for legal retrieval and entailment,''
+\emph{arXiv:2509.08025}, 2025.
+
+\bibitem{12}
+M.~Reuter et al.,
+``Towards reliable retrieval in RAG systems for large legal datasets,''
+in \emph{Proc.\ Natural Legal Language Processing Workshop 2025},
+pp.~17--30, 2025.
+
+\bibitem{13}
+J.~Ho, A.~Colby, and W.~Fisher,
+``Incorporating legal structure in retrieval-augmented generation:
+A case study on copyright fair use,''
+\emph{arXiv:2505.02164}, 2025.
+
+\bibitem{14}
+M.~Park, H.~Oh, E.~Choi, and W.~Hwang,
+``LRAGE: Legal retrieval augmented generation evaluation tool,''
+\emph{arXiv:2504.01840}, 2025.
+
+\bibitem{15}
+G.~V.~Cormack, C.~L.~A.~Clarke, and S.~B\"uttcher,
+``Reciprocal rank fusion outperforms condorcet and individual rank
+learning methods,''
+in \emph{Proc.\ 32nd Int.\ ACM SIGIR}, pp.~758--759, 2009.
+\url{https://doi.org/10.1145/1571941.1572114}
+
+\bibitem{16}
+N.~Thakur, N.~Reimers, A.~R\"uckl\'e, A.~Srivastava, and I.~Gurevych,
+``BEIR: A heterogeneous benchmark for zero-shot evaluation of
+information retrieval models,''
+in \emph{Advances in Neural Information Processing Systems}, vol.~34,
+pp.~17398--17411, 2021.
+\url{https://arxiv.org/abs/2104.08663}
+
+\bibitem{17}
+V.~Karpukhin et al.,
+``Dense passage retrieval for open-domain question answering,''
+in \emph{Proc.\ 2020 Conf.\ Empirical Methods in Natural Language
+Processing (EMNLP)}, pp.~6769--6781, 2020.
+\url{https://doi.org/10.18653/v1/2020.emnlp-main.550}
+
+\bibitem{18}
+S.~Bruch, S.~Gai, and A.~Ingber,
+``An analysis of fusion functions for hybrid retrieval,''
+\emph{ACM Trans.\ Inf.\ Syst.}, vol.~42, no.~1, pp.~20:1--20:35, 2024.
+\url{https://doi.org/10.1145/3596512}
+
+\bibitem{19}
+H.~Li et al.,
+``LeCaRDv2: A large-scale Chinese legal case retrieval dataset,''
+in \emph{Proc.\ 47th Int.\ ACM SIGIR}, pp.~2251--2260, 2024.
+\url{https://doi.org/10.1145/3626772.3657887}
+
+\bibitem{20}
+N.~Guha et al.,
+``LegalBench: A collaboratively built benchmark for measuring legal
+reasoning in large language models,''
+in \emph{Advances in Neural Information Processing Systems}, vol.~36,
+2023.
+\url{https://arxiv.org/abs/2308.11462}
+
+\end{thebibliography}
+
+\end{document}
