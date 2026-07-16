@@ -42,11 +42,11 @@ This paper evaluates three first-stage retrieval configurations---BM25
 lexical search, \nomic dense retrieval (768-dim,
 8{,}192-token context), and a hybrid combining both via weighted
 Reciprocal Rank Fusion (RRF, $k{=}20$, dense weight~5)---on a
-manually constructed benchmark of 71~queries over EU Climate Law.
+manually constructed benchmark of 102~queries over EU Climate Law.
 The corpus comprises 1{,}166 article-level provisions extracted from
 72~EU legislative instruments via SPARQL and Formex~XML.
-Evaluation uses a stratified 70/30 validation/test split; all reported
-metrics are from the sealed 53-query test set.
+Evaluation uses a stratified split; all reported metrics are from the
+sealed 53-query test set.
 Dense retrieval achieves $\HR{5}{=}0.925$, substantially outperforming
 BM25 ($\HR{5}{=}0.698$; Wilcoxon $p{=}0.004$).
 The hybrid achieves $\HR{5}{=}0.906$, $\MRR{5}{=}0.773$, and
@@ -111,7 +111,7 @@ Law statute retrieval?
 grounded legal AI, given coverage, hard-failure rates, and ranking
 quality?
 
-Our contributions are: (i)~a 71-query manually verified benchmark for
+Our contributions are: (i)~a 102-query manually verified benchmark for
 EU Climate Law statute-level retrieval with binary CELEX-level
 relevance judgements and a sealed 53-query test set; (ii)~a
 reproducible 1{,}166-provision corpus from 72~EU climate instruments
@@ -260,12 +260,20 @@ after tuning.
 
 \subsection{Benchmark}
 
-The benchmark contains 71~manually constructed queries covering all
-eleven EU Climate Law instrument families.
+The benchmark contains \textbf{102~queries} covering all eleven EU
+Climate Law instrument families.
 Unlike broad multi-task legal benchmarks~\cite{20} that aggregate
 hundreds of tasks across jurisdictions, this benchmark targets a single
 tightly bounded corpus to enable precise evaluation of statute-level
 retrieval.
+The 102~queries comprise two cohorts: 71~original plain-language
+queries (split 49~validation / 22~test) and 31~queries derived from
+written questions submitted by Members of the European Parliament (MEPs)
+to the Commission, added to the test partition after the validation
+split was fixed; the Commission's official answers independently
+corroborate the CELEX relevance judgements.
+The \textbf{53-query sealed test set} thus consists of the 22~original
+test queries plus the 31~EP-derived queries.
 Relevance is binary at the CELEX instrument level; a document is
 relevant if it contains the provision that directly and materially
 answers the query.
@@ -273,10 +281,6 @@ CELEX identifiers with corrigendum suffixes (e.g.,
 \texttt{32003L0087R(02)}) are normalised by stripping the
 \texttt{R(...)} suffix before matching, and duplicate CELEX hits within
 a single result list are deduplicated to prevent NDCG inflation.
-
-A stratified 70/30 split by query difficulty (seed~42) produces
-18~validation queries (used for weight tuning) and a sealed
-\textbf{53-query test set} used for all reported results.
 
 \subsection{Metrics}
 
@@ -397,6 +401,11 @@ However, the hybrid does not significantly outperform dense alone
 ($p{=}0.614$): the asymmetric weight ($w_d{=}5$) prevents BM25 errors
 from degrading the dense ranking, but BM25 contributes no unique hits
 that dense misses.
+This is partly a design limitation of RRF on small statutory corpora:
+RRF is rank-biased and discards score confidence entirely, so on a
+1{,}166-document corpus where the dense retriever already places the
+correct instrument at rank~1 for most queries, BM25's rank signal
+provides no additional discriminative information~\cite{18}.
 
 The $9.4\,\%$ hard-failure rate is primarily driven by queries
 requiring instruments outside the current corpus rather than retrieval
