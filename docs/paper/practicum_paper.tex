@@ -9,7 +9,7 @@
 \usetikzlibrary{positioning,arrows.meta}
 \usepackage{pgfplots}
 \usepackage{helvet}
-\usepackage[font={footnotesize,sf},labelfont=bf]{caption}
+\usepackage[font=footnotesize]{caption}
 \pgfplotsset{compat=1.17}
 
 \hyphenation{op-tical net-works semi-conduc-tor}
@@ -262,30 +262,30 @@ quality.
 Fig.~\ref{fig:arch} shows the end-to-end pipeline: corpus
 construction from CELLAR, dual indexing, and query-time fusion.
 
-\begin{figure}[!t]
+\begin{figure*}[!t]
 \centering
 \begin{tikzpicture}[
-  node distance=3.5mm and 4mm,
+  node distance=4mm and 4mm,
   box/.style={draw, rounded corners=1pt, align=center,
-              font=\scriptsize\sffamily, inner sep=3pt,
-              minimum height=5.5mm},
-  arr/.style={-{Stealth[length=2mm]}, semithick}
+              font=\normalsize\sffamily, inner sep=4pt,
+              minimum height=7mm},
+  arr/.style={-{Stealth[length=2.2mm]}, semithick}
 ]
-\node[box, minimum width=62mm] (cellar)
-  {CELLAR SPARQL\\ \tiny 21 EuroVoc climate/energy concepts $\rightarrow$ 72 instruments};
-\node[box, minimum width=62mm, below=of cellar] (formex)
-  {Formex XML parsing + validation\\ \tiny 1{,}156 article-level provisions};
-\node[box, minimum width=62mm, below=of formex] (chunk)
-  {Hierarchical chunking ($>$7k tokens)\\ \tiny 1{,}166 retrieval units};
-\node[box, below left=5mm and -24mm of chunk, minimum width=28mm] (bm25)
-  {BM25 index\\ \tiny $k_1{=}1.5$, $b{=}0.75$};
-\node[box, below right=5mm and -24mm of chunk, minimum width=28mm] (faiss)
-  {FAISS IndexFlatIP\\ \tiny nomic-embed, 768-d};
-\node[box, below=13mm of chunk, minimum width=42mm] (rrf)
-  {Weighted RRF\\ \tiny $k{=}20$, $w_d{=}5$, $w_s{=}1$};
-\node[box, below=of rrf, minimum width=42mm] (out)
+\node[box, minimum width=70mm] (cellar)
+  {CELLAR SPARQL\\ {\small 21 EuroVoc concepts $\rightarrow$ 72 instruments}};
+\node[box, minimum width=70mm, below=of cellar] (formex)
+  {Formex XML parsing + validation\\ {\small 1{,}156 article-level provisions}};
+\node[box, minimum width=70mm, below=of formex] (chunk)
+  {Hierarchical chunking ($>$7k tokens)\\ {\small 1{,}166 retrieval units}};
+\node[box, below left=5mm and -27mm of chunk, minimum width=32mm] (bm25)
+  {BM25 index\\ {\small $k_1{=}1.5$, $b{=}0.75$}};
+\node[box, below right=5mm and -27mm of chunk, minimum width=32mm] (faiss)
+  {FAISS IndexFlatIP\\ {\small nomic-embed, 768-d}};
+\node[box, below=21mm of chunk, minimum width=46mm] (rrf)
+  {Weighted RRF\\ {\small $k{=}20$, $w_d{=}5$, $w_s{=}1$}};
+\node[box, below=of rrf, minimum width=46mm] (out)
   {Top-5 statutory provisions};
-\node[box, left=7mm of rrf, minimum width=13mm] (query) {Query};
+\node[box, left=7mm of rrf, minimum width=15mm] (query) {Query};
 
 \draw[arr] (cellar) -- (formex);
 \draw[arr] (formex) -- (chunk);
@@ -301,7 +301,7 @@ sparse/dense indexing over 1{,}166 retrieval units, and query-time
 weighted reciprocal rank fusion. Both retrievers return their top-100
 candidates concurrently.}
 \label{fig:arch}
-\end{figure}
+\end{figure*}
 
 \subsection{Corpus Construction}
 
@@ -398,8 +398,12 @@ Each candidate document~$d$ receives the score
 
 \noindent where $\mathrm{rank}_s$ and $\mathrm{rank}_d$ are the
 document's positions in the sparse and dense lists
-($\infty$ if absent), $k$ dampens the influence of any single
-top-ranked result, and $w_s$, $w_d$ weight the two retrievers.
+($\infty$ if absent), and $w_s$, $w_d$ weight the two retrievers.
+The constant $k$ is a positive smoothing term added to each rank in
+the denominator; it sets how steeply a document's contribution decays
+with rank position, so a small $k$ lets rank-1 results dominate the
+fused score while a large $k$ flattens the differences between
+neighbouring ranks.
 The intuition of~\eqref{eq:rrf} is that a document ranked well by
 both retrievers should beat a document ranked first by only one; the
 weights let a systematically stronger retriever dominate ties.
@@ -423,15 +427,15 @@ among those reaching $\HR{5}{=}1.000$ on validation.
 \centering
 \begin{tikzpicture}
 \begin{axis}[
-  width=\columnwidth, height=54mm,
+  width=\columnwidth, height=60mm,
   xlabel={dense weight $w_d$ (with $w_s{=}1$)},
   ylabel={validation $\MRR{5}$},
   xtick={1,2,3,5,8,10},
   ymin=0.65, ymax=0.85,
-  legend style={font=\scriptsize, at={(0.98,0.02)},
+  legend style={font=\small, at={(0.98,0.02)},
                 anchor=south east, legend columns=2},
-  tick label style={font=\scriptsize},
-  label style={font=\scriptsize},
+  tick label style={font=\small},
+  label style={font=\small},
   grid=major, grid style={dotted}
 ]
 \addplot+[mark=*] coordinates
@@ -474,6 +478,10 @@ vocabulary.
 These 71~queries were split 70/30 by stratified difficulty (seed~42)
 into a 49-query validation set (used exclusively for fusion-parameter
 tuning) and a 22-query test set.
+The paired leakage experiment of Section~V-C operates on exactly this
+original 71-query set (49 validation plus 22 test), because only
+these queries exist in both wordings: the corpus-derived phrasing of
+the pilot and the plain-language rewrite.
 The test set was subsequently expanded with 31~queries derived from
 written questions submitted by Members of the European Parliament to
 the Commission: each parliamentary question was screened for
@@ -486,6 +494,13 @@ instruments, providing independent corroboration of the relevance
 judgement.
 Corpus membership was verified for every mapping before a query was
 accepted, so no query requires an instrument absent from the corpus.
+These 31~queries take no part in the paired leakage experiment, since
+they never had a corpus-derived wording to be paired with; that is
+also their value.
+Because they originate outside the corpus, their vocabulary is
+independent of the statutes by construction rather than by rewriting,
+which makes them the strongest leakage control in the benchmark, and
+each is traceable to a public parliamentary record.
 All reported results use the resulting sealed \textbf{53-query test
 set}; the validation set was never evaluated against reported metrics.
 To give a flavour of the derivation: parliamentary question
@@ -608,7 +623,7 @@ BM25
   & 0.494 \\
 \nomic
   & \textbf{0.925} (0.849--0.981)$^\ddagger$
-  & 0.743
+  & 0.742
   & 0.709 \\
 Hybrid RRF
   & 0.906 (0.811--0.981)$^\dagger$
@@ -628,13 +643,28 @@ roughly three queries in ten.
 Between the two semantic configurations the picture is a statistical
 tie.
 Dense retrieval posts the best $\HR{5}$ (0.925 vs.\ 0.906) while the
-hybrid posts the best $\MRR{5}$ (0.773 vs.\ 0.743) and $\NDCG{5}$
+hybrid posts the best $\MRR{5}$ (0.773 vs.\ 0.742) and $\NDCG{5}$
 (0.721 vs.\ 0.709), but the Wilcoxon test finds no significant
 difference ($p{=}0.614$, $d{=}0.120$, negligible), and the bootstrap
 confidence intervals of the two systems overlap substantially on
 every metric (e.g., $\MRR{5}$: hybrid $[0.666, 0.868]$ vs.\ dense
-$[0.639, 0.836]$; $\NDCG{5}$: hybrid $[0.627, 0.842]$ vs.\ dense
+$[0.639, 0.836]$; $\NDCG{5}$: hybrid $[0.627, 0.807]$ vs.\ dense
 $[0.621, 0.791]$).
+
+Part of the explanation is architectural rather than statistical.
+RRF fuses ranks and discards the scores behind them: a dense rank-1
+backed by a large similarity margin and one that barely edged out the
+runner-up contribute the same $w_d/(k{+}1)$ to the fused score, so
+the fusion cannot weight the dense retriever's confidence.
+On a corpus of 1{,}166 units, where dense retrieval already places a
+relevant instrument at rank~1 for most queries, BM25's ranks carry
+little additional discriminative information, and what they do carry
+is as likely to displace a correct dense result as to confirm it
+(Section~V-E quantifies both directions).
+This is a design limitation of rank-based fusion on small statutory
+corpora rather than a defect of the tuning: Bruch et al.~\cite{21}
+show analytically that rank-based fusion sacrifices score information
+that well-normalised convex score combinations can use.
 The honest answer to RQ1 is therefore split: fusion delivers a
 significant improvement over the lexical baseline, but no measurable
 improvement over a strong dense retriever used alone.
