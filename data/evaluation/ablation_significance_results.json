@@ -1,0 +1,66 @@
+{
+  "n_queries": 53,
+  "alpha": 0.05,
+  "comparisons": [
+    {
+      "comparison": "E5-large-v2 vs nomic-embed-text-v1.5",
+      "metric": "MRR@5",
+      "mean_a": 0.8057,
+      "mean_b": 0.7425,
+      "wilcoxon_W": 97.5,
+      "p_value": 0.21551,
+      "cohen_d": 0.1587,
+      "significant": false
+    },
+    {
+      "comparison": "E5-large-v2 vs nomic-embed-text-v1.5",
+      "metric": "NDCG@5",
+      "mean_a": 0.7945,
+      "mean_b": 0.7094,
+      "wilcoxon_W": 119.0,
+      "p_value": 0.055425,
+      "cohen_d": 0.2712,
+      "significant": false
+    },
+    {
+      "comparison": "E5-large-v2 vs nomic-embed-text-v1.5",
+      "metric": "HR@5",
+      "mean_a": 0.9245,
+      "mean_b": 0.9245,
+      "wilcoxon_W": 5.0,
+      "p_value": 1.0,
+      "cohen_d": 0.0,
+      "significant": false
+    },
+    {
+      "comparison": "BGE-small-v1.5 vs nomic-embed-text-v1.5",
+      "metric": "HR@5",
+      "mean_a": 0.9434,
+      "mean_b": 0.9245,
+      "wilcoxon_W": 2.0,
+      "p_value": 0.563703,
+      "cohen_d": 0.0788,
+      "significant": false
+    },
+    {
+      "comparison": "BGE-small-v1.5 vs nomic-embed-text-v1.5",
+      "metric": "MRR@5",
+      "mean_a": 0.7314,
+      "mean_b": 0.7425,
+      "wilcoxon_W": 130.0,
+      "p_value": 0.806314,
+      "cohen_d": -0.0335,
+      "significant": false
+    },
+    {
+      "comparison": "BGE-small-v1.5 vs nomic-embed-text-v1.5",
+      "metric": "NDCG@5",
+      "mean_a": 0.6962,
+      "mean_b": 0.7094,
+      "wilcoxon_W": 239.0,
+      "p_value": 0.64,
+      "cohen_d": -0.0515,
+      "significant": false
+    }
+  ]
+}

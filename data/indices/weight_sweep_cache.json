@@ -1,0 +1,56 @@
+[
+  {
+    "label": "BM25 only",
+    "dense_weight": null,
+    "hr": 0.6938775510204082,
+    "mrr": 0.5295918367346939
+  },
+  {
+    "label": "Dense only",
+    "dense_weight": null,
+    "hr": 0.9795918367346939,
+    "mrr": 0.7894557823129251
+  },
+  {
+    "label": "Hybrid dw=1",
+    "dense_weight": 1.0,
+    "hr": 0.9387755102040817,
+    "mrr": 0.7360544217687075
+  },
+  {
+    "label": "Hybrid dw=2",
+    "dense_weight": 2.0,
+    "hr": 0.9591836734693877,
+    "mrr": 0.7758503401360544
+  },
+  {
+    "label": "Hybrid dw=3",
+    "dense_weight": 3.0,
+    "hr": 0.9795918367346939,
+    "mrr": 0.7931972789115647
+  },
+  {
+    "label": "Hybrid dw=5",
+    "dense_weight": 5.0,
+    "hr": 1.0,
+    "mrr": 0.8098639455782313
+  },
+  {
+    "label": "Hybrid dw=8",
+    "dense_weight": 8.0,
+    "hr": 0.9795918367346939,
+    "mrr": 0.8047619047619047
+  },
+  {
+    "label": "Hybrid dw=12",
+    "dense_weight": 12.0,
+    "hr": 0.9795918367346939,
+    "mrr": 0.7996598639455782
+  },
+  {
+    "label": "Hybrid dw=20",
+    "dense_weight": 20.0,
+    "hr": 0.9795918367346939,
+    "mrr": 0.7996598639455782
+  }
+]

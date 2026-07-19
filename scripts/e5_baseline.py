@@ -46,7 +46,7 @@ logging.basicConfig(level=logging.WARNING)
 
 from config import settings
 from src.evaluation.evaluator import Evaluator, _SingleRetrieverWrapper
-from src.ingestion.loader import ArticleLoader
+from src.ingestion.loader import CorpusLoader
 from src.retrieval.dense import DenseRetriever
 
 E5_MODEL      = "intfloat/e5-large-v2"
@@ -68,7 +68,7 @@ def _build_e5(index_dir: str, corpus_path: str) -> DenseRetriever:
         trust_remote_code=False,
         index_prefix=E5_PREFIX,
     )
-    loader = ArticleLoader(corpus_path)
+    loader = CorpusLoader(corpus_path)
     articles = loader.load()
     print(f"Indexing {len(articles)} articles with {E5_MODEL}…")
     e5.index(articles)
@@ -150,7 +150,8 @@ def main() -> None:
     print("\nNote: E5-large-v2 has a 512-token context window vs 8192 for nomic-embed.")
     print("Differences in NDCG@5 partly reflect truncation of long EU legislative articles.")
 
-    # Save
+    # Save (includes per-query scores so downstream scripts can bootstrap a CI
+    # the same way scripts/bootstrap_ci.py does for bm25/dense/hybrid)
     out = {
         "model":  E5_MODEL,
         "split":  args.split,
@@ -159,6 +160,16 @@ def main() -> None:
             "mrr":      e5_report.mrr,
             "ndcg":     e5_report.ndcg,
             "hn_rate":  e5_report.hard_negative_rate,
+            "per_query": [
+                {
+                    "query_id":                pq.query_id,
+                    "hit_at_k":                pq.hit_at_k,
+                    "reciprocal_rank":         pq.reciprocal_rank,
+                    "ndcg_at_k":               pq.ndcg_at_k,
+                    "hard_negatives_in_top_k": pq.hard_negatives_in_top_k,
+                }
+                for pq in e5_report.per_query
+            ],
         },
     }
     out_path = Path("data/indices/e5_baseline_report.json")

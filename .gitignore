@@ -3,4 +3,9 @@ __pycache__/
 *.pyc
 .DS_Store
 data/etl/raw_cache/
+docs/paper_hardening_agent.md
+docs/paper/*.aux
+docs/paper/*.log
+docs/paper/*.out
+docs/paper/*.pdf
 

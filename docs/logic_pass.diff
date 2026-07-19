@@ -1,0 +1,99 @@
+--- eu_climate_hybrid_retrieval.tex	2026-07-19 18:31:41
++++ eu_climate_hybrid_retrieval_logic_pass.tex	2026-07-19 18:46:27
+@@ -42,10 +42,10 @@
+ On our 1{,}166-article EU Climate Law corpus, dense retrieval quality
+ is not predicted by context-window length: two alternative bi-encoders
+ with only a 512-token window, one-sixteenth of
+-\texttt{nomic-embed-text-v1.5}'s 8{,}192~tokens, match its retrieval
+-quality (all differences statistically non-significant, Wilcoxon
+-$p{\geq}0.055$, $n{=}53$) despite real truncation pressure
+-($21.1\,\%$ of indexed chunks exceed 512~tokens).
++\texttt{nomic-embed-text-v1.5}'s 8{,}192~tokens, show no significant
++difference in retrieval quality (Wilcoxon $p{\geq}0.055$, $n{=}53$)
++despite real truncation pressure ($21.1\,\%$ of indexed chunks exceed
++512~tokens).
+ \texttt{BGE-small-v1.5} (33M parameters) is the only one of three dense
+ models tested to resolve a failure that direct inspection showed was
+ cross-instrument confusion rather than the chunking artefact we had
+@@ -137,7 +137,7 @@
+ inflating a marginal ranking gain; and (iii)~a three-model embedding
+ ablation showing that context-window length does not predict
+ retrieval quality on this corpus: two alternatives with a 512-token
+-window statistically match \nomic's 8{,}192-token window despite real
++window show no significant difference from \nomic's 8{,}192-token window despite real
+ truncation (Wilcoxon $p{\geq}0.055$), tracing back to a concrete case
+ where a diagnosed ``corpus engineering'' failure turned out, on direct
+ inspection, to be a model-dependent discrimination gap rather than a
+@@ -766,12 +766,14 @@
+ However, the hybrid does not significantly outperform dense alone
+ ($p{=}0.614$): the asymmetric weight ($w_d{=}5$) prevents BM25 errors
+ from degrading the dense ranking, but BM25 contributes no unique hits
+-that dense misses.
++that dense misses (Table~\ref{tab:reliability}: 0 queries where hybrid
++hits and dense misses).
+ This is partly a design limitation of RRF on small statutory corpora:
+-RRF is rank-biased and discards score confidence entirely, so on a
+-1{,}166-document corpus where the dense retriever already places the
+-correct instrument at rank~1 for most queries, BM25's rank signal
+-provides no additional discriminative information~\cite{18}.
++RRF is rank-biased and discards score confidence entirely, and dense's
++high $\MRR{5}$ (0.743, Table~\ref{tab:effectiveness}) indicates the
++correct instrument is typically already at or near rank~1, so on this
++1{,}166-document corpus BM25's rank signal provides no additional
++discriminative information~\cite{18}.
+ 
+ None of the five hybrid misses is attributable to a missing
+ instrument: all five gold CELEX IDs are indexed, each with 23--43
+@@ -799,9 +801,13 @@
+ from the other retriever (q054, q090).
+ The q080 correction is itself informative: it shows that at least one
+ of our failure modes is a property of the specific embedding model
+-rather than the corpus, reinforcing \S\ref{sec:e5-ablation}'s finding
+-that embedding-model choice, not context-window length or corpus
+-engineering, is the more actionable lever for closing these gaps.
++rather than the corpus, a single demonstrated case rather than a
++measured rate.
++Combined with \S\ref{sec:e5-ablation}'s aggregate parity result
++(none of the three models is significantly better or worse), it
++supports checking embedding-model choice before assuming a failure
++needs a corpus-engineering fix, though we have not measured how often
++that check would actually resolve a given failure.
+ The efficiency overhead of the hybrid is negligible: concurrent
+ retrieval via \texttt{ThreadPoolExecutor} means hybrid latency is
+ dominated by the dense component (${\approx}35$\,ms median on CPU),
+@@ -916,9 +922,10 @@
+ significantly outperforms BM25 ($p{=}0.0005$, medium effect), but does
+ not significantly outperform dense alone ($p{=}0.614$).
+ Two further bi-encoders, tested purely as an ablation and not used in
+-the hybrid, statistically match \nomic despite a 512-token context
+-window one-sixteenth its size (Wilcoxon $p{\geq}0.055$ on every
+-comparison): E5-large-v2 has higher point-estimate ranking metrics,
++the hybrid, show no significant difference from \nomic despite a
++512-token context window one-sixteenth its size (Wilcoxon
++$p{\geq}0.055$ on every comparison): E5-large-v2 has higher
++point-estimate ranking metrics,
+ and BGE-small-v1.5, at one-quarter its parameter count, has higher
+ point-estimate coverage and uniquely resolves a failure (q080) that
+ direct inspection traced to cross-instrument discrimination rather
+@@ -933,11 +940,16 @@
+ statute retrieval in this domain, and hybrid fusion provides a
+ statistically non-significant but directionally positive improvement
+ in ranking quality.
+-Second, and more actionable given the embedding ablation: for legal
+-RAG systems on similarly bounded, article-level statutory corpora,
+-benchmarking a small set of embedding models directly is likely to
+-close more failure cases, faster, than either corpus expansion or
+-retrieval-strategy changes such as RRF re-tuning.
++Second: for legal RAG systems on similarly bounded, article-level
++statutory corpora, the embedding ablation and the q080 correction
++together support benchmarking a small set of embedding models before
++assuming a failure needs a corpus-engineering fix.
++This recommendation rests on one demonstrated case and an aggregate
++parity result, not a measured comparison of how often each remediation
++strategy succeeds; our own first hypothesis for q080 was a
++corpus-engineering explanation that direct inspection showed was
++wrong, which is the specific risk this recommendation is meant to
++guard against.
+ 
+ Future work will: (i)~compute Cohen's~$\kappa$ from independent
+ relevance annotation; (ii)~evaluate a cross-encoder re-ranking stage

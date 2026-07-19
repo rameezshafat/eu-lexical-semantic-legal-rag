@@ -5,6 +5,7 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage{xspace}
+\usepackage{graphicx}
 \usepackage{tikz}
 \usetikzlibrary{positioning,arrows.meta}
 \usepackage{pgfplots}
@@ -70,6 +71,12 @@ $\NDCG{5}{=}0.721$, the highest MRR and NDCG of all three systems,
 but its improvement over dense alone is statistically non-significant
 ($p{=}0.614$).
 Only 5 of 53 queries ($9.4\,\%$) are hard failures for the hybrid.
+An embedding-model ablation adds a further null result: E5-large-v2
+and BGE-small-v1.5, both restricted to 512-token context windows that
+truncate a fifth of this corpus, show no statistically significant
+difference from the deployed 8{,}192-token encoder (Wilcoxon
+$p{\geq}0.055$), so context-window length does not measurably drive
+retrieval quality here.
 A paired experiment re-evaluating 71~identical information needs
 under their original corpus-derived wording shows why leakage control
 matters: reworded queries cost BM25 $0.29$ of $\MRR{5}$ but the dense
@@ -152,13 +159,15 @@ To our knowledge, no prior work on hybrid legal retrieval has
 evaluated statute-level EU climate law, and none has controlled for
 query--corpus vocabulary leakage in this way.
 
-We ask two questions.
+We ask three questions.
 \textbf{RQ1.} Does hybrid sparse--dense retrieval improve
 effectiveness and reliability over BM25-only and dense-only baselines
 for EU Climate Law statute retrieval?
 \textbf{RQ2.} What failure modes remain for the strongest
 configuration, and do they indicate that first-stage retrieval is the
 bottleneck for grounded legal RAG in this domain?
+\textbf{RQ3.} Does dense embedding-model choice on this corpus track
+context-window length, or must it be benchmarked directly?
 
 Our contributions are:
 (i)~a 102-query benchmark for statute-level EU Climate Law retrieval
@@ -168,10 +177,13 @@ test set, constructed under the leakage-control protocol above, with
 questions;
 (ii)~a reproducible corpus of 1{,}156 article-level provisions from
 72~EU climate instruments, extracted through a documented two-phase
-SPARQL pipeline over the CELLAR repository; and
+SPARQL pipeline over the CELLAR repository;
 (iii)~a three-way comparison of BM25, a pure dense bi-encoder, and
 weighted reciprocal rank fusion, with bootstrap confidence intervals,
-significance testing, and per-query failure analysis.
+significance testing, and per-query failure analysis; and
+(iv)~an embedding-model ablation (E5-large-v2, BGE-small-v1.5)
+showing that context-window length does not measurably predict
+retrieval quality on this corpus.
 
 To preview the results: on the leakage-controlled test set, both the
 dense retriever and the hybrid significantly outperform BM25, but the
@@ -179,10 +191,11 @@ hybrid is statistically indistinguishable from the dense retriever
 alone, and the direction of that comparison reversed as the test set
 grew, a caution against reading small-sample differences between
 strong systems.
-The remaining failures are ranking errors on provisions buried inside
-large amending instruments, not gaps in corpus coverage, which points
-to corpus preprocessing rather than retrieval strategy as the next
-lever for improvement.
+The remaining failures are ranking errors, not gaps in corpus
+coverage, and the largest is a cross-instrument discrimination error
+that a different open-weight encoder resolves from the same indexed
+text, which points to embedding-model choice rather than corpus
+preprocessing as the next lever for improvement.
 
 The remainder of this paper is structured as follows.
 Section~II reviews related work on lexical, dense, and hybrid legal
@@ -333,12 +346,29 @@ headroom below the dense encoder's 8{,}192-token window) and are
 split at the natural amendment-point boundaries; the resulting
 sub-chunks inherit the parent \texttt{celex\_id}, so retrieval
 results always resolve to a citable instrument.
+Fig.~\ref{fig:tokhist} shows the resulting length distribution.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{figures/token_length_hist.pdf}
+\caption{Token-length distribution of the 1{,}166 retrieval units
+(E5 tokeniser; median 225 tokens). 246 units (21.1\,\%) exceed the
+512-token window of a conventional encoder (dashed line), the text a
+short-context model silently truncates; the deployed 8{,}192-token
+encoder reads every unit whole.}
+\label{fig:tokhist}
+\end{figure}
 
 The final corpus contains \textbf{1{,}156} article-level provisions
 (\textbf{1{,}166} retrieval units after splitting) from
 \textbf{72}~CELEX instruments covering ETS, CBAM, Taxonomy,
 LULUCF, F-Gas, Maritime MRV, ESR, the European Climate Law, Energy
 Efficiency, CSDDD, and the Governance Regulation.
+Instrument size is skewed, as is typical of EU legislation: a median
+of 10~articles per instrument against a mean of 16.2, ranging from 2
+(a short amending decision) to 72 (the European Green Bond Standards
+Regulation), and 79.8\,\% of retrieval units come from Regulations
+against 20.2\,\% from Directives.
 
 \subsection{Sparse Retrieval - BM25}
 
@@ -367,7 +397,8 @@ without API access.
 Its long context window embeds EU articles whole (only the five
 oversized amendment articles described above need splitting), where a
 conventional 512-token encoder would silently truncate roughly a
-fifth of this corpus.
+fifth of this corpus (Fig.~\ref{fig:tokhist}); Section~V-G tests how
+much this actually matters.
 Most importantly for the experimental design, it is a \emph{pure}
 bi-encoder: models trained jointly for dense, sparse, and
 late-interaction retrieval (such as BGE-M3) already encode lexical
@@ -587,10 +618,13 @@ are visible even where significance is not reached.
 
 \subsection{Hardware and Software}
 
-All reported results were produced on a consumer laptop (AMD
-Ryzen~7 5700U, CPU-only, Windows~11): deliberately modest hardware,
-since one claim of this work is that the full pipeline is
-reproducible without GPUs or paid APIs.
+All reported results were produced on consumer hardware without GPUs
+or paid APIs: the primary systems on an AMD Ryzen~7 5700U laptop
+(CPU-only, Windows~11) and the embedding-model ablation on an
+Apple~M1~Pro (CPU-only), with the primary-system numbers reproduced
+identically on both machines: deliberately modest hardware, since one
+claim of this work is that the full pipeline is reproducible
+anywhere.
 The software stack is Python~3.14.2 with
 \texttt{sentence-transformers}~5.5.1, \texttt{faiss-cpu}~1.14.2,
 \texttt{rank-bm25}~0.2.2, and \texttt{pydantic}~2.13.4; all versions
@@ -610,7 +644,10 @@ sealed 53-query test set.
 \caption{Retrieval effectiveness on the 53-query test set.
   Bootstrap 95\,\% CIs in parentheses for $\HR{5}$.
   $^\dagger p{=}0.0005$ vs.\ BM25;
-  $^\ddagger p{=}0.004$ vs.\ BM25.}
+  $^\ddagger p{=}0.004$ vs.\ BM25.
+  Bold marks the best of the three primary systems; the last two rows
+  are secondary embedding-model ablations (Section~V-G), not used in
+  the hybrid.}
 \label{tab:effectiveness}
 \centering
 \begin{tabular}{@{}lccc@{}}
@@ -629,6 +666,15 @@ Hybrid RRF
   & 0.906 (0.811--0.981)$^\dagger$
   & \textbf{0.773}
   & \textbf{0.721} \\
+\midrule
+E5-large-v2 (ablation)
+  & 0.925 (0.849--0.981)
+  & 0.806
+  & 0.794 \\
+BGE-small-v1.5 (ablation)
+  & 0.943 (0.868--1.000)
+  & 0.731
+  & 0.696 \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -838,17 +884,34 @@ five in total.
 Manual inspection shows that every failed query's relevant instrument
 \emph{is} present in the corpus: these are ranking failures, not
 coverage gaps.
-Four distinct causes account for the five hybrid failures: two ETS2
-queries whose relevant provisions sit inside the sub-chunks of
-Article~1 of Directive~2023/959, where amendment boilerplate
-dominates the embedding; one high-abstraction conceptual query about
-the legal character of the Taxonomy framework; one query whose
-colloquial phrasing (\emph{``suppliers wrecking the environment''})
-sits far from the statutory register of due-diligence obligations;
-and one confusion between adjacent EU funding instruments.
-Answering RQ2: the residual failures are concentrated in corpus
-structure (amendment-act sub-chunks) and extreme vocabulary mismatch,
-not in the retrieval strategy itself.
+Direct inspection of the rankings attributes the five failures to
+four causes.
+q080 is a cross-instrument discrimination failure: the relevant ETS2
+provisions are cleanly indexed (BM25's best-ranked chunk for the gold
+instrument sits at rank~13), but both retrievers rank thematically
+adjacent instruments (the Social Climate Fund regulation, the recast
+Energy Efficiency Directive, CBAM) higher on shared vocabulary, and a
+different encoder retrieves the same text correctly (Section~V-G),
+so the failure is a property of the deployed embedding model, not of
+the corpus.
+q083's specific content (Member State opt-in of fishing vessels and
+inland navigation) is confirmed absent from the codified directive
+text itself, its terms appearing nowhere in the raw Formex source.
+q009's colloquial phrasing (\emph{``suppliers wrecking the
+environment''}) sits too far from the statutory register of
+due-diligence obligations for either signal.
+q054 and q090 are fusion-weighting artefacts: in each case one
+retriever places the relevant document correctly and the dense-heavy
+weighting overrides it, including q054, where BM25 alone has the
+answer at rank~1.
+We initially attributed the ETS2 failures to amendment-act
+sub-chunking diluting the relevant provisions; inspecting the indexed
+chunks and rankings disproved that diagnosis, and we record the
+correction because it changes the remedy: re-chunking would not have
+helped.
+Answering RQ2: the residual failures are concentrated in
+encoder-specific discrimination errors and extreme vocabulary
+mismatch, not in corpus coverage or the retrieval strategy itself.
 
 \subsection{Ranking Quality}
 
@@ -867,6 +930,44 @@ alternative.
 This is the mechanism the complementarity hypothesis predicts, but at
 this corpus size it operates on a handful of queries, enough to move
 the mean but not enough to reach significance.
+
+\subsection{Embedding-Model Ablation}
+
+The choice of \nomic rested partly on its context window
+(Section~III), so we tested how much that choice matters: the
+dense-only evaluation was re-run under identical conditions with two
+alternative open-weight bi-encoders, E5-large-v2~\cite{24} (335M
+parameters, 512-token window) and BGE-small-v1.5~\cite{25} (33M
+parameters, an order of magnitude smaller, 512-token window).
+Both index the 1{,}156 raw articles without the deployed pipeline's
+hierarchical splitting, and both silently truncate the 21.1\,\% of
+retrieval units that exceed 512 tokens (Fig.~\ref{fig:tokhist}).
+Table~\ref{tab:effectiveness} reports their scores.
+Neither model differs significantly from \nomic on any metric: across
+the six Wilcoxon comparisons, $p$ ranges from 0.055 to 1.0.
+E5-large-v2 posts the best MRR and NDCG point estimates of any system
+in the table ($\MRR{5}{=}0.806$ vs.\ 0.742, $p{=}0.216$;
+$\NDCG{5}{=}0.794$ vs.\ 0.709, $p{=}0.055$), and it ties \nomic on
+$\HR{5}$ while hitting a different query subset (49/53 agreement:
+E5 recovers q054 and q083 where \nomic misses, and misses q086 and
+q088 that \nomic hits).
+BGE-small-v1.5, at a fraction of the parameter count, posts the best
+coverage ($\HR{5}{=}0.943$, $p{=}0.564$), retrieving q080, a query
+all three primary systems miss, from exactly the same indexed text
+(Section~V-E).
+Two readings follow, and we keep them apart.
+First, context-window length does not predict retrieval quality on
+this corpus: models that truncate a fifth of it are statistically
+indistinguishable from one that reads every article whole, so the
+truncation argument for model selection carries less weight than we
+assumed at design time.
+Second, these are null results at $n{=}53$: failing to detect a
+difference is not evidence of equivalence, and we claim parity only
+in that weak sense.
+Answering RQ3: neither context-window length nor parameter count
+predicts which model posts the best point estimate on any metric
+here, so embedding-model choice on a corpus like this has to be
+benchmarked directly rather than read off the specification sheet.
 
 % ============================================================
 \section{Discussion}
@@ -934,10 +1035,32 @@ displace dense rank-1 results.
 Parameters calibrated on TREC-scale collections do not transfer to
 small specialised corpora, consistent with the parameter-sensitivity
 analysis of Bruch et al.~\cite{21}.
-Finally, the failure analysis locates the remaining headroom not in
-retrieval strategy but in corpus preprocessing: indexing consolidated
-instrument versions would dissolve the amendment-act sub-chunks
-responsible for the largest cluster of residual failures.
+A post-hoc sweep of the full grid ($k{\in}\{10,20,30,60\}$,
+$w_d{\in}[1,20]$, three retrieval budgets) on the sealed test set,
+run to characterise sensitivity rather than to re-select parameters,
+reproduces the deployed configuration's numbers exactly; at the
+deployed $k{=}20$, $\HR{5}$ rises monotonically with $w_d$ to a
+plateau at the dense-only ceiling (0.925) from $w_d{=}8$, so the
+tuned operating point sits on a broad ridge, not a narrow spike
+(Fig.~\ref{fig:heatmap}).
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/rrf_heatmap.pdf}
+\caption{$\HR{5}$ on the sealed test set across the $(k, w_d)$ grid,
+from the post-hoc sensitivity sweep. Left: the deployed retrieval
+budget (top-$k_r{=}100$) with the deployed cell starred. Right: the
+slice containing the post-hoc test-set optimum (top-$k_r{=}20$). In
+both panels the high-scoring region is a broad plateau covering most
+of $w_d{\geq}5$, not an isolated peak: the tuned configuration is not
+a narrow, fragile optimum.}
+\label{fig:heatmap}
+\end{figure*}
+Finally, the failure analysis locates the remaining headroom in
+encoder choice rather than corpus engineering: the largest residual
+failure is a cross-instrument discrimination error that another
+open-weight encoder resolves from the same indexed text, and no
+failure traces to chunking or coverage.
 
 % ============================================================
 \section{Conclusion}
@@ -959,13 +1082,18 @@ realistically phrased legal queries: both dense-only and hybrid beat
 BM25 by wide, statistically significant margins.
 Between the two, there is no measurable difference; fusion acts as a
 cheap safety net rather than a necessary ingredient.
+An embedding-model ablation sharpens the picture: two further
+bi-encoders with 512-token windows are statistically indistinguishable
+from the deployed long-context model, so encoder identity, not
+context length, is where the remaining variance lives.
 And the pilot-to-controlled swing showed that benchmark construction,
 not retrieval architecture, was the largest single factor in which
 system appeared to win, which we regard as the paper's most
 transferable lesson.
-The remaining failures cluster on provisions buried in amending
-instruments, so corpus preprocessing, not a new retriever, is the
-most promising next step for practitioners.
+The remaining failures are encoder-specific discrimination and
+register-gap errors rather than coverage or chunking problems, so
+embedding-model selection, not corpus preprocessing, is the most
+promising next step for practitioners.
 
 Several limitations bound these conclusions.
 The test set, at 53~queries, yields wide confidence intervals, and a
@@ -977,16 +1105,21 @@ Query paraphrases and relevance mappings were produced with
 generative-AI assistance and verified by the authors; independent
 second-annotator validation with inter-annotator agreement is in
 progress but not reflected in the reported numbers.
-Finally, the study covers one legal domain, one language, and one
-dense encoder, so the ``dense is enough'' conclusion should be read
-as a claim about strong modern bi-encoders on small statutory
-corpora, not about dense retrieval in general.
+In the meantime, 31 of the 53 test queries (58.5\,\%) carry an
+independent form of corroboration: their relevance judgements match
+the instruments cited in the Commission's official answers to the
+source parliamentary questions.
+Finally, the study covers one legal domain and one language, and
+although the ablation adds two further encoders, all three are
+general-domain bi-encoders, so the ``dense is enough'' conclusion
+should be read as a claim about strong modern bi-encoders on small
+statutory corpora, not about dense retrieval in general.
 
 Future work follows directly from these limitations: completing the
 independent annotation and reporting Cohen's~$\kappa$; extending the
-relevance judgements to article level; indexing consolidated
-instrument versions to dissolve the amendment-article failure
-cluster; scaling the test set through the European Parliament's open
+relevance judgements to article level; addressing the
+cross-instrument discrimination failure at the encoder level, whether
+by fine-tuning or by re-ranking; scaling the test set through the European Parliament's open
 data interface, from which our query-derivation protocol can be
 largely automated; and evaluating the generation stage of the RAG
 pipeline, for which the Commission's official answers to the source
@@ -997,7 +1130,7 @@ answers.
 
 Generative AI tools (Claude, Anthropic) were used solely for proofreading and improving clarity of writing. All research ideas, technical content, and academic contributions are entirely  our own.
 
-\begin{thebibliography}{23}
+\begin{thebibliography}{25}
 
 \bibitem{1}
 L.~Mori, C.~Sousa de Oliveira, Y.~Yih, and M.~Ventresca,
@@ -1128,6 +1261,16 @@ N.~Guha et al.,
 reasoning in large language models,''
 in \emph{Advances in Neural Information Processing Systems}, vol.~36,
 2023.
+
+\bibitem{24}
+L.~Wang et al.,
+``Text embeddings by weakly-supervised contrastive pre-training,''
+\emph{arXiv:2212.03533}, 2022.
+
+\bibitem{25}
+S.~Xiao, Z.~Liu, P.~Zhang, and N.~Muennighoff,
+``C-Pack: Packed resources for general Chinese embeddings,''
+in \emph{Proc.\ 47th Int.\ ACM SIGIR}, pp.~641--649, 2024.
 
 \end{thebibliography}
 
