@@ -1,0 +1,44 @@
+{
+  "deployed": {
+    "n_units": 1166,
+    "hr5": 0.9245283018867925,
+    "mrr5": 0.7424528301886792,
+    "ndcg5": 0.7093503015649455
+  },
+  "no_chunking": {
+    "n_units": 1156,
+    "hr5": 0.9245283018867925,
+    "mrr5": 0.7424528301886792,
+    "ndcg5": 0.7093503015649455
+  },
+  "delta": {
+    "hr5": 0.0,
+    "mrr5": 0.0,
+    "ndcg5": 0.0
+  },
+  "oversized_instruments": [
+    "32008L0101",
+    "32018L2002",
+    "32023L0959",
+    "32023R0839",
+    "32025R2083"
+  ],
+  "affected_test_queries": [
+    "q011",
+    "q023",
+    "q060",
+    "q075",
+    "q076",
+    "q077",
+    "q079",
+    "q080",
+    "q081",
+    "q082",
+    "q083",
+    "q084",
+    "q085",
+    "q086",
+    "q089"
+  ],
+  "note": "Scoped comparison (deployed hierarchical chunking vs. no chunking/truncation for the 5 oversized articles only), not the full article/paragraph/amendment-point three-way comparison \u2014 that requires a new paragraph-level chunker for all 1,156 normally-sized articles and was out of scope for this pass."
+}

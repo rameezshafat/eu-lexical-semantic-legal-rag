@@ -220,6 +220,119 @@ def fig_difficulty_breakdown() -> None:
           f"data/evaluation/difficulty_breakdown_ci.json")
 
 
+def fig_validation_sweep() -> None:
+    """
+    Validation-set MRR@5 across the (k, dense_weight) grid at the deployed
+    retrieval budget (top_k_r=100), replacing a hand-typed TikZ plot whose
+    "k=40" series didn't match anything reproducible: the documented grid
+    (REPRODUCE.md) is k in {10,20,30,60}, and re-running scripts/tune_rrf.py
+    confirmed the k=10/20/60 series but found no k=40 in the actual sweep.
+    This reads data/evaluation/rrf_validation_sweep.json (written by
+    tune_rrf.py) directly, so it can't silently drift from the real grid
+    again.
+    """
+    with open("data/evaluation/rrf_validation_sweep.json") as f:
+        data = json.load(f)
+
+    rows = [r for r in data["grid"] if r["top_k_r"] == 100]
+    ks = [10, 20, 30, 60]
+    colors = {10: "#0173B2", 20: "#DE8F05", 30: "#029E73", 60: "#D55E00"}
+    markers = {10: "o", 20: "s", 30: "^", 60: "D"}
+
+    fig, ax = plt.subplots(figsize=(3.4, 2.3))
+    for k in ks:
+        pts = sorted([r for r in rows if r["k"] == k], key=lambda r: r["dense_weight"])
+        xs = [p["dense_weight"] for p in pts]
+        ys = [p["mrr5"] for p in pts]
+        ax.plot(xs, ys, marker=markers[k], markersize=4, linewidth=1.2,
+                color=colors[k], label=f"$k$={k}")
+
+    best = data["best"]
+    ax.scatter([best["dense_weight"]], [best["mrr5"]], marker="*", s=140,
+               color="white", edgecolor="black", zorder=5,
+               label=f"Deployed ($k$={best['k']}, $w_d$={best['dense_weight']:.0f})")
+
+    ax.set_xlabel("Dense weight $w_d$ (with $w_s$=1)")
+    ax.set_ylabel("Validation $\\mathrm{MRR}@5$")
+    ax.set_xticks([1, 2, 3, 5, 8, 12, 20])
+    ax.legend(loc="lower right", fontsize=6.5, frameon=False)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    fig.tight_layout()
+    fig.savefig(FIG_DIR / "validation_sweep.pdf", bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved {FIG_DIR / 'validation_sweep.pdf'}")
+
+
+def fig_effectiveness_comparison() -> None:
+    """
+    Six-system effectiveness comparison (HR@5/MRR@5/NDCG@5), replacing the
+    prose walkthrough of Table II's numbers with a single glance. Primary
+    systems (BM25, nomic, Hybrid RRF) and ablation baselines (SPLADE,
+    E5-large-v2, BGE-small-v1.5) share the same two-colour convention as
+    fig_difficulty_breakdown (hard/standard), reused here for tier rather
+    than difficulty, so the two figures read as one visual system.
+    """
+    with open("data/indices/test_report.json") as f:
+        report = json.load(f)
+    with open("data/indices/e5_baseline_report.json") as f:
+        e5 = json.load(f)["e5_large_v2"]
+    with open("data/indices/bge_baseline_report.json") as f:
+        bge = json.load(f)["bge_small_v1_5"]
+    with open("data/indices/splade_baseline_report.json") as f:
+        splade = json.load(f)["splade"]
+
+    systems = [
+        ("bm25", "BM25", report["results"]["bm25"]["per_query"], "primary"),
+        ("dense", "nomic", report["results"]["dense"]["per_query"], "primary"),
+        ("hybrid", "Hybrid RRF", report["results"]["hybrid"]["per_query"], "primary"),
+        ("splade", "SPLADE", splade["per_query"], "ablation"),
+        ("e5", "E5-large-v2", e5["per_query"], "ablation"),
+        ("bge", "BGE-small-v1.5", bge["per_query"], "ablation"),
+    ]
+    metrics = [("hit_at_k", "HR@5"), ("reciprocal_rank", "MRR@5"), ("ndcg_at_k", "NDCG@5")]
+    colors = {"primary": COLOR_HARD, "ablation": COLOR_STANDARD}
+
+    stats: dict[tuple[str, str], tuple[float, float, float]] = {}
+    for sys_key, _, pq, _ in systems:
+        for m_key, m_label in metrics:
+            vals = [float(q[m_key]) for q in pq]
+            stats[(sys_key, m_label)] = _bootstrap_ci(vals)
+
+    fig, axes = plt.subplots(1, 3, figsize=(7.1, 2.4), sharey=True)
+    x = np.arange(len(systems))
+
+    for ax, (m_key, m_label) in zip(axes, metrics):
+        means = [stats[(sk, m_label)][0] for sk, _, _, _ in systems]
+        los = [stats[(sk, m_label)][0] - stats[(sk, m_label)][1] for sk, _, _, _ in systems]
+        his = [stats[(sk, m_label)][2] - stats[(sk, m_label)][0] for sk, _, _, _ in systems]
+        bar_colors = [colors[tier] for _, _, _, tier in systems]
+        bars = ax.bar(x, means, 0.6, color=bar_colors, edgecolor="white", linewidth=0.3,
+                       yerr=[los, his], capsize=2.5,
+                       error_kw={"elinewidth": 0.8, "ecolor": "#333333"})
+        ax.bar_label(bars, labels=[f"{v:.3f}" for v in means], padding=3,
+                     fontsize=6, rotation=90)
+        ax.axvline(2.5, color="#999999", linestyle=":", linewidth=0.8)
+        ax.set_xticks(x)
+        ax.set_xticklabels([label for _, label, _, _ in systems], rotation=30, ha="right")
+        ax.set_title(m_label, fontsize=9)
+        ax.set_ylim(0, 1.32)
+        ax.tick_params(axis="y", labelleft=True)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+
+    axes[0].set_ylabel("Score")
+    fig.legend(
+        handles=[plt.Rectangle((0, 0), 1, 1, color=colors[t]) for t in ("primary", "ablation")],
+        labels=["Primary systems (BM25, nomic, Hybrid)", "Ablation baselines (SPLADE, E5, BGE)"],
+        loc="upper center", bbox_to_anchor=(0.5, 1.12), ncol=2, frameon=False, fontsize=7.5,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.90))
+    fig.savefig(FIG_DIR / "effectiveness_comparison.pdf", bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved {FIG_DIR / 'effectiveness_comparison.pdf'}")
+
+
 def fig_rrf_heatmap() -> None:
     from config import settings
     from src.retrieval.dense import DenseRetriever
@@ -281,7 +394,7 @@ def fig_rrf_heatmap() -> None:
     vmin = min(slices[100].min(), slices[20].min())
     vmax = max(slices[100].max(), slices[20].max())
 
-    fig, axes = plt.subplots(1, 2, figsize=(7.1, 2.8))
+    fig, axes = plt.subplots(1, 2, figsize=(7.1, 2.3))
     panel_specs = [
         (100, "Deployed retrieval budget (top-$k_r$=100)", ks.index(20), dws.index(5.0),
          "Deployed\n($k$=20, $w_d$=5)"),
@@ -322,4 +435,6 @@ if __name__ == "__main__":
     fig_difficulty_breakdown()
     fig_rrf_heatmap()
     fig_token_length_histogram()
+    fig_effectiveness_comparison()
+    fig_validation_sweep()
     print("\nAll figures generated.")

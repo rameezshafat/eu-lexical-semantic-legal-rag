@@ -75,12 +75,15 @@ print(f"{'dw':>5} {'k':>4} {'topkr':>6} | {'HR@5':>6} {'MRR@5':>6}")
 print("-"*42)
 
 best_hr, best_mrr, best_row = 0.0, 0.0, None
+grid_rows = []
 for k in [10, 20, 30, 60]:
     for top_k_r in [20, 50, 100]:
         for dw in [1.0, 2.0, 3.0, 5.0, 8.0, 12.0, 20.0]:
             hr, mrr = rrf_eval(val, dw, k, top_k_r)
             marker = " <-- best" if (hr == best_hr and mrr == best_mrr and best_row) else ""
             print(f"{dw:>5.1f} {k:>4} {top_k_r:>6} | {hr:>6.4f} {mrr:>6.4f}{marker}")
+            grid_rows.append({"dense_weight": dw, "k": k, "top_k_r": top_k_r,
+                               "hr5": round(hr, 6), "mrr5": round(mrr, 6)})
             if hr > best_hr or (hr == best_hr and mrr > best_mrr):
                 best_hr, best_mrr = hr, mrr
                 best_row = (dw, k, top_k_r, hr, mrr)
@@ -91,3 +94,13 @@ print(f"BEST on VAL: dense_weight={dw}, k={k}, top_k_retrieval={tkr}")
 print(f"             HR@5={hr:.4f}  MRR@5={mrr:.4f}")
 print(f"\nUpdate config.py with these values, then run:")
 print(f"  python scripts/eval_test.py")
+
+out = {
+    "n_val_queries": len(val),
+    "dense_only": {"hr5": round(hr_d, 6), "mrr5": round(mrr_d, 6)},
+    "sparse_only": {"hr5": round(hr_s, 6), "mrr5": round(mrr_s, 6)},
+    "best": {"dense_weight": dw, "k": k, "top_k_r": tkr, "hr5": round(hr, 6), "mrr5": round(mrr, 6)},
+    "grid": grid_rows,
+}
+Path("data/evaluation/rrf_validation_sweep.json").write_text(json.dumps(out, indent=2))
+print(f"\nGrid saved to data/evaluation/rrf_validation_sweep.json")

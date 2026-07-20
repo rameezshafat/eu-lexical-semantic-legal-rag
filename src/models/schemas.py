@@ -72,7 +72,7 @@ class RetrievedResult(BaseModel):
     article: LegalArticle
     score: float = Field(..., description="Raw retriever score (cosine sim or BM25)")
     rank: int = Field(..., ge=1, description="1-based rank within this retriever's list")
-    retriever_name: Literal["dense", "sparse"]
+    retriever_name: Literal["dense", "sparse", "splade"]
 
     @property
     def doc_id(self) -> str:

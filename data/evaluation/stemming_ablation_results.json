@@ -1,0 +1,33 @@
+{
+  "n_queries": 53,
+  "configs": {
+    "deployed (no stem, no stopwords)": {
+      "stem": false,
+      "stopwords": false,
+      "hr5": 0.6981,
+      "mrr5": 0.528,
+      "ndcg5": 0.4935
+    },
+    "stem only": {
+      "stem": true,
+      "stopwords": false,
+      "hr5": 0.7547,
+      "mrr5": 0.5855,
+      "ndcg5": 0.5527
+    },
+    "stopwords only": {
+      "stem": false,
+      "stopwords": true,
+      "hr5": 0.717,
+      "mrr5": 0.5431,
+      "ndcg5": 0.5144
+    },
+    "stem + stopwords": {
+      "stem": true,
+      "stopwords": true,
+      "hr5": 0.7547,
+      "mrr5": 0.5849,
+      "ndcg5": 0.55
+    }
+  }
+}
