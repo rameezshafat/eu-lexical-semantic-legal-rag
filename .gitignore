@@ -8,4 +8,5 @@ docs/paper/*.aux
 docs/paper/*.log
 docs/paper/*.out
 docs/paper/*.pdf
+!docs/paper/practicum_paper.pdf
 
