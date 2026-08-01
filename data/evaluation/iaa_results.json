@@ -1,0 +1,14 @@
+{
+  "annotator_1": "Primary annotator (gold standard)",
+  "annotator_2": "Faisal",
+  "n_pairs": 56,
+  "kappa": -0.048309,
+  "ci_95_lo": -0.291771,
+  "ci_95_hi": 0.180328,
+  "interpretation": "Poor",
+  "pct_agreement": 44.64,
+  "agreed_relevant": 16,
+  "agreed_irrelevant": 9,
+  "disagreements": 31,
+  "bootstrap_n": 2000
+}

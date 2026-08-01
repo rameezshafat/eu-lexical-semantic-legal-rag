@@ -1085,13 +1085,17 @@ Relevance is judged at the instrument (CELEX) level rather than the
 article level, which is lenient toward systems that find the right
 act but the wrong provision.
 Query paraphrases and relevance mappings were produced with
-generative-AI assistance and verified by the authors; independent
-second-annotator validation with inter-annotator agreement is in
-progress but not reflected in the reported numbers.
-In the meantime, 31 of the 53 test queries (58.5\,\%) carry an
-independent form of corroboration: their relevance judgements match
-the instruments cited in the Commission's official answers to the
-source parliamentary questions.
+generative-AI assistance and verified by the authors.
+A completed second-annotator check on the 14-query overlap subset
+found poor agreement (Cohen's $\kappa{=}-0.05$, 95\,\% CI
+$[-0.29,0.18]$), driven by an inclusiveness gap between annotators
+($43\,\%$ vs.\ $70\,\%$ of candidates marked relevant); this
+corroborates the pooled-candidate diagnostic above and bounds qrel
+reliability without affecting the relative comparisons between
+systems, which use one qrel set throughout.
+31 of the 53 test queries (58.5\,\%) still carry independent
+corroboration via the Commission's official answers to the source
+parliamentary questions.
 Finally, the study covers one legal domain and one language, and
 although the ablation adds two further encoders plus SPLADE, all
 three dense models are general-domain bi-encoders, no legal-domain or
@@ -1120,7 +1124,7 @@ questions provide ready-made reference answers.
 Generative AI tools (Claude, Anthropic) were used for proofreading and improving clarity of writing throughout, and to assist in drafting the plain-language query paraphrases and candidate relevance mappings described in Section~IV (Benchmark), all reviewed and verified by the authors. All research ideas, experimental design, analysis, and conclusions are the authors' own.
 
 \footnotesize
-\renewcommand{\baselinestretch}{0.96}\selectfont
+\renewcommand{\baselinestretch}{0.93}\selectfont
 \begin{thebibliography}{25}
 
 \bibitem{1}

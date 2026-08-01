@@ -1,0 +1,213 @@
+{
+  "annotator": "Faisal",
+  "date": "2026-08-01",
+  "queries": [
+    {
+      "query_id": "q001",
+      "query": "If my company runs cargo ships that call at European ports, what do we have to measure and report about their CO2?",
+      "candidate_celex_ids": [
+        "32015R0757",
+        "32008L0101",
+        "32003L0087",
+        "32023L0959"
+      ],
+      "relevant_celex_ids": [
+        "32015R0757",
+        "32003L0087"
+      ]
+    },
+    {
+      "query_id": "q002",
+      "query": "How much pollution is allowed in total under the EU carbon market, and how do factories get their permits?",
+      "candidate_celex_ids": [
+        "32003L0087",
+        "32023L0959",
+        "32015R0757",
+        "32023R0955"
+      ],
+      "relevant_celex_ids": [
+        "32003L0087",
+        "32023L0959",
+        "32023R0955"
+      ]
+    },
+    {
+      "query_id": "q005",
+      "query": "When goods come into the EU, how do they figure out how much carbon went into making them?",
+      "candidate_celex_ids": [
+        "32023R0956",
+        "32003L0087",
+        "32023R1773",
+        "32025R0486"
+      ],
+      "relevant_celex_ids": [
+        "32023R0956",
+        "32023R1773",
+        "32025R0486",
+        "32003L0087"
+      ]
+    },
+    {
+      "query_id": "q015",
+      "query": "What exact tests prove an activity really helps fight climate change for green-investment purposes?",
+      "candidate_celex_ids": [
+        "32021R2139",
+        "32020R0852",
+        "32021R2178",
+        "32020R1818"
+      ],
+      "relevant_celex_ids": [
+        "32021R2139",
+        "32020R0852",
+        "32020R1818"
+      ]
+    },
+    {
+      "query_id": "q016",
+      "query": "What do investment funds have to tell people about how green their products actually are?",
+      "candidate_celex_ids": [
+        "32021R2178",
+        "32020R0852",
+        "32021R2139",
+        "32023R2631"
+      ],
+      "relevant_celex_ids": [
+        "32021R2178",
+        "32021R2139",
+        "32023R2631"
+      ]
+    },
+    {
+      "query_id": "q022",
+      "query": "How did flying get pulled into the EU carbon market, and which flights does it cover?",
+      "candidate_celex_ids": [
+        "32008L0101",
+        "32003L0087",
+        "32023L0959",
+        "32015R0757"
+      ],
+      "relevant_celex_ids": [
+        "32008L0101",
+        "32003L0087",
+        "32023L0959"
+      ]
+    },
+    {
+      "query_id": "q023",
+      "query": "What do shipping companies now owe under the carbon market for their vessels' emissions?",
+      "candidate_celex_ids": [
+        "32023L0959",
+        "32015R0757",
+        "32008L0101",
+        "32003L0087"
+      ],
+      "relevant_celex_ids": [
+        "32015R0757",
+        "32003L0087"
+      ]
+    },
+    {
+      "query_id": "q037",
+      "query": "Why do some heavy industries get free carbon permits, and how is that amount worked out?",
+      "candidate_celex_ids": [
+        "32003L0087",
+        "32023L0959",
+        "32023R0955",
+        "32023R0956"
+      ],
+      "relevant_celex_ids": [
+        "32023R0955",
+        "32023R0956"
+      ]
+    },
+    {
+      "query_id": "q039",
+      "query": "What's the system that keeps track of who holds which carbon allowances?",
+      "candidate_celex_ids": [
+        "32018R0208",
+        "32003L0087",
+        "32015R1844",
+        "32023L0959"
+      ],
+      "relevant_celex_ids": [
+        "32018R0208",
+        "32015R1844"
+      ]
+    },
+    {
+      "query_id": "q040",
+      "query": "Can a country carry forward, stockpile or trade away its yearly emissions budget?",
+      "candidate_celex_ids": [
+        "32018R0842",
+        "32018R0841",
+        "32023R0857",
+        "32021R1119"
+      ],
+      "relevant_celex_ids": [
+        "32018R0842",
+        "32023R0857",
+        "32021R1119"
+      ]
+    },
+    {
+      "query_id": "q041",
+      "query": "How is the baseline for forest emissions set when judging how well a country is doing on land accounting?",
+      "candidate_celex_ids": [
+        "32018R0841",
+        "32013R0525",
+        "32023R0839",
+        "32018R0842"
+      ],
+      "relevant_celex_ids": [
+        "32018R0842",
+        "32013R0525"
+      ]
+    },
+    {
+      "query_id": "q044",
+      "query": "How is the carbon-border bill trimmed to account for the free permits domestic producers already get?",
+      "candidate_celex_ids": [
+        "32025R2620",
+        "32023R0956",
+        "32003L0087",
+        "32023L0959"
+      ],
+      "relevant_celex_ids": [
+        "32025R2620",
+        "32023R0956",
+        "32003L0087",
+        "32023L0959"
+      ]
+    },
+    {
+      "query_id": "q049",
+      "query": "What's the 'don't make anything else worse' test for activities in the EU green-investment rules?",
+      "candidate_celex_ids": [
+        "32021R2139",
+        "32020R0852",
+        "32020R1818",
+        "32021R2178"
+      ],
+      "relevant_celex_ids": [
+        "32020R1818",
+        "32021R2139",
+        "32021R2178"
+      ]
+    },
+    {
+      "query_id": "q067",
+      "query": "What yearly land-sector emission and removal limits apply to countries from 2026 to 2029?",
+      "candidate_celex_ids": [
+        "32026R0893",
+        "32018R0841",
+        "32023R0839",
+        "32018R0842"
+      ],
+      "relevant_celex_ids": [
+        "32026R0893",
+        "32023R0839",
+        "32018R0842"
+      ]
+    }
+  ]
+}
