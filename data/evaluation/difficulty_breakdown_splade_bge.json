@@ -1,0 +1,55 @@
+{
+  "description": "Query-difficulty split (standard n=35, hard n=18) for SPLADE and BGE-small-v1.5 on the sealed 53-query test set. Computed from saved per-query reports (no new inference); joins per_query records to the difficulty tag in gold_standard_test.json. BM25/dense/hybrid method verified to reproduce Table II exactly.",
+  "cutoff": 5,
+  "test_set": "data/evaluation/gold_standard_test.json",
+  "systems": [
+    {
+      "system": "SPLADE (splade-cocondenser-ensembledistil)",
+      "source_report": "data/indices/splade_baseline_report.json",
+      "by_difficulty": {
+        "overall": {
+          "hr5": 0.8868,
+          "mrr5": 0.7443,
+          "ndcg5": 0.7171,
+          "n": 53
+        },
+        "standard": {
+          "hr5": 0.9429,
+          "mrr5": 0.7962,
+          "ndcg5": 0.7784,
+          "n": 35
+        },
+        "hard": {
+          "hr5": 0.7778,
+          "mrr5": 0.6435,
+          "ndcg5": 0.5977,
+          "n": 18
+        }
+      }
+    },
+    {
+      "system": "BGE-small-v1.5",
+      "source_report": "data/indices/bge_baseline_report.json",
+      "by_difficulty": {
+        "overall": {
+          "hr5": 0.9434,
+          "mrr5": 0.7314,
+          "ndcg5": 0.6962,
+          "n": 53
+        },
+        "standard": {
+          "hr5": 0.9429,
+          "mrr5": 0.7457,
+          "ndcg5": 0.7042,
+          "n": 35
+        },
+        "hard": {
+          "hr5": 0.9444,
+          "mrr5": 0.7037,
+          "ndcg5": 0.6805,
+          "n": 18
+        }
+      }
+    }
+  ]
+}

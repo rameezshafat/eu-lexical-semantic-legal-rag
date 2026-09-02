@@ -26,7 +26,7 @@
 
 \begin{document}
 
-\title{Evaluating Hybrid Sparse-Dense Retrieval\\
+\title{Evaluating Sparse, Dense, and Hybrid Retrieval\\
 for EU Climate Legal Documents}
 
 \author{
@@ -51,58 +51,63 @@ for EU Climate Legal Documents}
 \bfseries\itshape
 Legal information retrieval in statutory corpora is hard because of
 formulaic language, hierarchical authority, and the need for
-doctrinal precision.
-Existing hybrid legal-retrieval studies focus on case law or large
+doctrinal precision, and evaluating it fairly is harder still:
+existing hybrid legal-retrieval studies target case law or large
 general corpora, and none controls for query--corpus vocabulary
-leakage; we show it materially shifts which retrieval approach
-appears superior, moving BM25's $\MRR{5}$ by $0.29$ against dense's
-$0.09$ under otherwise identical conditions (Section~V-C).
-This paper evaluates four first-stage retrieval configurations on a
-102-query benchmark over EU Climate Law: BM25 lexical search, a
-learned-sparse encoder (SPLADE), \nomic dense retrieval (768-dim,
-8{,}192-token context), and a hybrid combining BM25 and \nomic via
-weighted Reciprocal Rank Fusion (RRF, $k{=}20$, dense weight~5).
-Of these queries, 31 in the test set are derived from real written
-questions submitted by Members of the European Parliament, providing
-externally sourced information needs that control against
-query--corpus vocabulary leakage.
+leakage, where queries written while consulting the statutes inherit
+their wording so that term overlap stands in for relevance.
+This paper's primary contribution is a leakage-controlled evaluation
+methodology for statute-level legal retrieval, together with evidence
+that evaluation design, more than retrieval architecture, shifts
+which approach appears superior on this corpus.
+The protocol has two parts: every query is rewritten in the plain
+language of a non-expert, and the test set is extended with
+information needs sourced from outside the corpus entirely, derived
+from written questions that Members of the European Parliament put to
+the Commission (31 of the 53 sealed test queries), whose vocabulary
+is independent of the statutes by construction.
+A paired experiment on 71~identical information needs isolates the
+effect: with corpus, indices, systems, and relevance judgements held
+fixed, rewording alone moves BM25's $\MRR{5}$ by $0.29$ against
+dense's $0.09$ (Section~V-C), so leaky benchmarks manufacture a false
+parity between lexical and semantic retrieval.
+The methodology enables a controlled comparison of four first-stage
+configurations on a 102-query benchmark over EU Climate Law: BM25
+lexical search, a learned-sparse encoder (SPLADE), \nomic dense
+retrieval (768-dim, 8{,}192-token context), and a hybrid combining
+BM25 and \nomic via weighted Reciprocal Rank Fusion (RRF, $k{=}20$,
+dense weight~5).
 The corpus comprises 1{,}156 article-level provisions (1{,}166
 retrieval units after splitting oversized amendment articles)
 extracted from 72~EU legislative instruments via SPARQL and
-Formex~XML.
-Fusion parameters were tuned on a 49-query validation split; all
-reported metrics are from the sealed 53-query test set.
-Dense retrieval achieves $\HR{5}{=}0.925$, substantially outperforming
-BM25 ($\HR{5}{=}0.698$; Wilcoxon $p{=}0.004$).
-SPLADE, a learned-sparse model, closes most of the gap to dense
-($\HR{5}{=}0.887$, $\MRR{5}{=}0.744$, $\NDCG{5}{=}0.717$) while
-carrying the highest hard-negative rate of any system, showing
-classical BM25 understates what sparse retrieval can do here.
+Formex~XML; fusion parameters were tuned on a 49-query validation
+split and the sealed 53-query test set was evaluated only once.
+Under the controlled protocol, dense retrieval achieves
+$\HR{5}{=}0.925$, substantially outperforming BM25
+($\HR{5}{=}0.698$; Wilcoxon $p{=}0.004$).
+SPLADE closes most of the gap to dense ($\HR{5}{=}0.887$,
+$\MRR{5}{=}0.744$, $\NDCG{5}{=}0.717$) while carrying the highest
+hard-negative rate of any system, so classical BM25 understates what
+sparse retrieval can do here.
 The hybrid achieves $\HR{5}{=}0.906$, $\MRR{5}{=}0.773$, and
 $\NDCG{5}{=}0.721$, the highest MRR and NDCG of the three primary
-systems (BM25, dense, hybrid), though SPLADE's MRR and NDCG point
-estimates are close behind; the hybrid's improvement over dense alone
-is statistically non-significant ($p{=}0.614$).
-Only 5 of 53 queries ($9.4\,\%$) are hard failures for the hybrid.
-An embedding-model ablation adds a further null result: E5-large-v2
-and BGE-small-v1.5, both restricted to 512-token context windows that
-truncate a fifth of this corpus, show no statistically significant
-difference from the deployed 8{,}192-token encoder (Wilcoxon
-$p{\geq}0.055$), so context-window length does not measurably drive
-retrieval quality here; a targeted check confirms the deployed
-document-chunking strategy itself makes no measurable difference
+systems, though SPLADE's point estimates are close behind and the
+hybrid's improvement over dense alone is not significant
+($p{=}0.614$); only 5 of 53 queries ($9.4\,\%$) are hard failures for
+the hybrid.
+An embedding-model ablation adds a null result: E5-large-v2 and
+BGE-small-v1.5, both restricted to 512-token windows that truncate a
+fifth of this corpus, show no significant difference from the
+8{,}192-token encoder (Wilcoxon $p{\geq}0.055$), and a targeted check
+finds the document-chunking strategy makes no measurable difference
 either (Section~V-G).
-A paired experiment re-evaluating 71~identical information needs
-under their original corpus-derived wording shows why leakage control
-matters: reworded queries cost BM25 $0.29$ of $\MRR{5}$ but the dense
-retriever only $0.09$, meaning leaky benchmarks manufacture a false
-parity between lexical and semantic retrieval.
-The results show that a strong general-domain dense retriever already
-performs close to the best point estimate achieved by any system on
-this corpus (SPLADE and E5-large-v2 both post higher point estimates
-on at least one metric, none significantly), and that weighted
-lexical-semantic fusion provides modest ranking gains without
-statistically significant coverage improvement.
+The transferable finding is methodological: on a leakage-controlled
+benchmark a strong general-domain dense retriever already performs
+close to the best point estimate any system reaches on this corpus,
+and weighted lexical-semantic fusion adds modest ranking gains
+without a statistically significant coverage improvement, so we argue
+leakage control and externally sourced information needs should be
+standard practice when benchmarking statute-level retrieval.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -139,7 +144,8 @@ citation-grounded generation is possible at all~\cite{13}.
 This paper evaluates that first stage.
 
 The standard tension in legal retrieval is between lexical and
-semantic matching.
+semantic matching, but which side of it wins is a claim about a
+benchmark as much as about a system.
 BM25 performs well on formulaic legal text, where exact term overlap
 is a strong relevance signal~\cite{1}, but a compliance officer asking
 whether her shipping company ``has to pay for the pollution its
@@ -155,28 +161,34 @@ distribution~\cite{13,18}.
 Hybrid sparse--dense fusion is the commonly recommended
 remedy~\cite{2,3,9}.
 Whether that recommendation holds for statute-level retrieval over a
-small, terminologically dense corpus is, however, an empirical
-question, and answering it fairly turned out to be harder than
-building the systems.
+small, terminologically dense corpus is an empirical question, and
+answering it fairly depends on a benchmark whose queries were not
+written while consulting the statutes: when they are, they inherit
+statutory wording, term overlap substitutes for relevance, and
+lexical and hybrid systems are flattered by construction.
+No prior hybrid legal-retrieval study controls for this.
 
-Our first evaluation attempt taught us why.
+Our first evaluation attempt showed this concretely.
 In a pilot benchmark whose queries were written while consulting the
-corpus, every configuration looked excellent and the hybrid appeared
-to win outright; the strongest system reached a perfect hit rate.
-The queries had simply inherited the statutes' vocabulary, so the
-benchmark was rewarding term overlap rather than retrieval quality,
-flattering BM25 in particular.
+corpus, every configuration looked excellent, the hybrid appeared to
+win outright, and the strongest system reached a perfect hit rate;
+the queries had simply inherited the statutes' vocabulary, so the
+benchmark rewarded term overlap rather than retrieval quality and
+flattered BM25 in particular.
 We therefore rebuilt the benchmark under an explicit leakage-control
 protocol: every query was rewritten in the plain language of a
 non-expert, and the test set was extended with queries derived from
-written parliamentary questions that Members of the European
-Parliament submitted to the Commission: real information needs,
-documented by their parliamentary reference numbers, whose official
-answers often name the very instruments a correct retrieval should
-return.
-To our knowledge, no prior work on hybrid legal retrieval has
+written questions that Members of the European Parliament submitted
+to the Commission, real information needs documented by their
+reference numbers, whose official answers often name the very
+instruments a correct retrieval should return.
+Because those needs originate outside the corpus, their vocabulary is
+independent of the statutes by construction rather than by rewriting.
+To our knowledge no prior work on hybrid legal retrieval has
 evaluated statute-level EU climate law, and none has controlled for
-query--corpus vocabulary leakage in this way.
+query--corpus vocabulary leakage this way; we argue the protocol,
+plain-language rewriting plus externally sourced information needs,
+should be standard practice for statute-level retrieval evaluation.
 
 We ask three questions.
 \textbf{RQ1.} Does hybrid sparse--dense retrieval improve
@@ -191,35 +203,40 @@ bottleneck for a full RAG pipeline.)
 context-window length, or must it be benchmarked directly?
 
 Our contributions are:
-(i)~a 102-query benchmark for statute-level EU Climate Law retrieval
-with binary CELEX-level relevance judgements and a sealed 53-query
-test set, constructed under the leakage-control protocol above, with
-31~test queries traceable to documented European Parliament written
-questions;
-(ii)~a reproducible corpus of 1{,}156 article-level provisions from
-72~EU climate instruments, extracted through a documented two-phase
-SPARQL pipeline over the CELLAR repository;
-(iii)~a comparison of BM25, a learned-sparse encoder (SPLADE), a pure
+(i)~a leakage-control protocol for statute-level retrieval
+evaluation, pairing plain-language rewriting of every query with a
+test set extended by externally sourced information needs, plus a
+paired experiment quantifying what uncontrolled leakage costs
+(Section~V-C);
+(ii)~an externally sourced query set: 31 of the 53 sealed test
+queries derived from documented European Parliament written
+questions, with vocabulary independent of the corpus by construction;
+(iii)~a 102-query benchmark for statute-level EU Climate Law
+retrieval with binary CELEX-level relevance judgements built under
+that protocol, over a reproducible corpus of 1{,}156 article-level
+provisions from 72~EU climate instruments extracted through a
+documented two-phase SPARQL pipeline over CELLAR;
+(iv)~a comparison of BM25, a learned-sparse encoder (SPLADE), a pure
 dense bi-encoder, and weighted reciprocal rank fusion, with paired
-significance tests (Wilcoxon, exact McNemar), bootstrap and cluster-
-bootstrap confidence intervals, and per-query failure analysis; and
-(iv)~an embedding-model ablation (E5-large-v2, BGE-small-v1.5)
-showing that context-window length does not measurably predict
-retrieval quality on this corpus, together with a chunking-strategy
-check and a BM25 hyperparameter search run under the same
-validation/test discipline as the RRF tuning.
+significance tests (Wilcoxon, exact McNemar), bootstrap and
+cluster-bootstrap confidence intervals, and per-query failure
+analysis; and
+(v)~an embedding-model ablation (E5-large-v2, BGE-small-v1.5) showing
+that context-window length does not measurably predict retrieval
+quality on this corpus, together with a chunking-strategy check and a
+BM25 hyperparameter search run under the same validation/test
+discipline as the RRF tuning.
 
-To preview the results: on the leakage-controlled test set, both the
-dense retriever and the hybrid significantly outperform BM25, but the
-hybrid is statistically indistinguishable from the dense retriever
-alone, and the direction of that comparison reversed as the test set
-grew, a caution against reading small-sample differences between
-strong systems.
-The remaining failures are ranking errors, not gaps in corpus
-coverage, and the largest is a cross-instrument discrimination error
-that a different open-weight encoder resolves from the same indexed
-text, which points to embedding-model choice rather than corpus
-preprocessing as the next lever for improvement.
+To preview the results: on the leakage-controlled test set both the
+dense retriever and the hybrid significantly outperform BM25 but are
+statistically indistinguishable from each other, and the direction of
+that comparison reversed as the test set grew, a caution against
+reading small-sample differences between strong systems.
+The residual failures are ranking errors rather than coverage gaps,
+the largest a cross-instrument discrimination error that a different
+open-weight encoder resolves from the same indexed text, pointing to
+embedding-model choice rather than corpus preprocessing as the next
+lever for improvement.
 
 Section~II reviews related work; Section~III details the corpus,
 retrievers, and fusion; Section~IV covers the benchmark and setup;
@@ -232,15 +249,15 @@ Section~VII concludes with limitations and future work.
 \subsection{Lexical vs.\ Dense Retrieval in Legal IR}
 
 Mori et al.~\cite{1} find BM25 a competitive baseline for formulaic
-legal text, where exact term overlap is reliable and dense models
-underperform by glossing over legally binding phrasing.
-Zheng et al.~\cite{7} find the opposite on reasoning-intensive
-queries, and the LRAGE framework~\cite{13} confirms off-the-shelf
-dense retrievers underperform BM25 without domain adaptation.
-Li et al.~\cite{21} complicate this further: on large-scale Chinese
-legal case retrieval, BM25 consistently beats off-the-shelf dense
-models, so the balance is corpus- and language-dependent; our
-results suggest it also depends on how queries are phrased.
+legal text, where dense models underperform by glossing over legally
+binding phrasing; Zheng et al.~\cite{7} find the opposite on
+reasoning-intensive queries, and LRAGE~\cite{13} confirms
+off-the-shelf dense retrievers underperform BM25 without domain
+adaptation.
+Li et al.~\cite{21} add that on large-scale Chinese legal case
+retrieval BM25 consistently beats off-the-shelf dense models, so the
+balance is corpus- and language-dependent; our results suggest it
+also depends on how queries are phrased.
 
 \subsection{Hybrid Retrieval}
 
@@ -254,15 +271,15 @@ standalone baseline (Section~V-A) to check how much headroom that
 leaves on the table.
 Louis et al.~\cite{25} find domain-general legal models help fusion
 zero-shot but can hurt once components are domain-trained unless
-weights are re-tuned, consistent with our own finding that an untuned
+weights are re-tuned, consistent with our finding that an untuned
 literature-default RRF configuration underperforms a corpus-specific
 one; no legal-domain or EU-law-specific embedding model is evaluated
-here, a scope limit noted in Section~VII, not an oversight.
+here (Section~VII).
 Cormack et al.~\cite{14} established that rank-based fusion beats
-score-based combination without needing score normalisation; Bruch et
+score-based combination without score normalisation; Bruch et
 al.~\cite{20} show analytically that RRF's parameters do not transfer
-across collections, which our own validation sweep reproduces on a
-much smaller corpus.
+across collections, which our validation sweep reproduces on a much
+smaller corpus.
 
 \subsection{Retrieval Reliability and Legal RAG}
 
@@ -296,18 +313,16 @@ Formex is the Publications Office's structured drafting format, so
 parsing it (with \texttt{lxml}) recovers the legal structure of each
 act directly instead of reverse-engineering it from rendered HTML.
 
-The retrieval unit is the legislative article.
-This is a deliberate choice rather than a convenience: EU articles are
-typically drafted to state one obligation, definition, or procedure,
-so article-level units align with what a legal user usually needs
-retrieved and avoid the arbitrary window-size decisions of
-token-based chunking; we have not systematically measured how often
-an answer instead requires content spanning multiple articles,
-annexes, recitals, or cross-referenced instruments, so this is a
-design choice motivated by drafting convention, not an empirically
-verified claim, and Section~V-G's targeted chunking check speaks
-only to the five oversized amendment articles, not this broader
-question.
+The retrieval unit is the legislative article, a deliberate choice:
+EU articles are typically drafted to state one obligation,
+definition, or procedure, so article-level units align with what a
+legal user needs retrieved and avoid the arbitrary window sizes of
+token-based chunking.
+We have not measured how often an answer instead spans multiple
+articles, annexes, recitals, or cross-referenced instruments, so this
+is motivated by drafting convention rather than empirically verified,
+and Section~V-G's chunking check speaks only to the five oversized
+amendment articles, not this broader question.
 Concretely, each \texttt{<ARTICLE>} element becomes one unit, with
 text reconstructed from \texttt{<ALINEA>} leaf nodes to avoid
 duplicated nesting; every record is validated against a schema, and
@@ -377,10 +392,13 @@ the tokenizer vocabulary via a masked-language-model head, term
 weights are $\log(1{+}\mathrm{relu}(x))$-pooled over token positions,
 giving implicit query expansion while remaining sparse and
 interpretable.
-At this corpus size (1{,}166 documents), we score by exact sparse
-dot product rather than an inverted-index engine such as
-Anserini/Lucene: brute-force search is exact here and avoids adding
-infrastructure this project does not otherwise depend on.
+At this corpus size (1{,}166 documents) we score by exact sparse dot
+product rather than an inverted-index engine such as Anserini/Lucene.
+The trade is deliberate: brute-force scoring carries no
+approximate-retrieval error, so the SPLADE numbers below reflect the
+model and not an index-pruning heuristic, but they equally say
+nothing about learned-sparse behaviour, or its engineering overhead,
+at the corpus scales where an inverted index becomes necessary.
 Indexed on the same hierarchically chunked corpus as the other
 retrievers, for comparability.
 
@@ -609,19 +627,17 @@ Holm-Bonferroni correction across the six embedding-ablation tests
 \subsection{Hardware and Software}
 
 All results were produced on consumer hardware, no GPUs or paid APIs:
-primary systems on an AMD Ryzen~7 5700U laptop (CPU-only, Windows~11),
-the embedding ablation on an Apple~M1~Pro (CPU-only), with primary
-numbers reproduced identically on both, deliberately modest hardware,
-since this pipeline should be reproducible anywhere.
+primary systems on an AMD Ryzen~7 5700U laptop (CPU-only, Windows~11)
+and the embedding ablation on an Apple~M1~Pro (CPU-only), with primary
+numbers reproduced identically on both.
 The software stack is Python~3.14.2 with
 \texttt{sentence-transformers}~5.5.1, \texttt{faiss-cpu}~1.14.2,
-\texttt{rank-bm25}~0.2.2, and \texttt{pydantic}~2.13.4; all versions
-are pinned in the repository, and the combined indices occupy under
-10\,MB.
+\texttt{rank-bm25}~0.2.2, and \texttt{pydantic}~2.13.4, all pinned in
+the repository; the combined indices occupy under 10\,MB.
 All four dense/sparse encoders (nomic-v1.5, E5-large-v2,
-BGE-small-v1.5, SPLADE) share batch size 64 (16 for SPLADE) and run
-at PyTorch's CPU default precision (fp32); exact query/document
-prefixes are given alongside each model in Section~III.
+BGE-small-v1.5, SPLADE) share batch size 64 (16 for SPLADE) at
+PyTorch's CPU default precision (fp32); query/document prefixes are
+given with each model in Section~III.
 
 % ============================================================
 \section{Performance Evaluation}
@@ -645,34 +661,26 @@ Both semantic configurations beat BM25 by more than twenty points of
 $\HR{5}$ (hybrid: $p{=}0.0005$, $d{=}0.579$; dense: $p{=}0.004$,
 $d{=}0.433$): on a leakage-controlled benchmark, lexical retrieval
 alone still misses roughly three queries in ten.
-SPLADE, tested as a standalone baseline rather than BM25's
-replacement, closes most of that gap, its point estimates sit close
-to \nomic's, above the hybrid's on no metric, but well above BM25's,
-while carrying the highest hard-negative rate of any system tested
-($0.30$), a cost the point estimates alone don't show.
+SPLADE, a standalone baseline rather than BM25's replacement, closes
+most of that gap: its point estimates sit close to \nomic's and well
+above BM25's, above the hybrid's on no metric, while carrying the
+highest hard-negative rate of any system tested ($0.30$).
 
 Between dense and the hybrid the Wilcoxon test finds no significant
 difference ($p{=}0.614$, $d{=}0.120$): dense posts the best $\HR{5}$,
 the hybrid the best $\MRR{5}$ and $\NDCG{5}$, and their confidence
 intervals overlap substantially on every metric (Fig.~\ref{fig:effcomp}).
-Neither reading should be taken as confirmed equivalence, only that
-this test, at this sample size, detected no difference.
-
-Part of the explanation is architectural.
-RRF fuses ranks and discards the scores behind them: a dense rank-1
-backed by a wide similarity margin and one that barely edged out the
-runner-up contribute the same $w_d/(k{+}1)$ to the fused score, so
-fusion cannot weight the dense retriever's confidence.
-Dense already places a relevant instrument at rank~1 on 34 of 53
-queries (Section~V-F), so BM25's ranks carry little additional
-discriminative information here, and what they do carry is as likely
-to displace a correct dense result as to confirm one (Section~V-E
-quantifies both directions), consistent with Bruch et al.'s~\cite{20}
-analytical result that rank-based fusion sacrifices score information
-a normalised score combination could use.
+Neither reading is confirmed equivalence, only that this test, at this
+sample size, detected no difference.
+Part of the explanation is architectural: RRF fuses ranks and
+discards the scores behind them, so it cannot weight the dense
+retriever's confidence, and with dense already at rank~1 on 34 of 53
+queries (Section~V-F) BM25's ranks are as likely to displace a
+correct dense result as to confirm one (Section~V-E), consistent with
+Bruch et al.~\cite{20}.
 The honest answer to RQ1 is therefore split: fusion delivers a
-significant improvement over the lexical baseline, but no measurable
-improvement over a strong dense retriever used alone.
+significant improvement over the lexical baseline but no measurable
+improvement over a strong dense retriever alone.
 
 \subsection{Effect of Query Difficulty}
 
@@ -681,28 +689,37 @@ introduced in Section~IV: \emph{standard} queries are naturally
 phrased but moderately terminological, while \emph{hard} queries
 share essentially no vocabulary with the statutes.
 
-\begin{table*}[!t]
-\renewcommand{\arraystretch}{1.3}
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.15}
 \caption{Results by query difficulty (standard $n{=}35$,
-  hard $n{=}18$).}
+  hard $n{=}18$). nomic${=}$\texttt{nomic-embed-text-v1.5};
+  Hybrid${=}$weighted RRF; BGE${=}$BGE-small-v1.5. SPLADE and BGE are
+  standalone baselines, not fused into the hybrid.}
 \label{tab:difficulty}
 \centering
 \small
+\setlength{\tabcolsep}{4.5pt}
 \begin{tabular}{@{}llccc@{}}
 \toprule
 System & Subset & $\HR{5}$ & $\MRR{5}$ & $\NDCG{5}$ \\
 \midrule
-BM25       & standard & 0.743 & 0.611 & 0.559 \\
-           & hard     & 0.611 & 0.366 & 0.367 \\
+BM25   & standard & 0.743 & 0.611 & 0.559 \\
+       & hard     & 0.611 & 0.366 & 0.367 \\
 \midrule
-\nomic     & standard & 0.943 & 0.784 & 0.738 \\
-           & hard     & 0.889 & 0.661 & 0.654 \\
+nomic  & standard & 0.943 & 0.784 & 0.738 \\
+       & hard     & 0.889 & 0.661 & 0.654 \\
 \midrule
-Hybrid RRF & standard & 0.943 & 0.821 & 0.754 \\
-           & hard     & 0.833 & 0.680 & 0.655 \\
+Hybrid & standard & 0.943 & 0.821 & 0.754 \\
+       & hard     & 0.833 & 0.680 & 0.655 \\
+\midrule
+SPLADE & standard & 0.943 & 0.796 & 0.778 \\
+       & hard     & 0.778 & 0.644 & 0.598 \\
+\midrule
+BGE    & standard & 0.943 & 0.746 & 0.704 \\
+       & hard     & 0.944 & 0.704 & 0.680 \\
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{table}
 
 The split localises where lexical retrieval breaks: BM25's
 $\MRR{5}$ nearly halves on hard queries (0.611 to 0.366) while dense
@@ -713,6 +730,21 @@ It also explains where fusion helps at all: the hybrid's $\MRR{5}$
 edge over dense is concentrated on standard queries ($+0.037$) and
 shrinks on hard ones ($+0.019$), since BM25's signal is only
 trustworthy when the query shares some statutory vocabulary.
+
+The learned-sparse and small-dense baselines split along the same
+line.
+On standard queries all four semantic systems reach identical
+coverage ($\HR{5}{=}0.943$), and SPLADE posts the highest $\NDCG{5}$
+(0.778): it is fully competitive when the query shares statutory
+vocabulary.
+On hard queries SPLADE drops further than dense, its $\HR{5}$ falling
+$0.165$ from the standard split against dense's $0.054$, landing
+between BM25 and the semantic systems, so a learned-sparse model
+still carries a residual lexical dependence.
+BGE-small-v1.5 is nearly flat across difficulty and posts the best
+hard-query coverage of any system ($\HR{5}{=}0.944$), including the
+q080 instrument every primary system misses (Section~V-G); neither
+effect shows in the aggregate ranking.
 
 \subsection{Quantifying Vocabulary Leakage}
 
@@ -761,6 +793,9 @@ either wording of this set beyond the validation use already
 described.
 The comparison is between wordings, not systems, and for that purpose
 the pairing is exact.
+SPLADE and BGE-small-v1.5 are absent here by construction: added as
+standalone baselines after the pilot, they never had a corpus-derived
+wording to pair against.
 
 \subsection{A Worked Example}
 
@@ -779,26 +814,13 @@ matches.
 The dense retriever maps the paraphrase onto the natural-disturbance
 provisions directly, placing both relevant instruments in its top
 five; the dense-weighted fusion preserves them.
-Two further cases, selected because they illustrate failure modes the
-wildfire example does not, round out the qualitative picture rather
-than establish a general mechanism from one example alone.
-q054 (``does a shipowner need special approval to change how it
-verifies emissions data?'') is a fusion-weighting artefact: BM25
-alone ranks the correct instrument at position~1 (reciprocal
-rank~$1.0$), dense misses it entirely, and the dense-favouring weight
-($w_d{=}5$) lets that confident dense miss override BM25's correct
-signal, suppressing a genuine BM25 rescue rather than confirming a
-dense result, so the hybrid misses too.
-q083 fails all three systems for a different reason: direct
-inspection of the raw Formex source confirms the queried content
-(Member State opt-in of fishing vessels and inland navigation) is
-simply absent from the codified text, a coverage limitation no
-retrieval strategy could have fixed.
-The deployed weighting itself, $w_d{=}5w_s$, is worth naming
-precisely: it is dense-dominated weighted RRF, not a balanced hybrid,
-and its behaviour should not be generalised to hybrid retrieval
-broadly, a lower $w_d$ would let BM25 contribute more often, at the
-cost of the errors this weighting is tuned to suppress (Section~VI).
+This single example illustrates the dominant pattern rather than
+proving a mechanism; Section~V-E gives the full per-query failure
+breakdown, including the two fusion-weighting artefacts (q054, q090)
+and the one genuine coverage gap (q083) it does not show here.
+The deployed weighting is dense-dominated weighted RRF ($w_d{=}5w_s$),
+not a balanced hybrid, and its behaviour should not be generalised to
+hybrid retrieval broadly (Section~VI).
 
 \begin{table}[!t]
 \renewcommand{\arraystretch}{1.2}
@@ -848,74 +870,55 @@ Dense retrieval recovers 13~queries that BM25 misses entirely,
 confirming that semantic generalisation is the primary source of
 improvement over lexical retrieval.
 Fusion is nearly lossless with respect to the dense ranking: the
-hybrid preserves 48 of dense retrieval's 49~hits, losing exactly one
-query where BM25 interference displaces the relevant document from
-the top~5.
-Conversely, BM25 contributes exactly one unique hit that dense
-retrieval misses, and the dense-favouring fusion weight ($w_d{=}5$)
-suppresses the BM25 signal too strongly for the hybrid to preserve
-it.
-Three queries are missed by all three systems, and the hybrid fails
-five in total.
-Manual inspection shows that every failed query's relevant instrument
-\emph{is} present in the corpus: these are ranking failures, not
-coverage gaps.
-Direct inspection of the rankings attributes the five failures to
-four causes.
+hybrid keeps 48 of dense's 49~hits, losing one query to BM25
+interference, and BM25 contributes one unique hit that the
+dense-favouring weight ($w_d{=}5$) then suppresses.
+Three queries are missed by all three systems and the hybrid fails
+five in total; in every case the relevant instrument is present in
+the corpus, so these are ranking failures, not coverage gaps.
+The five split into four causes.
 q080 is a cross-instrument discrimination failure: the relevant ETS2
-provisions are cleanly indexed (BM25's best-ranked chunk for the gold
-instrument sits at rank~13), but both retrievers rank thematically
-adjacent instruments (the Social Climate Fund regulation, the recast
-Energy Efficiency Directive, CBAM) higher on shared vocabulary, and a
-different encoder retrieves the same text correctly (Section~V-G),
-so the failure is a property of the deployed embedding model, not of
-the corpus.
-q083's specific content (Member State opt-in of fishing vessels and
-inland navigation) is confirmed absent from the codified directive
-text itself, its terms appearing nowhere in the raw Formex source.
-q009's colloquial phrasing (\emph{``suppliers wrecking the
-environment''}) sits too far from the statutory register of
-due-diligence obligations for either signal.
-q054 and q090 are fusion-weighting artefacts: in each case one
-retriever places the relevant document correctly and the dense-heavy
-weighting overrides it, including q054, where BM25 alone has the
-answer at rank~1.
-We initially attributed the ETS2 failures to amendment-act
-sub-chunking diluting the relevant provisions; inspecting the indexed
-chunks and rankings disproved that diagnosis, and we record the
-correction because it changes the remedy: re-chunking would not have
-helped.
+provisions are cleanly indexed (BM25's best chunk for the gold
+instrument sits at rank~13) but both retrievers rank thematically
+adjacent instruments higher on shared vocabulary, and a different
+encoder retrieves the same text correctly (Section~V-G), so the
+failure is a property of the deployed embedding model, not the
+corpus.
+q083's content (Member State opt-in of fishing vessels and inland
+navigation) is confirmed absent from the codified text.
+q009's colloquial phrasing sits too far from the statutory register
+of due-diligence obligations for either signal.
+q054 and q090 are fusion-weighting artefacts, one retriever placing
+the document correctly and the dense-heavy weighting overriding it
+(for q054, BM25 alone has the answer at rank~1).
+An earlier diagnosis blaming amendment-act sub-chunking was disproved
+by inspecting the indexed chunks, which matters because re-chunking
+would not have helped.
 Answering RQ2: the residual failures are concentrated in
-encoder-specific discrimination errors and extreme vocabulary
-mismatch, not in corpus coverage or the retrieval strategy itself.
+encoder-specific discrimination and extreme vocabulary mismatch, not
+in corpus coverage or the retrieval strategy.
 
 \subsection{Ranking Quality}
 
-Where does the hybrid's aggregate $\MRR{5}$ advantage ($+0.031$)
-come from?
-Restricting to the 48~queries both semantic systems hit, as prior
-analyses of this kind typically do, would silently exclude the
-5~queries where dense and hybrid \emph{disagree on coverage},
-precisely the queries most informative about the aggregate $\HR{5}$
-gap; we report the full 53-query breakdown instead.
-Coverage: both hit on 48, dense alone hits 1 (q090, lost when RRF
-fusion pushes it just outside the top~5), hybrid alone hits 0, and
-both miss 4.
-Ranking, restricted to the 48 queries where rank comparison is
-defined: the two systems place the first relevant result at the same
-rank on 31~queries, the hybrid ranks it higher on~8, and dense ranks
-it higher on~9.
-The aggregate edge instead comes from magnitude: the hybrid's
-improvements are more often full promotions to rank~1 (38~queries
-place a relevant instrument at rank~1, versus 34 for dense and 23 for
-BM25), typically where BM25's exact-term signal confirms the correct
-instrument that \nomic had placed just below a semantically similar
-alternative.
-We describe this post hoc, from the per-query data, as one candidate
-explanation consistent with the pattern, an exploratory reading, not
-a mechanism we pre-specified and then confirmed; at this corpus size
-it operates on a handful of queries, enough to move the mean but not
-enough to reach significance.
+Where does the hybrid's aggregate $\MRR{5}$ advantage ($+0.031$) come
+from?
+Restricting to the 48~queries both semantic systems hit, as such
+analyses typically do, would exclude the 5~queries where dense and
+hybrid disagree on coverage, precisely those most informative about
+the $\HR{5}$ gap, so we report the full 53-query breakdown.
+On coverage, both hit on 48, dense alone on 1 (q090, pushed just
+outside the top~5 by fusion), hybrid alone on 0, and both miss 4.
+On ranking, over the 48 queries where the comparison is defined, the
+two place the first relevant result at the same rank on 31, the
+hybrid higher on 8, and dense higher on 9.
+The aggregate edge is one of magnitude: the hybrid more often
+promotes a relevant instrument all the way to rank~1 (38~queries
+versus 34 for dense and 23 for BM25), typically where BM25's
+exact-term signal confirms an instrument \nomic placed just below a
+semantically similar alternative.
+This is a post hoc exploratory reading, not a pre-specified
+mechanism; at this corpus size it moves the mean without reaching
+significance.
 
 \subsection{Embedding-Model Ablation}
 
@@ -970,11 +973,10 @@ re-rank what dense already found, while the dense-favouring weight
 needed to stop BM25's errors from corrupting the ranking also
 suppresses that one genuine save.
 This is not a general argument against hybrid retrieval: reported
-hybrid gains in the literature typically come where the dense
-component is weaker relative to the corpus, or the corpus is large
-enough that retrievers diverge more often; on a small, terminologically
-dense statutory corpus, a strong bi-encoder leaves BM25 too little
-room to help.
+gains typically come where the dense component is weaker or the
+corpus is large enough that retrievers diverge more often; on a
+small, terminologically dense statutory corpus a strong bi-encoder
+leaves BM25 too little room to help.
 
 \textbf{Small samples mislead.}
 The hybrid-vs-dense direction reversed as the test set grew (dense
@@ -986,36 +988,31 @@ drawn from them without significance testing deserve the same
 suspicion.
 
 \textbf{Evaluation design decides the apparent winner.}
-The sharpest lesson came before any system comparison: holding
-corpus, indices, systems, and judgements fixed, rewording the queries
-alone moves BM25 by $-0.29$ $\MRR{5}$ against dense's $-0.09$
-(Table~\ref{tab:leakage}), turning a three-point spread into a
-twenty-five-point one.
-Nothing about the retrievers changed, only the words did, and the
-independent raw-parliamentary-question check (Section~IV-A)
-reproduces the same pattern on data that experiment never touched.
-Annotators who write queries while reading the corpus will naturally
-reuse its vocabulary, so we suspect this inflation recurs in other
+The sharpest result came before any system comparison: rewording the
+queries alone, with everything else fixed, moved BM25 far more than
+dense (Table~\ref{tab:leakage}), and the independent
+raw-parliamentary-question check (Section~IV-A) reproduces the
+pattern on untouched data.
+Annotators who write queries while reading the corpus reuse its
+vocabulary, so we suspect this inflation recurs in other
 specialised-domain benchmarks and systematically flatters lexical and
 hybrid systems; externally sourced information needs are a cheap,
 auditable defence.
 
 \textbf{Practical implications.}
 These results support a simple recipe: start with a strong open-weight
-bi-encoder, treat BM25 fusion as low-cost insurance rather than a
-required component (negligible overhead, but on this evidence,
-negligible benefit too), and tune fusion if it is used.
+bi-encoder, treat BM25 fusion as low-cost insurance (negligible
+overhead, and on this evidence negligible benefit), and tune it if
+used.
 The literature default ($k{=}60$, equal weights)~\cite{14} degrades
-validation $\HR{5}{=}1.000$, $\MRR{5}{=}0.810$ to $\HR{5}{=}0.898$,
-$\MRR{5}{=}0.679$, because with only $\sim$1{,}200 candidates BM25's
-errors sit close enough to the top to displace dense rank-1 results,
-consistent with Bruch et al.'s~\cite{20} finding that TREC-scale
-parameters don't transfer to small corpora.
-A post-hoc full-grid sweep on the sealed test set, run to
-characterise sensitivity rather than re-select parameters, reproduces
-the deployed numbers exactly and shows $\HR{5}$ plateauing at the
-dense-only ceiling (0.925) from $w_d{=}8$, a broad ridge rather than a
-narrow spike (Fig.~\ref{fig:heatmap}).
+validation $\HR{5}$/$\MRR{5}$ from $1.000$/$0.810$ to $0.898$/$0.679$
+because with only $\sim$1{,}200 candidates BM25's errors displace
+dense rank-1 results, consistent with Bruch et al.~\cite{20}; a
+post-hoc full-grid sweep (Fig.~\ref{fig:heatmap}), run to characterise
+sensitivity rather than re-select parameters, reproduces the deployed
+numbers exactly and shows $\HR{5}$ plateauing at the dense-only
+ceiling (0.925) from $w_d{=}8$, a broad ridge rather than a narrow
+spike.
 
 \begin{figure*}[!t]
 \centering
@@ -1038,16 +1035,31 @@ failure traces to chunking or coverage.
 % ============================================================
 \section{Conclusion}
 
-This paper set out to test whether hybrid sparse--dense fusion
-improves statute-level retrieval for EU Climate Law, and found that
-answering the question fairly required building the evaluation as
-carefully as the system.
-We contributed a reproducible 1{,}156-provision corpus of 72~EU
-climate instruments, a 102-query benchmark constructed under an
-explicit leakage-control protocol, 31 of whose test queries derive
-from documented European Parliament written questions, and a
-comparison of BM25, SPLADE, a pure dense bi-encoder, and weighted
-reciprocal rank fusion with significance testing throughout.
+This paper's most transferable lesson concerns benchmark
+construction rather than architecture.
+The sharpest single result is not a system comparison at all: with
+corpus, indices, systems, and relevance judgements held fixed,
+rewording the queries alone shifts $\MRR{5}$ by $0.29$ for BM25 but
+only $0.09$ for the dense retriever (Table~\ref{tab:leakage}), enough
+to turn an apparent three-point lexical--semantic parity into a
+twenty-five-point gap, and the independent raw-parliamentary-question
+check (Section~IV-A) reproduces the pattern on data that experiment
+never touched.
+Annotators who write queries while reading the corpus inherit its
+vocabulary, so we expect this inflation in other specialised-domain
+benchmarks, where it systematically flatters lexical and hybrid
+systems; plain-language rewriting and externally sourced information
+needs are a cheap, auditable defence that we argue should be standard
+practice when benchmarking statute-level retrieval.
+We set out to test whether hybrid sparse--dense fusion improves
+statute-level retrieval for EU Climate Law, and found that answering
+the question fairly required building the evaluation as carefully as
+the system: a reproducible 1{,}156-provision corpus of 72~EU climate
+instruments, a 102-query benchmark under an explicit leakage-control
+protocol with 31 test queries from documented European Parliament
+written questions, and a comparison of BM25, SPLADE, a pure dense
+bi-encoder, and weighted reciprocal rank fusion with significance
+testing throughout.
 
 The findings are easy to state, with the caveats attached to each.
 Both dense-only and hybrid beat BM25 by wide, significant margins,
@@ -1067,10 +1079,6 @@ hyperparameters improve on validation but don't generalise to the
 test set, so we kept the defaults rather than switch on an overfit
 signal, while stemming alone would have bought $+0.057$ $\HR{5}$ left
 on the table for exact-match precision.
-The pilot-to-controlled swing, independently corroborated by the
-raw-PQ check (Section~IV-A), showed benchmark construction, not
-architecture, was the largest factor in which system appeared to
-win, this paper's most transferable lesson.
 The remaining failures are encoder-specific discrimination and
 register-gap errors rather than coverage or chunking problems, so
 embedding-model selection, not corpus preprocessing, is a more
@@ -1097,34 +1105,36 @@ throughout.
 31 of the 53 test queries (58.5\,\%) still carry independent
 corroboration via the Commission's official answers to the source
 parliamentary questions.
-Finally, the study covers one legal domain and one language, and
-although the ablation adds two further encoders plus SPLADE, all
-three dense models are general-domain bi-encoders, no legal-domain or
-multilingual EU-law-specific encoder was evaluated, so the
-``dense is enough'' conclusion should be read as a claim about strong
-modern general-domain bi-encoders on small statutory corpora, not
-about dense retrieval in general.
-\nomic's selection as the primary encoder is also not pre-registered:
-version control shows it replaced two earlier candidates, each
-swapped for a stated technical reason (removing a multi-task
-confound, then fixing context-window truncation) before the sealed
-test set reached its current size, evidence against post hoc
-cherry-picking but not a substitute for a pre-registered protocol.
+Finally, the study covers one legal domain and one language, and all
+three dense models (plus SPLADE) are general-domain: no legal-domain
+or multilingual EU-law-specific encoder was evaluated, so
+``dense is enough'' is a claim about strong general-domain
+bi-encoders on small statutory corpora, not about dense retrieval in
+general.
+\nomic's selection is also not pre-registered: version control shows
+it replaced two earlier candidates, each swapped for a stated
+technical reason before the sealed test set reached its current size,
+evidence against cherry-picking but not a pre-registered protocol.
 
-Future work follows from these limitations: extend relevance judgements to
-article level; address the cross-instrument discrimination failure at
-the encoder level via fine-tuning or re-ranking; scale the test set
-via the European Parliament's open data interface, which our
-query-derivation protocol can largely automate; and evaluate RAG
-generation itself, for which the Commission's answers to the source
-questions provide ready-made reference answers.
+Future work follows from these limitations: extend relevance
+judgements from the instrument to the article level; broaden the
+completed second-annotator check (Cohen's $\kappa{=}0.42$ on
+14~queries) to the full test set and reconcile disagreements toward
+the $0.60$ bar; address the cross-instrument discrimination failure at
+the encoder level via fine-tuning or re-ranking, and compare weighted
+RRF against a cross-encoder reranker over the same first-stage
+candidates; scale the test set via the European Parliament's open
+data interface, which our query-derivation protocol can largely
+automate; and evaluate end-to-end RAG generation by feeding the top-5
+retrieved passages to an LLM and scoring its answers against the
+Commission's official written replies to the 31~EP-derived queries.
 
 \section*{Generative AI Disclosure}
 
-Generative AI tools (Claude, Anthropic) were used for proofreading and improving clarity of writing throughout, and to assist in drafting the plain-language query paraphrases and candidate relevance mappings described in Section~IV (Benchmark), all reviewed and verified by the authors. All research ideas, experimental design, analysis, and conclusions are the authors' own.
+Generative AI tools (Claude, Anthropic) were used for proofreading and improving clarity of writing throughout; to assist in drafting the plain-language query paraphrases and candidate relevance mappings described in Section~IV (Benchmark); to draft and revise expository prose in the Abstract and in Sections~I (Introduction), III-C (Learned-Sparse Retrieval), V-B (Effect of Query Difficulty), and VII (Conclusion); and to compute the SPLADE and BGE-small-v1.5 rows of Table~II from previously saved per-query results. All such output was reviewed and verified by the authors, and all research ideas, experimental design, analysis, and conclusions are the authors' own.
 
 \footnotesize
-\renewcommand{\baselinestretch}{0.93}\selectfont
+\renewcommand{\baselinestretch}{0.91}\selectfont
 \begin{thebibliography}{25}
 
 \bibitem{1}
